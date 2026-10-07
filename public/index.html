@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Analisa Casemix INA-CBG | RS Humana Prima Bandung</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23EA580C'/%3E%3Cpath d='M13 7h6v6h6v6h-6v6h-6v-6H7v-6h6z' fill='%23fff'/%3E%3C/svg%3E">
-<meta name="theme-color" content="#C2410C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237C3AED'/%3E%3Cpath d='M13 7h6v6h6v6h-6v6h-6v-6H7v-6h6z' fill='%23fff'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#6D28D9">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -17,20 +17,20 @@
 <script type="module" src="/auth.js" defer></script>
 <style>
 /* =========================================================
-   Analisa Casemix INA-CBG - tema oranye profesional
-   (nama variabel --teal* dipertahankan agar kompatibel; nilainya kini oranye)
+   Analisa Casemix INA-CBG - tema ungu cerah profesional
+   (nama variabel --o-* / --teal* dipertahankan; nilainya kini ungu cerah)
    ========================================================= */
 :root{
-  --bg:#F8F5F2;
+  --bg:#F7F5FC;
   --paper:#FFFFFF;
-  --ink:#1C1917;
-  --ink-soft:#57534E;
-  --ink-mute:#78716C;
-  --teal:#C2410C;          /* aksen utama (tombol, tautan) - kontras 5:1 di atas putih */
-  --teal-deep:#7C2D12;
-  --teal-tint:#FFF3E8;
-  --o-50:#FFF7ED; --o-100:#FFEDD5; --o-200:#FED7AA; --o-300:#FDBA74; --o-400:#FB923C;
-  --o-500:#F97316; --o-600:#EA580C; --o-700:#C2410C; --o-800:#9A3412; --o-900:#7C2D12; --o-950:#431407;
+  --ink:#1E1B2E;
+  --ink-soft:#4B4563;
+  --ink-mute:#6B6585;
+  --teal:#6D28D9;          /* aksen utama (tombol, tautan) - kontras 5:1 di atas putih */
+  --teal-deep:#4C1D95;
+  --teal-tint:#F5F3FF;
+  --o-50:#F5F3FF; --o-100:#EDE9FE; --o-200:#DDD6FE; --o-300:#C4B5FD; --o-400:#A78BFA;
+  --o-500:#8B5CF6; --o-600:#7C3AED; --o-700:#6D28D9; --o-800:#5B21B6; --o-900:#4C1D95; --o-950:#2E1065;
   --amber:#B45309;
   --amber-tint:#FEF3C7;
   --green:#15803D;
@@ -39,15 +39,15 @@
   --red-tint:#FEE2E2;
   --pink:#BE185D;
   --blue:#1D4ED8;
-  --orange:#EA580C;
+  --orange:#7C3AED;
   --indigo:#4338CA;
-  --line:#E7DFD8;
-  --line-strong:#D6CBC1;
+  --line:#E6E1F2;
+  --line-strong:#CFC7E6;
   --sidebar-w:276px;
   --topbar-h:68px;
-  --shadow-sm:0 1px 2px rgba(67,20,7,.05), 0 1px 3px rgba(67,20,7,.06);
-  --shadow:0 1px 3px rgba(67,20,7,.06), 0 8px 24px rgba(67,20,7,.07);
-  --shadow-lg:0 20px 50px rgba(67,20,7,.18);
+  --shadow-sm:0 1px 2px rgba(46,16,101,.05), 0 1px 3px rgba(46,16,101,.06);
+  --shadow:0 1px 3px rgba(46,16,101,.06), 0 8px 24px rgba(46,16,101,.07);
+  --shadow-lg:0 20px 50px rgba(46,16,101,.18);
   --font-head:'Plus Jakarta Sans','Inter',system-ui,sans-serif;
 }
 *{box-sizing:border-box;}
@@ -72,14 +72,14 @@ body{
    ========================================================= */
 #accessGate{
   position:fixed; inset:0; z-index:1000;
-  display:flex; background:#FFFBF7; overflow:auto;
+  display:flex; background:#FAF8FF; overflow:auto;
 }
 .gate-brand{
   flex:1.1; position:relative; overflow:hidden; color:#fff;
   background:
-    radial-gradient(900px 500px at 105% -10%, rgba(253,186,116,.55), transparent 60%),
-    radial-gradient(700px 500px at -10% 110%, rgba(67,20,7,.55), transparent 60%),
-    linear-gradient(155deg,#9A3412 0%,#C2410C 48%,#EA580C 100%);
+    radial-gradient(900px 500px at 105% -10%, rgba(196,181,253,.55), transparent 60%),
+    radial-gradient(700px 500px at -10% 110%, rgba(46,16,101,.6), transparent 60%),
+    linear-gradient(155deg,#5B21B6 0%,#7C3AED 50%,#A855F7 100%);
   padding:48px 64px; display:flex; flex-direction:column; justify-content:space-between; gap:32px;
   min-width:0;
 }
@@ -96,16 +96,16 @@ body{
 .brand-row{display:flex;align-items:center;gap:14px;}
 .brand-mark{
   width:46px;height:46px;border-radius:13px;background:#fff;color:var(--o-700);
-  display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(67,20,7,.25);flex:none;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(46,16,101,.25);flex:none;
 }
 .brand-mark svg{width:26px;height:26px;}
 .brand-name{font-family:var(--font-head);font-weight:800;font-size:17px;letter-spacing:-.01em;line-height:1.2;}
-.brand-sub{font-size:12.5px;color:#FFEDD5;font-weight:500;}
+.brand-sub{font-size:12.5px;color:#EDE9FE;font-weight:500;}
 .gate-hero h2{
   font-family:var(--font-head);font-weight:800;font-size:clamp(30px,3.2vw,44px);line-height:1.12;
   letter-spacing:-.025em;margin:0 0 16px;color:#fff;
 }
-.gate-hero p{font-size:16px;line-height:1.6;color:#FFEDD5;max-width:520px;margin:0 0 28px;}
+.gate-hero p{font-size:16px;line-height:1.6;color:#EDE9FE;max-width:520px;margin:0 0 28px;}
 .gate-features{list-style:none;margin:0;padding:0;display:grid;gap:14px;max-width:520px;}
 .gate-features li{display:flex;gap:14px;align-items:flex-start;}
 .gate-features .fi{
@@ -113,7 +113,7 @@ body{
   display:flex;align-items:center;justify-content:center;flex:none;color:#fff;
 }
 .gate-features strong{display:block;font-size:14.5px;font-weight:700;color:#fff;}
-.gate-features span{font-size:13.5px;color:#FFEDD5;line-height:1.45;}
+.gate-features span{font-size:13.5px;color:#EDE9FE;line-height:1.45;}
 .gate-preview{
   display:grid;grid-template-columns:1.1fr 1fr;gap:12px;max-width:520px;
 }
@@ -121,16 +121,16 @@ body{
   background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.26);border-radius:14px;padding:14px 16px;
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
 }
-.gp-label{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#FFEDD5;}
+.gp-label{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#EDE9FE;}
 .gp-val{font-family:var(--font-head);font-weight:800;font-size:24px;margin-top:4px;color:#fff;}
 .gp-bars{display:flex;align-items:flex-end;gap:6px;height:44px;margin-top:8px;}
 .gp-bars i{flex:1;border-radius:4px 4px 0 0;background:rgba(255,255,255,.85);display:block;}
-.gp-bars i:nth-child(even){background:#FED7AA;}
-.gate-foot{font-size:12.5px;color:#FFEDD5;}
+.gp-bars i:nth-child(even){background:#DDD6FE;}
+.gate-foot{font-size:12.5px;color:#EDE9FE;}
 
 .gate-panel{
   flex:.9; display:flex; align-items:center; justify-content:center; padding:32px 24px; min-width:0;
-  background:#FFFBF7;
+  background:#FAF8FF;
 }
 .gate-card{
   background:#fff; border:1px solid var(--line); border-radius:20px; padding:38px 36px 30px;
@@ -151,8 +151,8 @@ body{
   font-family:'Inter',sans-serif; font-size:15px; margin-bottom:16px; background:#fff; color:var(--ink);
   transition:border-color .15s, box-shadow .15s;
 }
-.gate-card input::placeholder{color:#A8A29E;}
-.gate-card input:focus{outline:none;border-color:var(--o-600);box-shadow:0 0 0 4px rgba(249,115,22,.18);}
+.gate-card input::placeholder{color:#9A94B5;}
+.gate-card input:focus{outline:none;border-color:var(--o-600);box-shadow:0 0 0 4px rgba(139,92,246,.18);}
 .gate-card button[type=submit], .gate-card .btn-primary, .gate-card .btn-ghost{width:100%; height:48px; padding:0 16px; font-size:15px; border-radius:11px;}
 .gate-error{color:var(--red); background:var(--red-tint); border-radius:9px; padding:10px 12px; font-size:13.5px; margin-top:14px; font-weight:500;}
 .gate-success{color:var(--green); background:var(--green-tint); border-radius:9px; padding:10px 12px; font-size:13.5px; margin-top:14px; font-weight:500;}
@@ -189,22 +189,22 @@ body{
 #app{max-width:none;margin:0;padding:0;}
 .sidebar{
   position:fixed; left:0; top:0; bottom:0; width:var(--sidebar-w); z-index:70;
-  background:linear-gradient(185deg,#431407 0%,#5A1D0A 55%,#7C2D12 100%);
-  color:#FFEDD5; display:flex; flex-direction:column; overflow-y:auto; overflow-x:hidden;
+  background:linear-gradient(185deg,#4C1D95 0%,#5B21B6 55%,#6D28D9 100%);
+  color:#EDE9FE; display:flex; flex-direction:column; overflow-y:auto; overflow-x:hidden;
   transition:transform .22s ease;
 }
 .sidebar .brand-row{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1);}
 .sidebar .brand-mark{background:var(--o-500);color:#fff;width:42px;height:42px;box-shadow:none;}
 .sidebar .brand-name{color:#fff;font-size:15.5px;}
-.sidebar .brand-sub{color:#FDBA74;font-size:12px;}
+.sidebar .brand-sub{color:#C4B5FD;font-size:12px;}
 .nav-group{padding:16px 12px 4px;}
 .nav-title{
-  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#FDBA74;padding:0 10px 8px;
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C4B5FD;padding:0 10px 8px;
 }
 .nav-item, .tabs .tab{
   display:flex;align-items:center;gap:12px;
   padding:10px 12px;margin-bottom:2px;border-radius:10px;
-  font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#FFEDD5;
+  font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#EDE9FE;
   cursor:pointer;user-select:none;border:none;border-left:3px solid transparent;border-bottom:none;
   background:transparent;width:100%;text-align:left;line-height:1.3;
   transition:background .15s, color .15s;
@@ -218,8 +218,8 @@ body{
 .tab.inacbg-only{display:none;}
 body:not(.has-data) .tabs .tab{opacity:.42;pointer-events:none;}
 body:not(.has-data) .nav-note{display:block;}
-.nav-note{display:none;font-size:12px;color:#FDBA74;padding:2px 12px 10px;line-height:1.4;}
-.sidebar-foot{margin-top:auto;padding:16px 20px 20px;font-size:12px;color:#FDBA74;border-top:1px solid rgba(255,255,255,.1);line-height:1.5;}
+.nav-note{display:none;font-size:12px;color:#C4B5FD;padding:2px 12px 10px;line-height:1.4;}
+.sidebar-foot{margin-top:auto;padding:16px 20px 20px;font-size:12px;color:#C4B5FD;border-top:1px solid rgba(255,255,255,.1);line-height:1.5;}
 .sidebar-foot b{color:#fff;font-weight:600;}
 
 .main{margin-left:var(--sidebar-w);min-width:0;min-height:100vh;display:flex;flex-direction:column;}
@@ -256,8 +256,8 @@ body:not(.has-data) .nav-note{display:block;}
 .coversheet{
   position:relative;overflow:hidden;color:#fff;border-radius:18px;padding:30px 34px;
   background:
-    radial-gradient(600px 300px at 100% 0%, rgba(253,186,116,.5), transparent 65%),
-    linear-gradient(120deg,#9A3412 0%,#C2410C 50%,#EA580C 100%);
+    radial-gradient(600px 300px at 100% 0%, rgba(196,181,253,.5), transparent 65%),
+    linear-gradient(120deg,#5B21B6 0%,#7C3AED 55%,#A855F7 100%);
   box-shadow:var(--shadow);
 }
 .coversheet::before{
@@ -269,12 +269,12 @@ body:not(.has-data) .nav-note{display:block;}
 }
 .coversheet > *{position:relative;}
 .cover-eyebrow{
-  font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#FFEDD5;
+  font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#EDE9FE;
   display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px;
 }
-.cover-eyebrow .dot{width:5px;height:5px;border-radius:50%;background:#FED7AA;}
+.cover-eyebrow .dot{width:5px;height:5px;border-radius:50%;background:#DDD6FE;}
 .coversheet h1{font-family:var(--font-head);font-weight:800;font-size:30px;letter-spacing:-.02em;margin:0 0 8px;color:#fff;}
-.coversheet p{margin:0;color:#FFF1E6;font-size:15px;max-width:760px;line-height:1.6;}
+.coversheet p{margin:0;color:#F3EEFF;font-size:15px;max-width:760px;line-height:1.6;}
 .steps{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
 .step{
   display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:999px;
@@ -307,11 +307,11 @@ button{
   border:1px solid transparent;transition:transform .06s ease, background .15s ease, box-shadow .15s ease;
 }
 button:active{transform:translateY(1px);}
-.btn-primary{background:var(--o-700);color:#fff;box-shadow:0 1px 2px rgba(124,45,18,.25);}
+.btn-primary{background:var(--o-700);color:#fff;box-shadow:0 1px 2px rgba(76,29,149,.25);}
 .btn-primary:hover{background:var(--o-800);}
 .btn-ghost{background:#fff;color:var(--o-800);border-color:var(--line-strong);}
 .btn-ghost:hover{background:var(--o-50);border-color:var(--o-300);}
-.btn-primary:disabled{background:#D6CBC1;cursor:not-allowed;box-shadow:none;}
+.btn-primary:disabled{background:#CFC7E6;cursor:not-allowed;box-shadow:none;}
 .filename-badge{
   font-family:'IBM Plex Mono',monospace;font-size:12.5px;background:var(--o-100);color:var(--o-900);
   padding:6px 11px;border-radius:8px;font-weight:500;
@@ -338,7 +338,7 @@ select{
   width:100%;font-family:'IBM Plex Mono',monospace;font-size:13px;padding:9px 10px;border-radius:9px;
   border:1.5px solid var(--line-strong);background:#fff;color:var(--ink);
 }
-select:focus, input:focus{outline:none;border-color:var(--o-600);box-shadow:0 0 0 3px rgba(249,115,22,.18);}
+select:focus, input:focus{outline:none;border-color:var(--o-600);box-shadow:0 0 0 3px rgba(139,92,246,.18);}
 button:focus-visible, .dropzone:focus-visible, .nav-item:focus-visible, .tab:focus-visible{outline:2px solid var(--o-500);outline-offset:2px;}
 
 .tabpanel{display:none;}
@@ -358,7 +358,7 @@ button:focus-visible, .dropzone:focus-visible, .nav-item:focus-visible, .tab:foc
 .card-icon{width:36px;height:36px;border-radius:10px;background:var(--o-100);color:var(--o-800);display:flex;align-items:center;justify-content:center;flex:none;}
 .card-icon .ic{width:19px;height:19px;}
 .card .value{
-  font-family:var(--font-head);font-weight:800;font-size:clamp(22px,2.1vw,29px);line-height:1.15;margin-top:10px;
+  font-family:var(--font-head);font-weight:800;font-size:clamp(20px,1.62vw,26px);line-height:1.15;margin-top:10px;
   color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;
 }
 .card .value.pos{color:var(--green);}
@@ -389,9 +389,9 @@ canvas{max-width:100%;}
 .dash-header-row .sub{margin-bottom:0;}
 .btn-present{
   background:linear-gradient(135deg,var(--o-600),var(--o-800));color:#fff;border:none;padding:11px 18px;border-radius:11px;
-  font-size:13.5px;font-weight:700;box-shadow:0 4px 12px rgba(194,65,12,.3);white-space:nowrap;display:inline-flex;align-items:center;gap:8px;
+  font-size:13.5px;font-weight:700;box-shadow:0 4px 12px rgba(109,40,217,.3);white-space:nowrap;display:inline-flex;align-items:center;gap:8px;
 }
-.btn-present:hover{box-shadow:0 6px 18px rgba(194,65,12,.4);}
+.btn-present:hover{box-shadow:0 6px 18px rgba(109,40,217,.4);}
 
 /* mode presentasi */
 body.presentation-mode{background:var(--o-950);}
@@ -422,7 +422,7 @@ th{
   font-family:'Inter',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--o-900);font-weight:700;
   background:var(--o-50);border-bottom:2px solid var(--o-200);position:sticky;top:0;z-index:2;white-space:nowrap;
 }
-tbody tr:nth-child(even) td{background:#FCFAF8;}
+tbody tr:nth-child(even) td{background:#FAF9FE;}
 tbody tr:hover td{background:var(--o-50);}
 td.num, th.num{white-space:nowrap;text-align:right;font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;}
 td.mono, td .mono{font-size:12.5px;}
@@ -447,7 +447,7 @@ footer{text-align:center;color:var(--ink-mute);font-size:12px;margin-top:34px;fo
 
 /* ---- Panel admin ---- */
 #adminPanel{
-  position:fixed;inset:0;z-index:950;background:rgba(28,25,23,.55);
+  position:fixed;inset:0;z-index:950;background:rgba(30,27,46,.55);
   display:flex;align-items:flex-start;justify-content:center;padding:50px 20px;overflow-y:auto;
 }
 .admin-card{background:var(--paper);border-radius:18px;padding:28px 30px;max-width:780px;width:100%;box-shadow:var(--shadow-lg);}
@@ -456,7 +456,7 @@ footer{text-align:center;color:var(--ink-mute);font-size:12px;margin-top:34px;fo
 .admin-section{margin-top:22px;}
 .admin-section h3{font-family:var(--font-head);font-size:15px;font-weight:700;margin:0 0 10px;color:var(--o-900);}
 .admin-list{display:flex;flex-direction:column;gap:8px;}
-.admin-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#FCFAF8;}
+.admin-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#FAF9FE;}
 .admin-row .who{font-size:13.5px;}
 .admin-row .who strong{display:block;color:var(--ink);}
 .admin-row .who span{color:var(--ink-soft);font-size:12.5px;}
@@ -483,7 +483,7 @@ footer{text-align:center;color:var(--ink-mute);font-size:12px;margin-top:34px;fo
 .rekom-card.critical{border-left-color:var(--red);background:#FEF2F2;}
 .rekom-card.positive{border-left-color:var(--green);background:#F0FDF4;}
 .rekom-card .rekom-title{font-family:var(--font-head);font-weight:700;font-size:15.5px;margin-bottom:6px;display:flex;align-items:center;gap:8px;color:var(--ink);}
-.rekom-card .rekom-desc{font-size:14px;color:#44403C;line-height:1.65;}
+.rekom-card .rekom-desc{font-size:14px;color:#3B3552;line-height:1.65;}
 .rekom-card .rekom-desc b{color:var(--ink);}
 
 /* ---- SWOT ---- */
@@ -509,7 +509,7 @@ footer{text-align:center;color:var(--ink-mute);font-size:12px;margin-top:34px;fo
 
 /* ---- Data tersimpan ---- */
 .saved-header{font-family:var(--font-head);font-size:15.5px;font-weight:700;margin-top:24px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink);}
-.saved-item{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-top:10px;background:#FCFAF8;}
+.saved-item{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-top:10px;background:#FAF9FE;}
 .saved-item .meta strong{font-size:14px;display:block;color:var(--ink);}
 .saved-item .meta span{font-size:12.5px;color:var(--ink-soft);}
 .saved-item .actions{display:flex;gap:8px;}
@@ -543,7 +543,7 @@ footer{text-align:center;color:var(--ink-mute);font-size:12px;margin-top:34px;fo
 @media(max-width:1020px){
   .sidebar{transform:translateX(-100%);box-shadow:var(--shadow-lg);}
   body.nav-open .sidebar{transform:none;}
-  body.nav-open .nav-overlay{display:block;position:fixed;inset:0;background:rgba(28,25,23,.5);z-index:65;}
+  body.nav-open .nav-overlay{display:block;position:fixed;inset:0;background:rgba(30,27,46,.5);z-index:65;}
   .main{margin-left:0;}
   .menu-btn{display:inline-flex;}
   .topbar{padding:0 16px;}
@@ -565,7 +565,7 @@ footer{text-align:center;color:var(--ink-mute);font-size:12px;margin-top:34px;fo
 
 /* ---- Sorotan eksekutif ---- */
 .insight{
-  background:linear-gradient(120deg,#FFF7ED 0%,#FFFFFF 70%);border:1px solid var(--o-200);border-left:5px solid var(--o-600);
+  background:linear-gradient(120deg,#F5F3FF 0%,#FFFFFF 70%);border:1px solid var(--o-200);border-left:5px solid var(--o-600);
   border-radius:16px;padding:18px 22px 14px;margin-bottom:18px;box-shadow:var(--shadow-sm);
 }
 .insight h3{font-family:var(--font-head);font-weight:800;font-size:15px;letter-spacing:.01em;margin:0 0 10px;color:var(--o-900);display:flex;align-items:center;gap:8px;}
@@ -601,11 +601,30 @@ body.view-upload .tabs .tab.active{background:transparent;border-left-color:tran
 .filter-body{padding-top:14px;}
 .filter-body[hidden]{display:none;}
 
+/* ---- Tombol mata (lihat kata sandi): besar & mudah diklik ---- */
+.password-toggle{display:none !important;}
+.eye-btn{
+  position:absolute; right:4px; top:50%; transform:translateY(-50%); width:46px; height:40px;
+  display:flex; align-items:center; justify-content:center;
+  background:transparent; border:none; border-radius:9px; padding:0;
+  color:var(--ink-soft); cursor:pointer; transition:background .15s, color .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.eye-btn:active{transform:translateY(-50%);}
+.eye-btn:hover{background:var(--o-100); color:var(--o-800);}
+.eye-btn:focus-visible{outline:2px solid var(--o-500); outline-offset:0;}
+.eye-btn[aria-pressed="true"]{color:var(--o-700); background:var(--o-50);}
+.eye-btn .ic{width:22px; height:22px; stroke-width:1.8;}
+.eye-btn .off{display:none;}
+.eye-btn[aria-pressed="true"] .on{display:none;}
+.eye-btn[aria-pressed="true"] .off{display:block;}
+.password-field input[type=password], .password-field input[type=text]{padding-right:58px;}
+
 </style>
 </head>
 <body>
 
-<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs><symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></symbol><symbol id="i-dash" viewBox="0 0 24 24"><path d="M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z"/></symbol><symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 16V9M12 16V5M17 16v-4"/></symbol><symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol><symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></symbol><symbol id="i-wallet" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 0 1 0-4h12v4M4 6v12a2 2 0 0 0 2 2h14v-4M18 12a2 2 0 0 0 0 4h4v-4z"/></symbol><symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></symbol><symbol id="i-trend" viewBox="0 0 24 24"><path d="M22 7l-8.5 8.5-5-5L2 17M16 7h6v6"/></symbol><symbol id="i-table" viewBox="0 0 24 24"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8"/></symbol><symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></symbol><symbol id="i-target" viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></symbol><symbol id="i-bed" viewBox="0 0 24 24"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol><symbol id="i-cash" viewBox="0 0 24 24"><path d="M2 6h20v12H2zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 12h.01M18 12h.01"/></symbol><symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 8a4 4 0 0 0 6 0zM19 7l-3 8a4 4 0 0 0 6 0z"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 6v6l4 2"/></symbol><symbol id="i-gauge" viewBox="0 0 24 24"><path d="M12 14l4-4M3.3 17a10 10 0 1 1 17.4 0"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol><symbol id="i-monitor" viewBox="0 0 24 24"><path d="M2 3h20v14H2zM8 21h8M12 17v4"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1M22 4 12 14l-3-3"/></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></symbol></defs></svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs><symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></symbol><symbol id="i-dash" viewBox="0 0 24 24"><path d="M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z"/></symbol><symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 16V9M12 16V5M17 16v-4"/></symbol><symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol><symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></symbol><symbol id="i-wallet" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 0 1 0-4h12v4M4 6v12a2 2 0 0 0 2 2h14v-4M18 12a2 2 0 0 0 0 4h4v-4z"/></symbol><symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></symbol><symbol id="i-trend" viewBox="0 0 24 24"><path d="M22 7l-8.5 8.5-5-5L2 17M16 7h6v6"/></symbol><symbol id="i-table" viewBox="0 0 24 24"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8"/></symbol><symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></symbol><symbol id="i-target" viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></symbol><symbol id="i-bed" viewBox="0 0 24 24"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol><symbol id="i-cash" viewBox="0 0 24 24"><path d="M2 6h20v12H2zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 12h.01M18 12h.01"/></symbol><symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 8a4 4 0 0 0 6 0zM19 7l-3 8a4 4 0 0 0 6 0z"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 6v6l4 2"/></symbol><symbol id="i-gauge" viewBox="0 0 24 24"><path d="M12 14l4-4M3.3 17a10 10 0 1 1 17.4 0"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol><symbol id="i-monitor" viewBox="0 0 24 24"><path d="M2 3h20v14H2zM8 21h8M12 17v4"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1M22 4 12 14l-3-3"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></symbol><symbol id="i-eyeoff" viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c6.4 0 10 6 10 6a17 17 0 0 1-3.2 3.9M6.6 6.7C3.7 8.5 2 12 2 12s3.6 7 10 7c1.6 0 3-.4 4.3-1M9.9 9.9a3 3 0 0 0 4.2 4.2"/></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></symbol></defs></svg>
 
 <div id="accessGate">
   <aside class="gate-brand">
@@ -657,7 +676,7 @@ body.view-upload .tabs .tab.active{background:transparent;border-left-color:tran
         <label for="loginPassword">Kata Sandi</label>
         <div class="password-field">
           <input type="password" id="loginPassword" autocomplete="current-password" placeholder="Kata sandi" required>
-          <button type="button" class="password-toggle" id="toggleLoginPassword" aria-label="Lihat kata sandi">&#128065;</button>
+          <button type="button" class="password-toggle" id="toggleLoginPassword" aria-label="Lihat kata sandi" tabindex="-1" aria-hidden="true">&#128065;</button><button type="button" class="eye-btn" data-target="loginPassword" aria-label="Tampilkan kata sandi" aria-pressed="false" title="Tampilkan / sembunyikan kata sandi"><svg class="ic on" aria-hidden="true"><use href="#i-eye"/></svg><svg class="ic off" aria-hidden="true"><use href="#i-eyeoff"/></svg></button>
         </div>
         <div class="forgot-link"><a href="#" id="showForgot">Lupa kata sandi?</a></div>
         <button type="submit" class="btn-primary" id="loginSubmit">Masuk</button>
@@ -690,7 +709,7 @@ body.view-upload .tabs .tab.active{background:transparent;border-left-color:tran
         <label for="regPassword">Buat Kata Sandi</label>
         <div class="password-field">
           <input type="password" id="regPassword" autocomplete="new-password" placeholder="Minimal 6 karakter" required minlength="6">
-          <button type="button" class="password-toggle" id="toggleRegPassword" aria-label="Lihat kata sandi">&#128065;</button>
+          <button type="button" class="password-toggle" id="toggleRegPassword" aria-label="Lihat kata sandi" tabindex="-1" aria-hidden="true">&#128065;</button><button type="button" class="eye-btn" data-target="regPassword" aria-label="Tampilkan kata sandi" aria-pressed="false" title="Tampilkan / sembunyikan kata sandi"><svg class="ic on" aria-hidden="true"><use href="#i-eye"/></svg><svg class="ic off" aria-hidden="true"><use href="#i-eyeoff"/></svg></button>
         </div>
         <button type="submit" class="btn-primary" id="registerSubmit">Daftar &amp; Ajukan Akses</button>
         <div class="gate-error" id="registerError" style="display:none;"></div>
@@ -1902,6 +1921,20 @@ function loadSampleData(){
 }
 
 // ---------------- tabs ----------------
+// tombol mata: tampilkan / sembunyikan kata sandi (mandiri, tidak bergantung auth.js)
+document.querySelectorAll('.eye-btn').forEach(btn=>{
+  btn.addEventListener('mousedown', e=>e.preventDefault());
+  btn.addEventListener('click', ()=>{
+    const input = document.getElementById(btn.dataset.target);
+    if(!input) return;
+    const show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    btn.setAttribute('aria-pressed', show ? 'true' : 'false');
+    btn.setAttribute('aria-label', show ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi');
+    try{ input.focus({preventScroll:true}); }catch(e){}
+  });
+});
+
 function tabLabel(tab){ const s = tab.querySelector('span'); return (s||tab).textContent.trim(); }
 function setPageTitle(t){ const el = document.getElementById('pageTitle'); if(el) el.textContent = t; }
 function scrollToDashboardTop(){
@@ -2097,14 +2130,14 @@ function avg(arr, f){const vals=arr.map(f).filter(v=>v!==null&&v!==undefined&&!i
 
 function destroyChart(id){ if(charts[id]){charts[id].destroy(); delete charts[id];} }
 
-const PALETTE = ['#EA580C','#0F766E','#2563EB','#D97706','#9333EA','#DB2777','#65A30D','#0891B2','#92400E','#475569'];
+const PALETTE = ['#7C3AED','#0D9488','#F59E0B','#2563EB','#DB2777','#65A30D','#0891B2','#EA580C','#4F46E5','#64748B'];
 
 if(window.ChartDataLabels){ Chart.register(window.ChartDataLabels); }
 
 // Pengaturan global agar semua grafik terasa hidup, jelas, dan siap presentasi
 Chart.defaults.font.family = "'Inter', sans-serif";
 Chart.defaults.font.size = 13;
-Chart.defaults.color = '#44403C';
+Chart.defaults.color = '#3B3552';
 Chart.defaults.layout.padding = {top:22, right:44, bottom:4, left:4};
 Chart.defaults.maintainAspectRatio = false;
 Chart.defaults.locale = 'id-ID';
@@ -2114,10 +2147,10 @@ Chart.defaults.plugins.legend.labels.usePointStyle = true;
 Chart.defaults.plugins.legend.labels.pointStyle = 'circle';
 Chart.defaults.plugins.legend.labels.padding = 16;
 Chart.defaults.plugins.legend.labels.font = {size:13, weight:600};
-Chart.defaults.plugins.legend.labels.color = '#1C1917';
-Chart.defaults.plugins.tooltip.backgroundColor = '#1C1917';
+Chart.defaults.plugins.legend.labels.color = '#1E1B2E';
+Chart.defaults.plugins.tooltip.backgroundColor = '#1E1B2E';
 Chart.defaults.plugins.tooltip.titleColor = '#FFFFFF';
-Chart.defaults.plugins.tooltip.bodyColor = '#FFEDD5';
+Chart.defaults.plugins.tooltip.bodyColor = '#EDE9FE';
 Chart.defaults.plugins.tooltip.padding = 12;
 Chart.defaults.plugins.tooltip.cornerRadius = 8;
 Chart.defaults.plugins.tooltip.titleFont = {size:13, weight:700};
@@ -2136,14 +2169,14 @@ Chart.defaults.elements.point.hoverRadius = 6;
 function pctLabels(totalFn, opts){
   opts = opts || {};
   return {
-    color: opts.color || '#1C1917',
+    color: opts.color || '#1E1B2E',
     font: {size: opts.fontSize || 12, weight:700},
     anchor: opts.anchor || 'end',
     align: opts.align || 'end',
     offset: opts.offset!==undefined ? opts.offset : 4,
     clamp: true,
     clip: false,
-    textStrokeColor: opts.textStrokeColor || ((opts.color||'').toLowerCase()==='#fff' ? 'rgba(28,25,23,0.55)' : 'rgba(255,255,255,0)'),
+    textStrokeColor: opts.textStrokeColor || ((opts.color||'').toLowerCase()==='#fff' ? 'rgba(30,27,46,0.55)' : 'rgba(255,255,255,0)'),
     textStrokeWidth: opts.textStrokeWidth!==undefined ? opts.textStrokeWidth : ((opts.color||'').toLowerCase()==='#fff' ? 3 : 0),
     formatter: (value, ctx)=>{
       const total = typeof totalFn==='function' ? totalFn(ctx) : ctx.dataset.data.reduce((a,b)=>a+(typeof b==='number'?Math.abs(b):0),0);
@@ -2305,9 +2338,9 @@ function renderIcdAnalysis(){
     type:'bar',
     data:{
       labels:['Diagnosis Saja (ICD-10)','Diagnosis + Prosedur (ICD-10 + ICD-9)'],
-      datasets:[{label:'Rata-rata Klaim (Rp)', data:[avgKlaimDiagOnly||0, avgKlaimDiagProc||0], backgroundColor:['#EA580C','#0F766E'], borderRadius:8}]
+      datasets:[{label:'Rata-rata Klaim (Rp)', data:[avgKlaimDiagOnly||0, avgKlaimDiagProc||0], backgroundColor:['#7C3AED','#0D9488'], borderRadius:8}]
     },
-    options:{plugins:{legend:{display:false}, datalabels:{color:'#1C1917', font:{size:12.5, weight:700}, anchor:'end', align:'end', formatter:(v)=>fmtRpShort(v).replace('&mdash;','-')}}, scales:{y:{beginAtZero:true, grid:{color:'#EDE5DE'}, grace:'16%', ticks:{callback:(v)=>axisRp(v)}}, x:{grid:{display:false}}}}
+    options:{plugins:{legend:{display:false}, datalabels:{color:'#1E1B2E', font:{size:12.5, weight:700}, anchor:'end', align:'end', formatter:(v)=>fmtRpShort(v).replace('&mdash;','-')}}, scales:{y:{beginAtZero:true, grid:{color:'#E6E1F2'}, grace:'16%', ticks:{callback:(v)=>axisRp(v)}}, x:{grid:{display:false}}}}
   });
 }
 
@@ -2361,8 +2394,8 @@ function renderTopFreqChart(){
   destroyChart('topFreq');
   charts.topFreq = new Chart(document.getElementById('chartTopFreq'), {
     type:'bar',
-    data:{labels: top.map(t=>t.kode), datasets:[{label:'Jumlah kasus', data: top.map(t=>t.n), backgroundColor:'#EA580C', borderRadius:8}]},
-    options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels(()=>data.length)}, scales:{x:{beginAtZero:true, grid:{color:'#EDE5DE'}}, y:{grid:{display:false}}}}
+    data:{labels: top.map(t=>t.kode), datasets:[{label:'Jumlah kasus', data: top.map(t=>t.n), backgroundColor:'#7C3AED', borderRadius:8}]},
+    options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels(()=>data.length)}, scales:{x:{beginAtZero:true, grid:{color:'#E6E1F2'}}, y:{grid:{display:false}}}}
   });
 }
 
@@ -2383,7 +2416,7 @@ function renderKelasChart(){
   charts.kelas = new Chart(document.getElementById('chartKelas'), {
     type:'doughnut',
     data:{labels, datasets:[{data:vals, backgroundColor: labels.map((_,i)=>PALETTE[i%PALETTE.length])}]},
-    options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:13, weight:600}, color:'#1C1917'}}, datalabels: pctLabels(null,{color:'#fff', anchor:'center', align:'center', fontSize:12, hideBelow:4})}}
+    options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:13, weight:600}, color:'#1E1B2E'}}, datalabels: pctLabels(null,{color:'#fff', anchor:'center', align:'center', fontSize:12, hideBelow:4})}}
   });
 }
 
@@ -2413,13 +2446,13 @@ function renderKodeSection(){
     charts.defisit = new Chart(document.getElementById('chartDefisit'), {
       type:'bar',
       data:{labels: defisit.map(d=>d.kode), datasets:[{label:'Selisih', data: defisit.map(d=>d.selisih), backgroundColor:'#B91C1C', borderRadius:8}]},
-      options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{x:{grid:{color:'#EDE5DE'}, ticks:{callback:(v)=>axisRp(v)}}, y:{grid:{display:false}}}}
+      options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{x:{grid:{color:'#E6E1F2'}, ticks:{callback:(v)=>axisRp(v)}}, y:{grid:{display:false}}}}
     });
     destroyChart('surplus');
     charts.surplus = new Chart(document.getElementById('chartSurplus'), {
       type:'bar',
       data:{labels: surplus.map(d=>d.kode), datasets:[{label:'Selisih', data: surplus.map(d=>d.selisih), backgroundColor:'#15803D', borderRadius:8}]},
-      options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{x:{grid:{color:'#EDE5DE'}, ticks:{callback:(v)=>axisRp(v)}}, y:{grid:{display:false}}}}
+      options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{x:{grid:{color:'#E6E1F2'}, ticks:{callback:(v)=>axisRp(v)}}, y:{grid:{display:false}}}}
     });
   } else {
     document.getElementById('chartDefisit').style.display='none';
@@ -2449,7 +2482,7 @@ function renderSeverityChart(){
   charts.severity = new Chart(document.getElementById('chartSeverity'), {
     type:'bar',
     data:{labels, datasets:[{label:'Jumlah kasus', data:vals, backgroundColor: labels.map((_,i)=>PALETTE[i%PALETTE.length]), borderRadius:8}]},
-    options:{plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{y:{beginAtZero:true, grid:{color:'#EDE5DE'}}, x:{grid:{display:false}}}}
+    options:{plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{y:{beginAtZero:true, grid:{color:'#E6E1F2'}}, x:{grid:{display:false}}}}
   });
 }
 
@@ -2468,8 +2501,8 @@ function renderLOSChart(){
   destroyChart('los');
   charts.los = new Chart(document.getElementById('chartLOS'), {
     type:'bar',
-    data:{labels: bins.map(b=>b[2]), datasets:[{label:'Jumlah kasus', data:vals, backgroundColor:'#EA580C', borderRadius:8}]},
-    options:{plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{y:{beginAtZero:true, grid:{color:'#EDE5DE'}}, x:{grid:{display:false}}}}
+    data:{labels: bins.map(b=>b[2]), datasets:[{label:'Jumlah kasus', data:vals, backgroundColor:'#7C3AED', borderRadius:8}]},
+    options:{plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{y:{beginAtZero:true, grid:{color:'#E6E1F2'}}, x:{grid:{display:false}}}}
   });
 }
 
@@ -2479,8 +2512,8 @@ function renderMdcChart(){
   destroyChart('mdc');
   charts.mdc = new Chart(document.getElementById('chartMdc'), {
     type:'bar',
-    data:{labels: arr.map(a=>a.mdc.length>38?a.mdc.slice(0,38)+'\u2026':a.mdc), datasets:[{label:'Jumlah kasus', data: arr.map(a=>a.n), backgroundColor:'#EA580C', borderRadius:8}]},
-    options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels(()=>data.length)}, scales:{x:{beginAtZero:true, grid:{color:'#EDE5DE'}}, y:{grid:{display:false}, ticks:{font:{size:10.5}}}}}
+    data:{labels: arr.map(a=>a.mdc.length>38?a.mdc.slice(0,38)+'\u2026':a.mdc), datasets:[{label:'Jumlah kasus', data: arr.map(a=>a.n), backgroundColor:'#7C3AED', borderRadius:8}]},
+    options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels(()=>data.length)}, scales:{x:{beginAtZero:true, grid:{color:'#E6E1F2'}}, y:{grid:{display:false}, ticks:{font:{size:10.5}}}}}
   });
 }
 
@@ -2492,7 +2525,7 @@ function renderCaraMasukChart(){
   charts.caraMasuk = new Chart(document.getElementById('chartCaraMasuk'), {
     type:'doughnut',
     data:{labels, datasets:[{data:vals, backgroundColor: labels.map((_,i)=>PALETTE[i%PALETTE.length])}]},
-    options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:13, weight:600}, color:'#1C1917'}}, datalabels: pctLabels(null,{color:'#fff', anchor:'center', align:'center', fontSize:12, hideBelow:4})}}
+    options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:13, weight:600}, color:'#1E1B2E'}}, datalabels: pctLabels(null,{color:'#fff', anchor:'center', align:'center', fontSize:12, hideBelow:4})}}
   });
 }
 
@@ -2503,8 +2536,8 @@ function renderGenderChart(){
   destroyChart('gender');
   charts.gender = new Chart(document.getElementById('chartGender'), {
     type:'doughnut',
-    data:{labels, datasets:[{data:vals, backgroundColor:['#EA580C','#0F766E','#2563EB']}]},
-    options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:13, weight:600}, color:'#1C1917'}}, datalabels: pctLabels(null,{color:'#fff', anchor:'center', align:'center', fontSize:12, hideBelow:4})}}
+    data:{labels, datasets:[{data:vals, backgroundColor:['#7C3AED','#0D9488','#2563EB']}]},
+    options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:13, weight:600}, color:'#1E1B2E'}}, datalabels: pctLabels(null,{color:'#fff', anchor:'center', align:'center', fontSize:12, hideBelow:4})}}
   });
 }
 
@@ -2516,7 +2549,7 @@ function renderStatusPulangChart(){
   charts.statusPulang = new Chart(document.getElementById('chartStatusPulang'), {
     type:'bar',
     data:{labels, datasets:[{label:'Jumlah kasus', data:vals, backgroundColor: labels.map((_,i)=>PALETTE[i%PALETTE.length]), borderRadius:8}]},
-    options:{plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{y:{beginAtZero:true, grid:{color:'#EDE5DE'}}, x:{grid:{display:false}, ticks:{font:{size:10.5}}}}}
+    options:{plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{y:{beginAtZero:true, grid:{color:'#E6E1F2'}}, x:{grid:{display:false}, ticks:{font:{size:10.5}}}}}
   });
 }
 
@@ -2534,8 +2567,8 @@ function renderBiayaChart(){
   destroyChart('biaya');
   charts.biaya = new Chart(document.getElementById('chartBiaya'), {
     type:'bar',
-    data:{labels: arr.map(a=>a.label), datasets:[{label:'Total biaya (Rp)', data: arr.map(a=>a.v), backgroundColor:'#0F766E', borderRadius:8}]},
-    options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{x:{beginAtZero:true, grid:{color:'#EDE5DE'}, ticks:{callback:(v)=>axisRp(v)}}, y:{grid:{display:false}}}}
+    data:{labels: arr.map(a=>a.label), datasets:[{label:'Total biaya (Rp)', data: arr.map(a=>a.v), backgroundColor:'#0D9488', borderRadius:8}]},
+    options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{x:{beginAtZero:true, grid:{color:'#E6E1F2'}, ticks:{callback:(v)=>axisRp(v)}}, y:{grid:{display:false}}}}
   });
 }
 
@@ -2580,17 +2613,17 @@ function renderInapJalanAnalysis(){
   destroyChart('inapJalanJumlah');
   charts.inapJalanJumlah = new Chart(document.getElementById('chartInapJalanJumlah'), {
     type:'doughnut',
-    data:{labels:['Rawat Inap','Rawat Jalan'], datasets:[{data:[inapRows.length, jalanRows.length], backgroundColor:['#EA580C','#0F766E']}]},
-    options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:13, weight:600}, color:'#1C1917'}}, datalabels: pctLabels(null,{color:'#fff', anchor:'center', align:'center', fontSize:12})}}
+    data:{labels:['Rawat Inap','Rawat Jalan'], datasets:[{data:[inapRows.length, jalanRows.length], backgroundColor:['#7C3AED','#0D9488']}]},
+    options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:13, weight:600}, color:'#1E1B2E'}}, datalabels: pctLabels(null,{color:'#fff', anchor:'center', align:'center', fontSize:12})}}
   });
 
   destroyChart('inapJalanNilai');
-  const nilaiDatasets = [{label:'Tarif Klaim', data:[totalKlaimInap, totalKlaimJalan], backgroundColor:'#EA580C', borderRadius:8}];
-  if(hasRS) nilaiDatasets.push({label:'Biaya Riil', data:[totalRSInap||0, totalRSJalan||0], backgroundColor:'#0F766E', borderRadius:8});
+  const nilaiDatasets = [{label:'Tarif Klaim', data:[totalKlaimInap, totalKlaimJalan], backgroundColor:'#7C3AED', borderRadius:8}];
+  if(hasRS) nilaiDatasets.push({label:'Biaya Riil', data:[totalRSInap||0, totalRSJalan||0], backgroundColor:'#0D9488', borderRadius:8});
   charts.inapJalanNilai = new Chart(document.getElementById('chartInapJalanNilai'), {
     type:'bar',
     data:{labels:['Rawat Inap','Rawat Jalan'], datasets:nilaiDatasets},
-    options:{plugins:{legend:{display:hasRS}, datalabels:{color:'#1C1917', font:{size:12, weight:700}, anchor:'end', align:'end', formatter:(v)=>axisRp(v)}}, scales:{y:{beginAtZero:true, grid:{color:'#EDE5DE'}, grace:'16%', ticks:{callback:(v)=>axisRp(v)}}, x:{grid:{display:false}}}}
+    options:{plugins:{legend:{display:hasRS}, datalabels:{color:'#1E1B2E', font:{size:12, weight:700}, anchor:'end', align:'end', formatter:(v)=>axisRp(v)}}, scales:{y:{beginAtZero:true, grid:{color:'#E6E1F2'}, grace:'16%', ticks:{callback:(v)=>axisRp(v)}}, x:{grid:{display:false}}}}
   });
 
   // 3: 20 kasus terbanyak - rawat inap & rawat jalan
@@ -2635,8 +2668,8 @@ function renderInapJalanAnalysis(){
   destroyChart('komponenTarif');
   charts.komponenTarif = new Chart(document.getElementById('chartKomponenTarif'), {
     type:'bar',
-    data:{labels:komponenArr.map(k=>k.label), datasets:[{label:'Total Biaya Riil (Rp)', data:komponenArr.map(k=>k.v), backgroundColor:['#EA580C','#0F766E','#2563EB','#D97706','#64748B'], borderRadius:8}]},
-    options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels(()=>totalSemua)}, scales:{x:{beginAtZero:true, grid:{color:'#EDE5DE'}, ticks:{callback:(v)=>axisRp(v)}}, y:{grid:{display:false}}}}
+    data:{labels:komponenArr.map(k=>k.label), datasets:[{label:'Total Biaya Riil (Rp)', data:komponenArr.map(k=>k.v), backgroundColor:['#7C3AED','#0D9488','#2563EB','#F59E0B','#64748B'], borderRadius:8}]},
+    options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels(()=>totalSemua)}, scales:{x:{beginAtZero:true, grid:{color:'#E6E1F2'}, ticks:{callback:(v)=>axisRp(v)}}, y:{grid:{display:false}}}}
   });
 
   document.querySelector('#tableKomponenTarif thead').innerHTML = `<tr><th>Komponen</th><th class="num">Total Biaya Riil</th><th class="num">% dari Total</th></tr>`;
@@ -2793,14 +2826,14 @@ function renderTrendChart(){
     data:{
       labels: keys,
       datasets:[
-        {type:'bar', label:'Jumlah kasus', data:counts, backgroundColor:'#0F766E', yAxisID:'y', borderRadius:8},
-        {type:'line', label:'Total klaim (Rp)', data:totals, borderColor:'#EA580C', backgroundColor:'#EA580C', yAxisID:'y1', tension:.25}
+        {type:'bar', label:'Jumlah kasus', data:counts, backgroundColor:'#0D9488', yAxisID:'y', borderRadius:8},
+        {type:'line', label:'Total klaim (Rp)', data:totals, borderColor:'#7C3AED', backgroundColor:'#7C3AED', yAxisID:'y1', tension:.25}
       ]
     },
     options:{
       plugins:{ datalabels: {display:false} },
       scales:{
-        y:{position:'left', beginAtZero:true, grid:{color:'#EDE5DE'}, title:{display:true, text:'Jumlah kasus'}},
+        y:{position:'left', beginAtZero:true, grid:{color:'#E6E1F2'}, title:{display:true, text:'Jumlah kasus'}},
         y1:{position:'right', beginAtZero:true, grid:{display:false}, title:{display:true, text:'Total klaim (Rp)'}}
       }
     }
@@ -3410,9 +3443,9 @@ function exportWordReport(){
   bagianKe++;
   sections.push(`
     <h2>${bagianKe}. Rekomendasi Perbaikan</h2>
-    <h3 style="color:#9A3412;margin-top:16px;">A. Rekomendasi dari Sisi Pendapatan dan Efisiensi Biaya</h3>
+    <h3 style="color:#4C1D95;margin-top:16px;">A. Rekomendasi dari Sisi Pendapatan dan Efisiensi Biaya</h3>
     ${rekomListHtml(finansialItems)}
-    <h3 style="color:#9A3412;margin-top:16px;">B. Rekomendasi Berdasarkan Regulasi (Kementerian Kesehatan, BPJS Kesehatan, dan TKMKB)</h3>
+    <h3 style="color:#4C1D95;margin-top:16px;">B. Rekomendasi Berdasarkan Regulasi (Kementerian Kesehatan, BPJS Kesehatan, dan TKMKB)</h3>
     ${rekomListHtml(regulasiItems)}
   `);
 
@@ -3425,13 +3458,13 @@ function exportWordReport(){
   const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
   <head><meta charset="utf-8"><title>Laporan Analisa Casemix INA-CBG</title>
   <style>
-    body{font-family:Calibri,Arial,sans-serif; color:#1C1917; font-size:14px; line-height:1.6;}
-    h1{color:#9A3412; margin-bottom:2px; font-size:24px;}
-    h2{color:#9A3412; border-bottom:2px solid #FED7AA; padding-bottom:5px; margin-top:30px; font-size:18px;}
+    body{font-family:Calibri,Arial,sans-serif; color:#1E1B2E; font-size:14px; line-height:1.6;}
+    h1{color:#4C1D95; margin-bottom:2px; font-size:24px;}
+    h2{color:#4C1D95; border-bottom:2px solid #DDD6FE; padding-bottom:5px; margin-top:30px; font-size:18px;}
     h3{font-size:15px;}
     table{border-collapse:collapse; width:100%; margin-top:10px;}
     th,td{border:1px solid #ccc; padding:7px 9px; font-size:12.5px;}
-    th{background:#FFEDD5; text-align:left; color:#9A3412;}
+    th{background:#EDE9FE; text-align:left; color:#4C1D95;}
     ol li{margin-bottom:8px;}
     p{text-align:justify;}
   </style></head>
@@ -3458,13 +3491,13 @@ async function exportPptxReport(){
   pptx.defineLayout({name:'CASEMIX', width:10, height:5.63});
   pptx.layout = 'CASEMIX';
 
-  const purpleDeep = '7C2D12';
+  const purpleDeep = '4C1D95';
 
   let s = pptx.addSlide();
   s.background = {color: purpleDeep};
   s.addText('Laporan Analisa Casemix INA-CBG', {x:0.5,y:1.8,w:9,h:1,fontSize:28,bold:true,color:'FFFFFF',fontFace:'Georgia'});
-  s.addText('RS Humana Prima Bandung', {x:0.5,y:2.7,w:9,h:0.5,fontSize:16,color:'FED7AA'});
-  s.addText('Digenerate: '+new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'}), {x:0.5,y:3.2,w:9,h:0.4,fontSize:12,color:'FFEDD5'});
+  s.addText('RS Humana Prima Bandung', {x:0.5,y:2.7,w:9,h:0.5,fontSize:16,color:'DDD6FE'});
+  s.addText('Digenerate: '+new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'}), {x:0.5,y:3.2,w:9,h:0.4,fontSize:12,color:'EDE9FE'});
 
   s = pptx.addSlide();
   s.addText('Ringkasan', {x:0.5,y:0.3,w:9,h:0.6,fontSize:22,bold:true,color:purpleDeep});
@@ -3478,7 +3511,7 @@ async function exportPptxReport(){
   }
   bullets.push(`Rata-rata LOS: ${rep.rataLos!==null?rep.rataLos.toFixed(1)+' hari':'-'}`);
   if(rep.cmi!==null) bullets.push(`CMI (Case Mix Index): ${rep.cmi.toFixed(3)}`);
-  s.addText(bullets.map(b=>({text:b, options:{bullet:true, breakLine:true, paraSpaceAfter:10}})), {x:0.5,y:1.1,w:9,h:3.5,fontSize:16,color:'1C1917'});
+  s.addText(bullets.map(b=>({text:b, options:{bullet:true, breakLine:true, paraSpaceAfter:10}})), {x:0.5,y:1.1,w:9,h:3.5,fontSize:16,color:'1E1B2E'});
 
   const chartOrder = ['topFreq','kelas','severity','los'];
   if(inacbgMode){ chartOrder.push('mdc','caraMasuk','gender','statusPulang','biaya'); }
