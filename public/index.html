@@ -1,0 +1,3527 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analisa Casemix INA-CBG | RS Humana Prima Bandung</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23EA580C'/%3E%3Cpath d='M13 7h6v6h6v6h-6v6h-6v-6H7v-6h6z' fill='%23fff'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#C2410C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+<script type="module" src="/firebase-config.js"></script>
+<script type="module" src="/auth.js" defer></script>
+<style>
+/* =========================================================
+   Analisa Casemix INA-CBG - tema oranye profesional
+   (nama variabel --teal* dipertahankan agar kompatibel; nilainya kini oranye)
+   ========================================================= */
+:root{
+  --bg:#F8F5F2;
+  --paper:#FFFFFF;
+  --ink:#1C1917;
+  --ink-soft:#57534E;
+  --ink-mute:#78716C;
+  --teal:#C2410C;          /* aksen utama (tombol, tautan) - kontras 5:1 di atas putih */
+  --teal-deep:#7C2D12;
+  --teal-tint:#FFF3E8;
+  --o-50:#FFF7ED; --o-100:#FFEDD5; --o-200:#FED7AA; --o-300:#FDBA74; --o-400:#FB923C;
+  --o-500:#F97316; --o-600:#EA580C; --o-700:#C2410C; --o-800:#9A3412; --o-900:#7C2D12; --o-950:#431407;
+  --amber:#B45309;
+  --amber-tint:#FEF3C7;
+  --green:#15803D;
+  --green-tint:#DCFCE7;
+  --red:#B91C1C;
+  --red-tint:#FEE2E2;
+  --pink:#BE185D;
+  --blue:#1D4ED8;
+  --orange:#EA580C;
+  --indigo:#4338CA;
+  --line:#E7DFD8;
+  --line-strong:#D6CBC1;
+  --sidebar-w:276px;
+  --topbar-h:68px;
+  --shadow-sm:0 1px 2px rgba(67,20,7,.05), 0 1px 3px rgba(67,20,7,.06);
+  --shadow:0 1px 3px rgba(67,20,7,.06), 0 8px 24px rgba(67,20,7,.07);
+  --shadow-lg:0 20px 50px rgba(67,20,7,.18);
+  --font-head:'Plus Jakarta Sans','Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:14.5px;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.55;
+}
+::selection{background:var(--o-600);color:#fff;}
+.mono{font-family:'IBM Plex Mono',monospace;white-space:nowrap;}
+.serif{font-family:var(--font-head);}
+.ic{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+.ic-sm{width:16px;height:16px;}
+
+/* =========================================================
+   LOGIN - dua panel
+   ========================================================= */
+#accessGate{
+  position:fixed; inset:0; z-index:1000;
+  display:flex; background:#FFFBF7; overflow:auto;
+}
+.gate-brand{
+  flex:1.1; position:relative; overflow:hidden; color:#fff;
+  background:
+    radial-gradient(900px 500px at 105% -10%, rgba(253,186,116,.55), transparent 60%),
+    radial-gradient(700px 500px at -10% 110%, rgba(67,20,7,.55), transparent 60%),
+    linear-gradient(155deg,#9A3412 0%,#C2410C 48%,#EA580C 100%);
+  padding:48px 64px; display:flex; flex-direction:column; justify-content:space-between; gap:32px;
+  min-width:0;
+}
+.gate-brand::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size:44px 44px;
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.9),transparent 85%);
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.9),transparent 85%);
+}
+.gate-brand > *{position:relative;}
+.brand-row{display:flex;align-items:center;gap:14px;}
+.brand-mark{
+  width:46px;height:46px;border-radius:13px;background:#fff;color:var(--o-700);
+  display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(67,20,7,.25);flex:none;
+}
+.brand-mark svg{width:26px;height:26px;}
+.brand-name{font-family:var(--font-head);font-weight:800;font-size:17px;letter-spacing:-.01em;line-height:1.2;}
+.brand-sub{font-size:12.5px;color:#FFEDD5;font-weight:500;}
+.gate-hero h2{
+  font-family:var(--font-head);font-weight:800;font-size:clamp(30px,3.2vw,44px);line-height:1.12;
+  letter-spacing:-.025em;margin:0 0 16px;color:#fff;
+}
+.gate-hero p{font-size:16px;line-height:1.6;color:#FFEDD5;max-width:520px;margin:0 0 28px;}
+.gate-features{list-style:none;margin:0;padding:0;display:grid;gap:14px;max-width:520px;}
+.gate-features li{display:flex;gap:14px;align-items:flex-start;}
+.gate-features .fi{
+  width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  display:flex;align-items:center;justify-content:center;flex:none;color:#fff;
+}
+.gate-features strong{display:block;font-size:14.5px;font-weight:700;color:#fff;}
+.gate-features span{font-size:13.5px;color:#FFEDD5;line-height:1.45;}
+.gate-preview{
+  display:grid;grid-template-columns:1.1fr 1fr;gap:12px;max-width:520px;
+}
+.gp-card{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.26);border-radius:14px;padding:14px 16px;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+.gp-label{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#FFEDD5;}
+.gp-val{font-family:var(--font-head);font-weight:800;font-size:24px;margin-top:4px;color:#fff;}
+.gp-bars{display:flex;align-items:flex-end;gap:6px;height:44px;margin-top:8px;}
+.gp-bars i{flex:1;border-radius:4px 4px 0 0;background:rgba(255,255,255,.85);display:block;}
+.gp-bars i:nth-child(even){background:#FED7AA;}
+.gate-foot{font-size:12.5px;color:#FFEDD5;}
+
+.gate-panel{
+  flex:.9; display:flex; align-items:center; justify-content:center; padding:32px 24px; min-width:0;
+  background:#FFFBF7;
+}
+.gate-card{
+  background:#fff; border:1px solid var(--line); border-radius:20px; padding:38px 36px 30px;
+  max-width:440px; width:100%; box-shadow:var(--shadow-lg);
+}
+.gate-mobile-brand{display:none;align-items:center;gap:12px;margin-bottom:22px;}
+.gate-mobile-brand .brand-mark{background:var(--o-600);color:#fff;box-shadow:none;}
+.gate-mobile-brand .brand-name{color:var(--ink);}
+.gate-mobile-brand .brand-sub{color:var(--ink-soft);}
+.gate-eyebrow{
+  font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--o-700); font-weight:700; margin-bottom:8px;
+}
+.gate-card h1{font-family:var(--font-head); font-weight:800; font-size:26px; line-height:1.2; letter-spacing:-.02em; margin:0 0 10px; color:var(--ink);}
+.gate-card p{font-size:14.5px; color:var(--ink-soft); margin:0 0 22px; line-height:1.55;}
+.gate-card label{display:block; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px;}
+.gate-card input[type=email], .gate-card input[type=text], .gate-card input[type=password]{
+  width:100%; height:48px; padding:0 14px; border-radius:11px; border:1.5px solid var(--line-strong);
+  font-family:'Inter',sans-serif; font-size:15px; margin-bottom:16px; background:#fff; color:var(--ink);
+  transition:border-color .15s, box-shadow .15s;
+}
+.gate-card input::placeholder{color:#A8A29E;}
+.gate-card input:focus{outline:none;border-color:var(--o-600);box-shadow:0 0 0 4px rgba(249,115,22,.18);}
+.gate-card button[type=submit], .gate-card .btn-primary, .gate-card .btn-ghost{width:100%; height:48px; padding:0 16px; font-size:15px; border-radius:11px;}
+.gate-error{color:var(--red); background:var(--red-tint); border-radius:9px; padding:10px 12px; font-size:13.5px; margin-top:14px; font-weight:500;}
+.gate-success{color:var(--green); background:var(--green-tint); border-radius:9px; padding:10px 12px; font-size:13.5px; margin-top:14px; font-weight:500;}
+.password-field{position:relative; margin-bottom:16px;}
+.password-field input[type=password], .password-field input[type=text]{margin-bottom:0; padding-right:48px;}
+.password-toggle{
+  position:absolute; right:6px; top:50%; transform:translateY(-50%);
+  background:none !important; border:none !important; padding:6px 9px !important; font-size:17px; cursor:pointer;
+  color:var(--ink-soft); width:auto !important; height:auto !important; opacity:.8;
+}
+.password-toggle:hover{opacity:1;}
+.forgot-link{text-align:right; font-size:13px; margin:-4px 0 18px;}
+.forgot-link a, .gate-note a{color:var(--o-700); text-decoration:none; font-weight:700;}
+.forgot-link a:hover, .gate-note a:hover{text-decoration:underline;}
+.gate-note{font-size:13.5px; color:var(--ink-soft); margin-top:20px; text-align:center; border-top:1px solid var(--line); padding-top:16px;}
+.gate-state p{text-align:left;}
+.gate-state button + button{margin-top:10px;}
+.gate-icon{font-size:38px; text-align:center; margin-bottom:8px;}
+.gate-state button{margin-top:8px;}
+#stateLoading p{text-align:center; color:var(--ink-soft);}
+.gate-legal{font-size:12px;color:var(--ink-mute);text-align:center;margin-top:16px;}
+
+@media(max-width:960px){
+  #accessGate{flex-direction:column;}
+  .gate-brand{display:none;}
+  .gate-panel{flex:1;align-items:flex-start;padding:28px 16px;}
+  .gate-mobile-brand{display:flex;}
+  .gate-card{padding:28px 22px 24px;box-shadow:var(--shadow);}
+}
+
+/* =========================================================
+   KERANGKA APLIKASI - sidebar + topbar
+   ========================================================= */
+#app{max-width:none;margin:0;padding:0;}
+.sidebar{
+  position:fixed; left:0; top:0; bottom:0; width:var(--sidebar-w); z-index:70;
+  background:linear-gradient(185deg,#431407 0%,#5A1D0A 55%,#7C2D12 100%);
+  color:#FFEDD5; display:flex; flex-direction:column; overflow-y:auto; overflow-x:hidden;
+  transition:transform .22s ease;
+}
+.sidebar .brand-row{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1);}
+.sidebar .brand-mark{background:var(--o-500);color:#fff;width:42px;height:42px;box-shadow:none;}
+.sidebar .brand-name{color:#fff;font-size:15.5px;}
+.sidebar .brand-sub{color:#FDBA74;font-size:12px;}
+.nav-group{padding:16px 12px 4px;}
+.nav-title{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#FDBA74;padding:0 10px 8px;
+}
+.nav-item, .tabs .tab{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 12px;margin-bottom:2px;border-radius:10px;
+  font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#FFEDD5;
+  cursor:pointer;user-select:none;border:none;border-left:3px solid transparent;border-bottom:none;
+  background:transparent;width:100%;text-align:left;line-height:1.3;
+  transition:background .15s, color .15s;
+}
+.nav-item:hover, .tabs .tab:hover{background:rgba(255,255,255,.09);color:#fff;}
+.nav-item.active, .tabs .tab.active{
+  background:rgba(255,255,255,.14);color:#fff;font-weight:700;border-left-color:var(--o-400);
+}
+.nav-item .ic, .tabs .tab .ic{opacity:.9;}
+.tabs{display:block;border:none;margin:0;padding:0;}
+.tab.inacbg-only{display:none;}
+body:not(.has-data) .tabs .tab{opacity:.42;pointer-events:none;}
+body:not(.has-data) .nav-note{display:block;}
+.nav-note{display:none;font-size:12px;color:#FDBA74;padding:2px 12px 10px;line-height:1.4;}
+.sidebar-foot{margin-top:auto;padding:16px 20px 20px;font-size:12px;color:#FDBA74;border-top:1px solid rgba(255,255,255,.1);line-height:1.5;}
+.sidebar-foot b{color:#fff;font-weight:600;}
+
+.main{margin-left:var(--sidebar-w);min-width:0;min-height:100vh;display:flex;flex-direction:column;}
+.topbar{
+  position:sticky;top:0;z-index:60;height:var(--topbar-h);
+  background:rgba(255,255,255,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:16px;padding:0 32px;
+}
+.menu-btn{display:none;background:transparent;border:1px solid var(--line);color:var(--ink);padding:8px;border-radius:9px;line-height:0;}
+.topbar-title{min-width:0;}
+.crumb{font-size:12.5px;color:var(--ink-mute);font-weight:500;}
+.crumb b{color:var(--o-700);font-weight:700;}
+.topbar-title h1{
+  font-family:var(--font-head);font-weight:800;font-size:20px;letter-spacing:-.015em;margin:0;line-height:1.2;color:var(--ink);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#userBar{
+  margin-left:auto;display:flex;align-items:center;gap:10px;
+  font-size:13px;color:var(--ink);font-family:'Inter',sans-serif;
+}
+.user-chip{display:flex;align-items:center;gap:10px;padding:5px 14px 5px 6px;border:1px solid var(--line);border-radius:999px;background:#fff;min-width:0;}
+.user-avatar{width:30px;height:30px;border-radius:50%;background:var(--o-100);color:var(--o-800);display:flex;align-items:center;justify-content:center;flex:none;}
+.user-meta{display:flex;flex-direction:column;line-height:1.2;min-width:0;}
+#userBarEmail{font-size:13px;font-weight:600;color:var(--ink);max-width:340px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#userBarExpiry{font-size:11.5px;color:var(--ink-soft);}
+#userBarExpiry:empty{display:none;}
+#userBar button{padding:8px 13px;font-size:13px;background:#fff;color:var(--o-800);border:1px solid var(--line-strong);}
+#userBar button:hover{background:var(--o-50);}
+.content{width:100%;max-width:1380px;margin:0 auto;padding:26px 32px 64px;flex:1;}
+.panel, .chart-wrap, .filter-bar, .swot-box, .card{scroll-margin-top:calc(var(--topbar-h) + 16px);}
+
+/* ---- Hero / pengantar ---- */
+.coversheet{
+  position:relative;overflow:hidden;color:#fff;border-radius:18px;padding:30px 34px;
+  background:
+    radial-gradient(600px 300px at 100% 0%, rgba(253,186,116,.5), transparent 65%),
+    linear-gradient(120deg,#9A3412 0%,#C2410C 50%,#EA580C 100%);
+  box-shadow:var(--shadow);
+}
+.coversheet::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+  background-size:40px 40px;
+  mask-image:linear-gradient(100deg,transparent 30%,rgba(0,0,0,.8));
+  -webkit-mask-image:linear-gradient(100deg,transparent 30%,rgba(0,0,0,.8));
+}
+.coversheet > *{position:relative;}
+.cover-eyebrow{
+  font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#FFEDD5;
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px;
+}
+.cover-eyebrow .dot{width:5px;height:5px;border-radius:50%;background:#FED7AA;}
+.coversheet h1{font-family:var(--font-head);font-weight:800;font-size:30px;letter-spacing:-.02em;margin:0 0 8px;color:#fff;}
+.coversheet p{margin:0;color:#FFF1E6;font-size:15px;max-width:760px;line-height:1.6;}
+.steps{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+.step{
+  display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:999px;
+  background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);font-size:13.5px;font-weight:600;color:#fff;
+}
+.step b{width:24px;height:24px;border-radius:50%;background:#fff;color:var(--o-800);display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;}
+
+/* ---- Panel ---- */
+.panel{
+  background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:26px 28px;margin-top:22px;box-shadow:var(--shadow-sm);
+}
+.panel h2{font-family:var(--font-head);font-weight:800;font-size:19px;letter-spacing:-.01em;margin:0 0 4px;color:var(--ink);}
+.panel .sub, .sub{color:var(--ink-soft);font-size:14px;margin:0 0 18px;line-height:1.55;}
+#panel-dashboard{background:transparent;border:none;box-shadow:none;padding:0;margin-top:22px;}
+#panel-dashboard > .dash-header-row h2{font-size:22px;}
+
+/* upload */
+.dropzone{
+  border:2px dashed var(--o-300);border-radius:14px;padding:40px 20px;text-align:center;background:var(--o-50);cursor:pointer;
+  transition:border-color .15s, background .15s, transform .15s;
+}
+.dropzone:hover, .dropzone.drag{border-color:var(--o-600);background:var(--o-100);}
+.dropzone .icon{font-size:30px;margin-bottom:8px;}
+.dropzone strong{font-size:15.5px;color:var(--ink);}
+.dropzone .hint{color:var(--ink-soft);font-size:13px;margin-top:6px;}
+input[type=file]{display:none;}
+.row-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;align-items:center;}
+button{
+  font-family:'Inter',sans-serif;font-size:14px;font-weight:600;border-radius:10px;padding:10px 18px;cursor:pointer;
+  border:1px solid transparent;transition:transform .06s ease, background .15s ease, box-shadow .15s ease;
+}
+button:active{transform:translateY(1px);}
+.btn-primary{background:var(--o-700);color:#fff;box-shadow:0 1px 2px rgba(124,45,18,.25);}
+.btn-primary:hover{background:var(--o-800);}
+.btn-ghost{background:#fff;color:var(--o-800);border-color:var(--line-strong);}
+.btn-ghost:hover{background:var(--o-50);border-color:var(--o-300);}
+.btn-primary:disabled{background:#D6CBC1;cursor:not-allowed;box-shadow:none;}
+.filename-badge{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;background:var(--o-100);color:var(--o-900);
+  padding:6px 11px;border-radius:8px;font-weight:500;
+}
+.privacy-note{font-size:13px;color:var(--ink-soft);margin-top:16px;display:flex;gap:8px;align-items:flex-start;border-top:1px solid var(--line);padding-top:14px;}
+.loading-line{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--o-800);margin-top:12px;display:none;}
+
+/* banner deteksi */
+.detect-banner{border:1px solid #BBF7D0;background:var(--green-tint);border-radius:12px;padding:16px 18px;margin-bottom:18px;}
+.detect-banner .title{font-weight:700;color:var(--green);font-size:14.5px;display:flex;align-items:center;gap:8px;}
+.detect-banner .desc{font-size:13.5px;color:var(--ink-soft);margin-top:5px;}
+.detect-banner details{margin-top:10px;}
+.detect-banner summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--o-800);}
+.chip-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;max-height:180px;overflow-y:auto;}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:11.5px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:3px 8px;color:var(--ink-soft);}
+.chip.matched{border-color:var(--green);color:var(--green);}
+
+/* mapping */
+.map-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;}
+.map-field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--ink);}
+.map-field .req{color:var(--red);}
+.map-hint{font-size:12px;color:var(--ink-soft);margin-top:5px;font-style:italic;}
+select{
+  width:100%;font-family:'IBM Plex Mono',monospace;font-size:13px;padding:9px 10px;border-radius:9px;
+  border:1.5px solid var(--line-strong);background:#fff;color:var(--ink);
+}
+select:focus, input:focus{outline:none;border-color:var(--o-600);box-shadow:0 0 0 3px rgba(249,115,22,.18);}
+button:focus-visible, .dropzone:focus-visible, .nav-item:focus-visible, .tab:focus-visible{outline:2px solid var(--o-500);outline-offset:2px;}
+
+.tabpanel{display:none;}
+.tabpanel.active{display:block;animation:fadeUp .25s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+/* ---- Kartu KPI ---- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:6px;}
+.card{
+  position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px 16px 22px;
+  box-shadow:var(--shadow-sm);overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;min-width:0;
+}
+.card::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:0 4px 4px 0;background:var(--o-600);}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.card .label{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;font-weight:700;line-height:1.35;}
+.card-icon{width:36px;height:36px;border-radius:10px;background:var(--o-100);color:var(--o-800);display:flex;align-items:center;justify-content:center;flex:none;}
+.card-icon .ic{width:19px;height:19px;}
+.card .value{
+  font-family:var(--font-head);font-weight:800;font-size:clamp(22px,2.1vw,29px);line-height:1.15;margin-top:10px;
+  color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;
+}
+.card .value.pos{color:var(--green);}
+.card .value.neg{color:var(--red);}
+.card .foot{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.4;}
+.card .foot .full{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink);font-weight:500;display:block;margin-bottom:2px;}
+.card.neg-card::before{background:var(--red);}
+.card.pos-card::before{background:var(--green);}
+
+/* ---- Kartu grafik ---- */
+.chart-wrap{
+  background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 24px 20px;margin-top:18px;box-shadow:var(--shadow-sm);
+}
+.chart-wrap h3{font-family:var(--font-head);font-weight:700;font-size:16px;letter-spacing:-.01em;margin:0 0 14px;color:var(--ink);display:flex;align-items:center;gap:10px;}
+.chart-wrap h3::before{content:"";width:4px;height:18px;border-radius:2px;background:var(--o-600);display:inline-block;flex:none;}
+.chart-wrap .sub{margin-top:-6px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.two-col > .chart-wrap{margin-top:18px;min-width:0;}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+@media(max-width:1100px){.two-col{grid-template-columns:1fr;} .three-col{grid-template-columns:1fr;}}
+.cbox{position:relative;height:340px;}
+.cbox.tall{height:420px;}
+.cbox.short{height:280px;}
+canvas{max-width:100%;}
+
+/* header dashboard */
+.dash-header-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px;}
+.dash-header-row .sub{margin-bottom:0;}
+.btn-present{
+  background:linear-gradient(135deg,var(--o-600),var(--o-800));color:#fff;border:none;padding:11px 18px;border-radius:11px;
+  font-size:13.5px;font-weight:700;box-shadow:0 4px 12px rgba(194,65,12,.3);white-space:nowrap;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-present:hover{box-shadow:0 6px 18px rgba(194,65,12,.4);}
+
+/* mode presentasi */
+body.presentation-mode{background:var(--o-950);}
+body.presentation-mode .sidebar,
+body.presentation-mode .topbar,
+body.presentation-mode #panel-upload,
+body.presentation-mode #panel-mapping,
+body.presentation-mode .coversheet,
+body.presentation-mode #userBar,
+body.presentation-mode footer,
+body.presentation-mode .filter-bar{display:none !important;}
+body.presentation-mode .main{margin-left:0;}
+body.presentation-mode .content{max-width:1560px;padding:28px 40px;}
+body.presentation-mode #panel-dashboard{padding:32px 40px;border-radius:20px;background:var(--bg);box-shadow:0 20px 60px rgba(0,0,0,.4);margin-top:0;}
+body.presentation-mode .tabs{display:none;}
+body.presentation-mode h2{font-size:28px;}
+body.presentation-mode .sub{font-size:16px;}
+body.presentation-mode .card .value{font-size:30px;}
+body.presentation-mode .card .label{font-size:13.5px;}
+body.presentation-mode .chart-wrap h3{font-size:19px;}
+body.presentation-mode .cbox{height:460px;}
+body.presentation-mode .cbox.tall{height:520px;}
+
+/* ---- Tabel ---- */
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);color:var(--ink);vertical-align:top;}
+th{
+  font-family:'Inter',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--o-900);font-weight:700;
+  background:var(--o-50);border-bottom:2px solid var(--o-200);position:sticky;top:0;z-index:2;white-space:nowrap;
+}
+tbody tr:nth-child(even) td{background:#FCFAF8;}
+tbody tr:hover td{background:var(--o-50);}
+td.num, th.num{white-space:nowrap;text-align:right;font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;}
+td.mono, td .mono{font-size:12.5px;}
+.badge{white-space:nowrap;display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;}
+.badge.pos{background:var(--green-tint);color:var(--green);}
+.badge.neg{background:var(--red-tint);color:var(--red);}
+.badge.neutral{background:var(--o-100);color:var(--o-900);}
+.table-scroll{overflow:auto;max-height:560px;border:1px solid var(--line);border-radius:12px;}
+.table-scroll table{margin:0;}
+.table-scroll tbody tr:last-child td{border-bottom:none;}
+
+.search-bar{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
+.search-bar input[type=text], .filter-field input[type=text]{
+  flex:1;min-width:220px;padding:10px 13px;border-radius:10px;border:1.5px solid var(--line-strong);
+  font-family:'Inter',sans-serif;font-size:14px;background:#fff;color:var(--ink);
+}
+.toggle-label{display:flex;align-items:center;gap:7px;font-size:13.5px;color:var(--ink-soft);cursor:pointer;user-select:none;}
+.pager{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:13.5px;color:var(--ink-soft);}
+.pager button{padding:7px 12px;font-size:13px;}
+.empty-hint{text-align:center;padding:30px 10px;color:var(--ink-soft);font-size:14px;}
+footer{text-align:center;color:var(--ink-mute);font-size:12px;margin-top:34px;font-weight:500;letter-spacing:.02em;}
+
+/* ---- Panel admin ---- */
+#adminPanel{
+  position:fixed;inset:0;z-index:950;background:rgba(28,25,23,.55);
+  display:flex;align-items:flex-start;justify-content:center;padding:50px 20px;overflow-y:auto;
+}
+.admin-card{background:var(--paper);border-radius:18px;padding:28px 30px;max-width:780px;width:100%;box-shadow:var(--shadow-lg);}
+.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.admin-header h2{font-family:var(--font-head);font-weight:800;font-size:20px;margin:0;color:var(--ink);}
+.admin-section{margin-top:22px;}
+.admin-section h3{font-family:var(--font-head);font-size:15px;font-weight:700;margin:0 0 10px;color:var(--o-900);}
+.admin-list{display:flex;flex-direction:column;gap:8px;}
+.admin-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#FCFAF8;}
+.admin-row .who{font-size:13.5px;}
+.admin-row .who strong{display:block;color:var(--ink);}
+.admin-row .who span{color:var(--ink-soft);font-size:12.5px;}
+.admin-row .actions{display:flex;gap:7px;flex-wrap:wrap;}
+.admin-row .actions button{padding:7px 12px;font-size:12.5px;}
+.admin-empty{color:var(--ink-soft);font-size:13.5px;padding:10px 0;}
+
+/* ---- Laporan ---- */
+.report-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-top:6px;}
+.report-card{
+  border:1px solid var(--line);border-radius:16px;padding:26px 22px;background:#fff;box-shadow:var(--shadow-sm);
+  text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;transition:transform .18s, box-shadow .18s;
+}
+.report-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+.report-icon{font-size:30px;margin-bottom:6px;width:62px;height:62px;border-radius:16px;background:var(--o-100);display:flex;align-items:center;justify-content:center;}
+.report-card h3{font-family:var(--font-head);font-weight:700;font-size:17px;margin:0;color:var(--ink);}
+.report-card p{font-size:13.5px;color:var(--ink-soft);margin:0 0 12px;min-height:40px;}
+.report-card button{width:100%;}
+
+/* ---- Rekomendasi ---- */
+.rekomendasi-list{display:flex;flex-direction:column;gap:12px;}
+.rekom-card{border-radius:14px;padding:18px 20px;border:1px solid var(--line);background:#fff;border-left:5px solid var(--o-600);box-shadow:var(--shadow-sm);}
+.rekom-card.warning{border-left-color:var(--amber);background:#FFFBEB;}
+.rekom-card.critical{border-left-color:var(--red);background:#FEF2F2;}
+.rekom-card.positive{border-left-color:var(--green);background:#F0FDF4;}
+.rekom-card .rekom-title{font-family:var(--font-head);font-weight:700;font-size:15.5px;margin-bottom:6px;display:flex;align-items:center;gap:8px;color:var(--ink);}
+.rekom-card .rekom-desc{font-size:14px;color:#44403C;line-height:1.65;}
+.rekom-card .rekom-desc b{color:var(--ink);}
+
+/* ---- SWOT ---- */
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:8px;}
+@media(max-width:820px){.swot-grid{grid-template-columns:1fr;}}
+.swot-box{border-radius:16px;padding:20px 22px;border:1px solid var(--line);box-shadow:var(--shadow-sm);background:#fff;}
+.swot-title{font-family:var(--font-head);font-weight:800;font-size:16px;margin-bottom:12px;}
+.swot-box ul{margin:0;padding-left:20px;font-size:14px;line-height:1.65;color:var(--ink);}
+.swot-box ul li{margin-bottom:8px;}
+.swot-box ul li b{color:inherit;}
+.swot-s{background:linear-gradient(160deg,#fff,var(--green-tint));border-top:4px solid var(--green);}
+.swot-s .swot-title{color:var(--green);}
+.swot-w{background:linear-gradient(160deg,#fff,var(--red-tint));border-top:4px solid var(--red);}
+.swot-w .swot-title{color:var(--red);}
+.swot-o{background:linear-gradient(160deg,#fff,#E0E7FF);border-top:4px solid var(--indigo);}
+.swot-o .swot-title{color:var(--indigo);}
+.swot-t{background:linear-gradient(160deg,#fff,var(--amber-tint));border-top:4px solid var(--amber);}
+.swot-t .swot-title{color:var(--amber);}
+
+.section-heading{
+  font-family:var(--font-head);font-weight:800;font-size:17px;color:var(--o-900);margin:30px 0 4px;padding-bottom:10px;border-bottom:2px solid var(--o-200);
+}
+
+/* ---- Data tersimpan ---- */
+.saved-header{font-family:var(--font-head);font-size:15.5px;font-weight:700;margin-top:24px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink);}
+.saved-item{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-top:10px;background:#FCFAF8;}
+.saved-item .meta strong{font-size:14px;display:block;color:var(--ink);}
+.saved-item .meta span{font-size:12.5px;color:var(--ink-soft);}
+.saved-item .actions{display:flex;gap:8px;}
+.saved-item .actions button{padding:7px 13px;font-size:13px;}
+.btn-danger{background:#fff;color:var(--red);border-color:#FECACA;}
+.btn-danger:hover{background:var(--red-tint);}
+.chk-row{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-soft);}
+.saved-status{font-size:13.5px;padding:10px 14px;border-radius:9px;margin-bottom:10px;}
+.saved-status.ok{background:var(--green-tint);color:var(--green);}
+.saved-status.err{background:var(--red-tint);color:var(--red);}
+.confirm-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.confirm-row .confirm-text{font-size:13.5px;color:var(--red);font-weight:600;}
+
+/* ---- Filter ---- */
+.filter-bar{
+  border:1px solid var(--line);border-left:5px solid var(--o-600);border-radius:14px;background:#fff;
+  padding:18px 22px;margin-bottom:20px;box-shadow:var(--shadow-sm);
+}
+.filter-bar .filter-title{font-family:var(--font-head);font-weight:700;font-size:15px;margin-bottom:12px;color:var(--ink);}
+.filter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;align-items:end;}
+.filter-field label{display:block;font-size:12px;font-weight:700;color:var(--ink-soft);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em;}
+.filter-field input[type=date], .filter-field input[type=number], .filter-field select{
+  width:100%;padding:9px 11px;border-radius:9px;border:1.5px solid var(--line-strong);
+  font-family:'Inter',sans-serif;font-size:14px;background:#fff;color:var(--ink);
+}
+.filter-field input[type=text]{width:100%;min-width:0;}
+.filter-actions{display:flex;gap:10px;margin-top:16px;}
+
+/* ---- Responsif ---- */
+.nav-overlay{display:none;}
+@media(max-width:1020px){
+  .sidebar{transform:translateX(-100%);box-shadow:var(--shadow-lg);}
+  body.nav-open .sidebar{transform:none;}
+  body.nav-open .nav-overlay{display:block;position:fixed;inset:0;background:rgba(28,25,23,.5);z-index:65;}
+  .main{margin-left:0;}
+  .menu-btn{display:inline-flex;}
+  .topbar{padding:0 16px;}
+  .content{padding:20px 16px 56px;}
+  .user-meta{display:none;}
+  .user-chip{padding:5px;}
+  .coversheet{padding:24px 22px;}
+}
+@media(max-width:560px){
+  .topbar-title h1{font-size:17px;}
+  .crumb{display:none;}
+  #userBar button{padding:7px 10px;}
+  .panel{padding:20px 16px;}
+}
+@media print{
+  .sidebar,.topbar,.filter-bar{display:none !important;}
+  .main{margin-left:0;}
+}
+
+/* ---- Sorotan eksekutif ---- */
+.insight{
+  background:linear-gradient(120deg,#FFF7ED 0%,#FFFFFF 70%);border:1px solid var(--o-200);border-left:5px solid var(--o-600);
+  border-radius:16px;padding:18px 22px 14px;margin-bottom:18px;box-shadow:var(--shadow-sm);
+}
+.insight h3{font-family:var(--font-head);font-weight:800;font-size:15px;letter-spacing:.01em;margin:0 0 10px;color:var(--o-900);display:flex;align-items:center;gap:8px;}
+.insight ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;}
+.insight li{display:flex;gap:11px;align-items:flex-start;font-size:14.5px;line-height:1.55;color:var(--ink);}
+.insight li .ic{margin-top:2px;color:var(--o-700);width:18px;height:18px;}
+.insight li b{font-weight:700;}
+.insight li .neg{color:var(--red);font-weight:700;}
+.insight li .pos{color:var(--green);font-weight:700;}
+
+/* ---- Navigasi mode presentasi ---- */
+.present-nav{display:none;}
+body.presentation-mode .present-nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.present-nav button{background:#fff;color:var(--o-900);border:1px solid var(--line-strong);padding:9px 16px;border-radius:999px;font-size:14px;}
+.present-nav button.active{background:var(--o-700);color:#fff;border-color:var(--o-700);}
+
+/* ---- Tampilan: unggah vs analisis ---- */
+body.view-analysis .coversheet,
+body.view-analysis #panel-upload,
+body.view-analysis #panel-mapping{display:none !important;}
+body.view-upload #panel-dashboard{display:none !important;}
+body.view-upload .tabs .tab.active{background:transparent;border-left-color:transparent;font-weight:500;}
+
+/* ---- Filter yang bisa dilipat ---- */
+.filter-bar{padding:14px 22px;}
+.filter-toggle{display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;padding:4px 0;text-align:left;color:var(--ink);box-shadow:none;}
+.filter-toggle:hover{background:none;}
+.filter-toggle .filter-title{margin:0;font-family:var(--font-head);font-weight:700;font-size:15px;}
+.filter-hint{font-size:13px;color:var(--ink-soft);font-weight:500;}
+.filter-hint.on{color:var(--o-800);font-weight:700;}
+.filter-toggle .chev{margin-left:auto;transition:transform .2s;color:var(--o-700);}
+.filter-toggle[aria-expanded="true"] .chev{transform:rotate(180deg);}
+.filter-body{padding-top:14px;}
+.filter-body[hidden]{display:none;}
+
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs><symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></symbol><symbol id="i-dash" viewBox="0 0 24 24"><path d="M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z"/></symbol><symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 16V9M12 16V5M17 16v-4"/></symbol><symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol><symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></symbol><symbol id="i-wallet" viewBox="0 0 24 24"><path d="M20 12V8H6a2 2 0 0 1 0-4h12v4M4 6v12a2 2 0 0 0 2 2h14v-4M18 12a2 2 0 0 0 0 4h4v-4z"/></symbol><symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></symbol><symbol id="i-trend" viewBox="0 0 24 24"><path d="M22 7l-8.5 8.5-5-5L2 17M16 7h6v6"/></symbol><symbol id="i-table" viewBox="0 0 24 24"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8"/></symbol><symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></symbol><symbol id="i-target" viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></symbol><symbol id="i-bed" viewBox="0 0 24 24"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/></symbol><symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol><symbol id="i-cash" viewBox="0 0 24 24"><path d="M2 6h20v12H2zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 12h.01M18 12h.01"/></symbol><symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 8a4 4 0 0 0 6 0zM19 7l-3 8a4 4 0 0 0 6 0z"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 6v6l4 2"/></symbol><symbol id="i-gauge" viewBox="0 0 24 24"><path d="M12 14l4-4M3.3 17a10 10 0 1 1 17.4 0"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol><symbol id="i-monitor" viewBox="0 0 24 24"><path d="M2 3h20v14H2zM8 21h8M12 17v4"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1M22 4 12 14l-3-3"/></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></symbol></defs></svg>
+
+<div id="accessGate">
+  <aside class="gate-brand">
+    <div class="brand-row">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3h4v7h7v4h-7v7h-4v-7H3v-4h7z" fill="currentColor"/></svg></div>
+      <div><div class="brand-name">Casemix Analytics</div><div class="brand-sub">RS Humana Prima Bandung</div></div>
+    </div>
+
+    <div class="gate-hero">
+      <h2>Keputusan klaim yang lebih tepat, dari data yang tertata.</h2>
+      <p>Satu tempat untuk membaca klaim INA&#8209;CBG: selisih tarif dan biaya riil, pola fragmentasi dan readmisi, hingga rekomendasi berbasis regulasi.</p>
+      <ul class="gate-features">
+        <li><span class="fi"><svg class="ic" aria-hidden="true"><use href="#i-scale"/></svg></span><div><strong>Selisih klaim vs biaya riil</strong><span>Temukan kode CBG yang defisit dan surplus dalam hitungan detik.</span></div></li>
+        <li><span class="fi"><svg class="ic" aria-hidden="true"><use href="#i-repeat"/></svg></span><div><strong>Fragmentasi &amp; readmisi</strong><span>Episode kunjungan berulang terdeteksi otomatis per pasien dan dokter.</span></div></li>
+        <li><span class="fi"><svg class="ic" aria-hidden="true"><use href="#i-file"/></svg></span><div><strong>Laporan siap rapat</strong><span>Unduh Excel, Word, dan PowerPoint dengan grafik dan rekomendasi.</span></div></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="gate-preview" aria-hidden="true">
+        <div class="gp-card"><div class="gp-label">Total klaim</div><div class="gp-val">Rp5,45 M</div>
+          <div class="gp-bars"><i style="height:38%"></i><i style="height:55%"></i><i style="height:46%"></i><i style="height:72%"></i><i style="height:60%"></i><i style="height:92%"></i></div></div>
+        <div class="gp-card"><div class="gp-label">Rata-rata LOS</div><div class="gp-val">1,3 hari</div>
+          <div class="gp-bars"><i style="height:80%"></i><i style="height:52%"></i><i style="height:34%"></i><i style="height:22%"></i><i style="height:14%"></i><i style="height:8%"></i></div></div>
+      </div>
+      <div class="gate-foot" style="margin-top:18px;">Contoh tampilan. Data asli tampil setelah Anda masuk dan mengunggah berkas.</div>
+    </div>
+  </aside>
+
+  <main class="gate-panel">
+    <div class="gate-card">
+      <div class="gate-mobile-brand">
+        <div class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3h4v7h7v4h-7v7h-4v-7H3v-4h7z" fill="currentColor"/></svg></div>
+        <div><div class="brand-name">Casemix Analytics</div><div class="brand-sub">RS Humana Prima Bandung</div></div>
+      </div>
+      <div class="gate-eyebrow">Portal Staf Casemix</div>
+      <h1>Analisa Casemix INA&#8209;CBG</h1>
+    <!-- state: loading -->
+    <div id="stateLoading" class="gate-state">
+      <p>Memeriksa status akun&hellip;</p>
+    </div>
+
+    <!-- state: login -->
+    <div id="stateLogin" class="gate-state" style="display:none;">
+      <p>Masuk dengan akun email Anda.</p>
+      <form id="loginForm">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" autocomplete="email" placeholder="nama@contoh.com" required>
+        <label for="loginPassword">Kata Sandi</label>
+        <div class="password-field">
+          <input type="password" id="loginPassword" autocomplete="current-password" placeholder="Kata sandi" required>
+          <button type="button" class="password-toggle" id="toggleLoginPassword" aria-label="Lihat kata sandi">&#128065;</button>
+        </div>
+        <div class="forgot-link"><a href="#" id="showForgot">Lupa kata sandi?</a></div>
+        <button type="submit" class="btn-primary" id="loginSubmit">Masuk</button>
+        <div class="gate-error" id="loginError" style="display:none;"></div>
+      </form>
+      <div class="gate-note">Belum punya akun? <a href="#" id="showRegister">Daftar di sini</a></div>
+    </div>
+
+    <!-- state: forgot password -->
+    <div id="stateForgot" class="gate-state" style="display:none;">
+      <p>Masukkan email akun Anda. Kami akan mengirimkan tautan untuk membuat kata sandi baru.</p>
+      <form id="forgotForm">
+        <label for="forgotEmail">Email</label>
+        <input type="email" id="forgotEmail" autocomplete="email" placeholder="nama@contoh.com" required>
+        <button type="submit" class="btn-primary" id="forgotSubmit">Kirim Tautan Reset</button>
+        <div class="gate-error" id="forgotError" style="display:none;"></div>
+        <div class="gate-success" id="forgotSuccess" style="display:none;"></div>
+      </form>
+      <div class="gate-note">Sudah ingat kata sandi? <a href="#" id="showLoginFromForgot">Masuk di sini</a></div>
+    </div>
+
+    <!-- state: register -->
+    <div id="stateRegister" class="gate-state" style="display:none;">
+      <p>Daftar untuk mengajukan akses. Permintaan Anda akan dikirim ke penanggung jawab untuk disetujui.</p>
+      <form id="registerForm">
+        <label for="regName">Nama Lengkap</label>
+        <input type="text" id="regName" autocomplete="name" placeholder="Nama lengkap" required>
+        <label for="regEmail">Email</label>
+        <input type="email" id="regEmail" autocomplete="email" placeholder="nama@contoh.com" required>
+        <label for="regPassword">Buat Kata Sandi</label>
+        <div class="password-field">
+          <input type="password" id="regPassword" autocomplete="new-password" placeholder="Minimal 6 karakter" required minlength="6">
+          <button type="button" class="password-toggle" id="toggleRegPassword" aria-label="Lihat kata sandi">&#128065;</button>
+        </div>
+        <button type="submit" class="btn-primary" id="registerSubmit">Daftar &amp; Ajukan Akses</button>
+        <div class="gate-error" id="registerError" style="display:none;"></div>
+      </form>
+      <div class="gate-note">Sudah punya akun? <a href="#" id="showLogin">Masuk di sini</a></div>
+    </div>
+
+    <!-- state: pending approval -->
+    <div id="statePending" class="gate-state" style="display:none;">
+      <div class="gate-icon">&#9203;</div>
+      <p><strong>Menunggu persetujuan.</strong> Permintaan akses Anda sudah dikirim ke penanggung jawab dan akan diproses secepatnya. Anda akan bisa masuk begitu disetujui.</p>
+      <button class="btn-ghost" id="btnRecheckPending">Periksa Status Lagi</button>
+      <button class="btn-ghost" id="btnLogoutPending">Keluar</button>
+    </div>
+
+    <!-- state: rejected -->
+    <div id="stateRejected" class="gate-state" style="display:none;">
+      <div class="gate-icon">&#10060;</div>
+      <p><strong>Permintaan akses ditolak.</strong> Silakan hubungi penanggung jawab aplikasi bila ini tidak sesuai.</p>
+      <button class="btn-ghost" id="btnLogoutRejected">Keluar</button>
+    </div>
+
+    <!-- state: expired -->
+    <div id="stateExpired" class="gate-state" style="display:none;">
+      <div class="gate-icon">&#8987;</div>
+      <p><strong>Akses Anda sudah kedaluwarsa</strong> (masa berlaku 3 bulan telah habis). Ajukan perpanjangan untuk melanjutkan.</p>
+      <button class="btn-primary" id="btnRequestRenewal">Ajukan Perpanjangan</button>
+      <button class="btn-ghost" id="btnLogoutExpired">Keluar</button>
+      <div class="gate-error" id="renewalError" style="display:none;"></div>
+    </div>
+
+    <!-- state: pending renewal -->
+    <div id="statePendingRenewal" class="gate-state" style="display:none;">
+      <div class="gate-icon">&#9203;</div>
+      <p><strong>Permintaan perpanjangan terkirim.</strong> Menunggu persetujuan penanggung jawab.</p>
+      <button class="btn-ghost" id="btnRecheckRenewal">Periksa Status Lagi</button>
+      <button class="btn-ghost" id="btnLogoutRenewal">Keluar</button>
+    </div>
+
+    <div class="gate-note" style="margin-top:16px;">Akun disetujui berlaku 3 bulan sejak disetujui, lalu perlu diperpanjang.</div>
+      <div class="gate-legal">Berkas data diproses di peramban Anda dan tidak diunggah ke server.</div>
+    </div>
+  </main>
+</div>
+
+
+<div id="adminPanel" style="display:none;">
+  <div class="admin-card">
+    <div class="admin-header">
+      <h2>Panel Admin &mdash; Persetujuan Akun</h2>
+      <button class="btn-ghost" id="btnCloseAdmin">Tutup</button>
+    </div>
+    <p class="sub">Setujui, tolak, atau perpanjang akses staf di sini. Perubahan berlaku langsung.</p>
+
+    <div class="admin-section">
+      <h3>Menunggu Persetujuan / Perpanjangan</h3>
+      <div id="adminPendingList" class="admin-list"></div>
+    </div>
+
+    <div class="admin-section">
+      <h3>Semua Akun</h3>
+      <div id="adminAllList" class="admin-list"></div>
+    </div>
+  </div>
+</div>
+
+<div id="app" style="display:none;">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand-row">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3h4v7h7v4h-7v7h-4v-7H3v-4h7z" fill="currentColor"/></svg></div>
+      <div><div class="brand-name">Casemix Analytics</div><div class="brand-sub">RS Humana Prima Bandung</div></div>
+    </div>
+    <nav>
+      <div class="nav-group">
+        <div class="nav-title">Data</div>
+        <button type="button" class="nav-item active" id="navUpload" data-goto="upload"><svg class="ic" aria-hidden="true"><use href="#i-upload"/></svg><span>Unggah &amp; Data Tersimpan</span></button>
+      </div>
+      <div class="nav-group">
+        <div class="nav-title">Analisis</div>
+        <div class="nav-note">Unggah dan proses data terlebih dahulu untuk membuka menu analisis.</div>
+        <div class="tabs" id="navTabs">
+      <div class="tab active" data-tab="ringkasan" role="button" tabindex="0"><svg class="ic" aria-hidden="true"><use href="#i-dash"/></svg><span>Ringkasan</span></div>
+      <div class="tab" data-tab="kode" role="button" tabindex="0"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg><span>Sebaran Kode CBG</span></div>
+      <div class="tab" data-tab="keparahan" role="button" tabindex="0"><svg class="ic" aria-hidden="true"><use href="#i-activity"/></svg><span>Keparahan &amp; LOS</span></div>
+      <div class="tab inacbg-only" data-tab="klinis" role="button" tabindex="0"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg><span>Klinis &amp; Casemix</span></div>
+      <div class="tab inacbg-only" data-tab="biaya" role="button" tabindex="0"><svg class="ic" aria-hidden="true"><use href="#i-wallet"/></svg><span>Komposisi Biaya</span></div>
+      <div class="tab inacbg-only" data-tab="fragmentasi" role="button" tabindex="0"><svg class="ic" aria-hidden="true"><use href="#i-shuffle"/></svg><span>Fragmentasi</span></div>
+      <div class="tab inacbg-only" data-tab="readmisi" role="button" tabindex="0"><svg class="ic" aria-hidden="true"><use href="#i-repeat"/></svg><span>Readmisi</span></div>
+      <div class="tab" data-tab="tren" role="button" tabindex="0"><svg class="ic" aria-hidden="true"><use href="#i-trend"/></svg><span>Tren Bulanan</span></div>
+      <div class="tab" data-tab="detail" role="button" tabindex="0"><svg class="ic" aria-hidden="true"><use href="#i-table"/></svg><span>Tabel Detail</span></div>
+      <div class="tab" data-tab="laporan" role="button" tabindex="0"><svg class="ic" aria-hidden="true"><use href="#i-file"/></svg><span>Laporan</span></div>
+      <div class="tab" data-tab="rekomendasi" role="button" tabindex="0"><svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg><span>Rekomendasi</span></div>
+      <div class="tab" data-tab="swot" role="button" tabindex="0"><svg class="ic" aria-hidden="true"><use href="#i-target"/></svg><span>Analisa SWOT</span></div>
+      <div class="tab inacbg-only" data-tab="inapjalan" role="button" tabindex="0"><svg class="ic" aria-hidden="true"><use href="#i-bed"/></svg><span>Inap, Jalan &amp; Tarif</span></div>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar-foot"><b>INA&#8209;CBG Casemix</b><br>Estimasi analitik internal. Bukan pengganti hasil grouping resmi.</div>
+  </aside>
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button type="button" class="menu-btn" id="menuBtn" aria-label="Buka menu"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
+      <div class="topbar-title">
+        <div class="crumb">RS Humana Prima Bandung &nbsp;/&nbsp; <b>Analisa Casemix</b></div>
+        <h1 id="pageTitle">Unggah Data</h1>
+      </div>
+      <div id="userBar" style="display:none;">
+        <div class="user-chip">
+          <span class="user-avatar"><svg class="ic ic-sm" aria-hidden="true"><use href="#i-user"/></svg></span>
+          <span class="user-meta"><span id="userBarEmail"></span><span id="userBarExpiry"></span></span>
+        </div>
+        <button class="btn-ghost" id="btnOpenAdmin" style="display:none;">Panel Admin</button>
+        <button class="btn-ghost" id="btnLogoutApp">Keluar</button>
+      </div>
+    </header>
+
+    <div class="content">
+
+  <div class="coversheet">
+    <div class="cover-eyebrow"><span>RS Humana Prima Bandung</span><span class="dot"></span><span id="cover-date"></span><span class="dot"></span><span>Modul Analisa Casemix</span></div>
+    <h1>Analisa Casemix INA&#8209;CBG</h1>
+    <p>Unggah berkas <strong>TXT mentah (MIX) dari aplikasi INA&#8209;CBG</strong>, ekspor SIMRS, atau CSV/Excel apa pun. Bila formatnya adalah berkas resmi INA&#8209;CBG, seluruh 78 kolom, termasuk bobot casemix, MDC, dan cara masuk yang tersimpan di dalamnya, akan terbaca otomatis.</p>
+    <div class="steps">
+      <span class="step"><b>1</b>Unggah berkas</span>
+      <span class="step"><b>2</b>Verifikasi kolom</span>
+      <span class="step"><b>3</b>Baca hasil &amp; unduh laporan</span>
+    </div>
+  </div>
+
+  <!-- UPLOAD -->
+  <div class="panel" id="panel-upload">
+    <h2>1. Unggah Data</h2>
+    <p class="sub">Format didukung: .txt (ekspor mentah INA&#8209;CBG / MIX, dipisah tab), .csv, dan .xlsx/.xls. Bisa pilih/seret <strong>beberapa berkas sekaligus</strong> (mis. beberapa bulan) untuk digabung jadi satu analisa.</p>
+
+    <div class="dropzone" id="dropzone" tabindex="0">
+      <div class="icon">&#128193;</div>
+      <strong>Klik untuk pilih berkas, atau seret ke sini</strong>
+      <div class="hint">Contoh: 3204123_20260829_MIX_Juli_2026.TXT &middot; bisa pilih lebih dari satu</div>
+      <input type="file" id="fileInput" accept=".csv,.txt,.xlsx,.xls" multiple>
+    </div>
+
+    <div class="row-actions">
+      <span class="filename-badge" id="filenameBadge" style="display:none;"></span>
+      <button class="btn-ghost" id="btnSample">Coba dengan data contoh</button>
+    </div>
+    <div class="loading-line" id="loadingLine">Membaca dan menguraikan berkas...</div>
+
+    <div id="stagedSection" style="display:none;">
+      <div class="saved-header">Berkas Siap Digabung &amp; Dianalisa</div>
+      <div id="stagedFilesBox" class="admin-list"></div>
+      <div class="row-actions" style="margin-top:12px;">
+        <button class="btn-primary" id="btnProcessStaged">Proses Berkas</button>
+        <button class="btn-ghost" id="btnClearStaged">Kosongkan Daftar</button>
+      </div>
+    </div>
+
+    <div class="privacy-note">
+      <span>&#128274;</span>
+      <span>Berkas tidak diunggah ke server mana pun &mdash; seluruh pembacaan dan perhitungan berjalan di peramban Anda sendiri, sehingga aman untuk data rekam medis.</span>
+    </div>
+
+    <div id="savedSection" style="display:none;">
+      <div class="saved-header">Data Tersimpan di Perangkat Ini</div>
+      <p class="sub" style="margin-bottom:12px;">Data yang sudah pernah diproses dan disimpan dapat dibuka kembali tanpa perlu mengunggah berkas ulang.</p>
+      <div id="savedStatusMsg" style="display:none;"></div>
+      <div id="savedDatasetsBox"></div>
+    </div>
+  </div>
+
+  <!-- MAPPING -->
+  <div class="panel" id="panel-mapping" style="display:none;">
+    <h2>2. Verifikasi Kolom</h2>
+    <p class="sub" id="mappingSub">Sistem sudah menebak kolom yang sesuai. Periksa dan sesuaikan bila perlu &mdash; kolom bertanda <span class="req">*</span> wajib diisi.</p>
+
+    <div class="detect-banner" id="detectBanner" style="display:none;">
+      <div class="title">&#9989; Format resmi INA&#8209;CBG terdeteksi otomatis</div>
+      <div class="desc" id="detectDesc"></div>
+      <details>
+        <summary>Lihat seluruh kolom yang terbaca dari berkas ini</summary>
+        <div class="chip-list" id="chipList"></div>
+      </details>
+    </div>
+
+    <div class="map-grid" id="mapGrid"></div>
+    <div class="row-actions" style="margin-top:20px;">
+      <button class="btn-primary" id="btnProcess">Proses &amp; Analisa</button>
+      <button class="btn-ghost" id="btnCancelMap">Batal, pilih berkas lain</button>
+      <span class="filename-badge" id="rowCountBadge"></span>
+    </div>
+    <label class="chk-row" style="margin-top:14px;"><input type="checkbox" id="chkSimpan" checked> Simpan data ini di perangkat ini setelah diproses, agar tidak perlu unggah ulang</label>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="panel" id="panel-dashboard" style="display:none;">
+    <div class="dash-header-row">
+      <div>
+        <h2>3. Hasil Analisa</h2>
+        <p class="sub" id="dashSub"></p>
+      </div>
+      <button class="btn-present" id="btnPresentMode">&#9654;&nbsp; Mode Presentasi</button>
+    </div>
+
+    <div class="filter-bar">
+      <button type="button" class="filter-toggle" id="filterToggle" aria-expanded="false" aria-controls="filterBody"><span class="filter-title">Filter Data</span><span class="filter-hint" id="filterHint">Tidak ada filter aktif</span><svg class="ic chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="filter-body" id="filterBody" hidden>
+      <div class="filter-grid">
+        <div class="filter-field" id="filterJenisWrap" style="display:none;">
+          <label>Rawat Inap / Rawat Jalan</label>
+          <select id="filterJenis">
+            <option value="semua">Semua</option>
+            <option value="inap">Rawat Inap</option>
+            <option value="jalan">Rawat Jalan</option>
+          </select>
+        </div>
+        <div class="filter-field">
+          <label>Tanggal Masuk</label>
+          <input type="date" id="filterMasuk">
+        </div>
+        <div class="filter-field">
+          <label>Tanggal Keluar</label>
+          <input type="date" id="filterKeluar">
+        </div>
+        <div class="filter-field">
+          <label>Usia Dari (tahun)</label>
+          <input type="number" id="filterUmurMin" min="0" max="150" placeholder="mis. 0">
+        </div>
+        <div class="filter-field">
+          <label>Usia Sampai (tahun)</label>
+          <input type="number" id="filterUmurMax" min="0" max="150" placeholder="mis. 60">
+        </div>
+        <div class="filter-field">
+          <label>Tingkat Keparahan</label>
+          <select id="filterSeverity"><option value="semua">Semua</option></select>
+        </div>
+        <div class="filter-field">
+          <label>Kelas Rawat</label>
+          <select id="filterKelas"><option value="semua">Semua</option></select>
+        </div>
+        <div class="filter-field">
+          <label>Cara / Status Pulang</label>
+          <select id="filterStatusPulang"><option value="semua">Semua</option></select>
+        </div>
+      </div>
+      <div class="filter-actions">
+        <button class="btn-primary" id="btnApplyFilter">Terapkan Filter</button>
+        <button class="btn-ghost" id="btnResetFilter">Reset Filter</button>
+      </div>
+      <p class="sub" style="margin:10px 0 0;">Tanggal Masuk menyaring kasus mulai tanggal tersebut; Tanggal Keluar menyaring kasus sampai dengan tanggal tersebut.</p>
+      </div>
+    </div>
+
+
+    <div class="present-nav" id="presentNav"></div>
+
+    <div class="tabpanel active" id="tab-ringkasan">
+      <div class="insight" id="execInsight" style="display:none;"></div>
+      <div class="cards" id="summaryCards"></div>
+      <div class="two-col">
+        <div class="chart-wrap"><h3>10 Kode INA&#8209;CBG Paling Sering</h3><div class="cbox tall"><canvas id="chartTopFreq"></canvas></div></div>
+        <div class="chart-wrap"><h3>Distribusi Kelas Rawat</h3><div class="cbox"><canvas id="chartKelas"></canvas></div></div>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="tab-kode">
+      <div class="chart-wrap"><h3>10 Kode dengan Selisih Paling Defisit (Klaim &lt; Biaya Riil)</h3><div class="cbox tall"><canvas id="chartDefisit"></canvas></div></div>
+      <div class="chart-wrap"><h3>10 Kode dengan Selisih Paling Surplus (Klaim &gt; Biaya Riil)</h3><div class="cbox tall"><canvas id="chartSurplus"></canvas></div></div>
+      <div class="chart-wrap">
+        <h3>Ringkasan &amp; Seluruh Judul (Deskripsi) Kode INA&#8209;CBG</h3>
+        <div class="table-scroll"><table id="tableKode"><thead></thead><tbody></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="tab-keparahan">
+      <div class="two-col">
+        <div class="chart-wrap"><h3>Distribusi Tingkat Keparahan</h3><div class="cbox"><canvas id="chartSeverity"></canvas></div></div>
+        <div class="chart-wrap"><h3>Distribusi Lama Rawat (LOS)</h3><div class="cbox"><canvas id="chartLOS"></canvas></div></div>
+      </div>
+      <p class="sub" style="margin-top:14px;">Catatan: bila kolom tingkat keparahan tidak dipetakan, sistem menduganya dari akhiran kode INA&#8209;CBG (I/II/III atau 0/1/2).</p>
+    </div>
+
+    <div class="tabpanel" id="tab-klinis">
+      <div class="cards" id="klinisCards"></div>
+      <div class="two-col">
+        <div class="chart-wrap"><h3>10 MDC (Kelompok Diagnosis Mayor) Terbanyak</h3><div class="cbox tall"><canvas id="chartMdc"></canvas></div></div>
+        <div class="chart-wrap"><h3>Cara Masuk Pasien</h3><div class="cbox"><canvas id="chartCaraMasuk"></canvas></div></div>
+      </div>
+      <div class="two-col">
+        <div class="chart-wrap"><h3>Jenis Kelamin</h3><div class="cbox"><canvas id="chartGender"></canvas></div></div>
+        <div class="chart-wrap"><h3>Status Pulang</h3><div class="cbox"><canvas id="chartStatusPulang"></canvas></div></div>
+      </div>
+      <div class="chart-wrap">
+        <h3>Rata-rata Klaim: Diagnosis Saja (ICD&#8209;10) vs Diagnosis + Prosedur (ICD&#8209;10 + ICD&#8209;9)</h3>
+        <p class="sub">Dihitung dari isi kolom DIAGLIST (diagnosis, ICD&#8209;10) dan PROCLIST (prosedur/tindakan, ICD&#8209;9&#8209;CM). Kasus dengan PROCLIST terisi berarti ada tindakan/prosedur yang dikode selain diagnosis.</p>
+        <div class="cards" id="icdCards"></div>
+        <div class="cbox short"><canvas id="chartIcd"></canvas></div>
+      </div>
+      <div class="chart-wrap">
+        <h3>Daftar Kasus dengan Prosedur (ICD&#8209;9), Diurutkan dari Nilai Klaim Terbesar</h3>
+        <p class="sub">Hanya menampilkan kasus yang memiliki kode prosedur (PROCLIST terisi), diurutkan menurun berdasarkan tarif klaim.</p>
+        <div class="search-bar">
+          <input type="text" id="prosedurSearchInput" placeholder="Cari kode, nama, atau MRN...">
+        </div>
+        <div class="table-scroll"><table id="tableProsedur"><thead></thead><tbody></tbody></table></div>
+        <div class="pager">
+          <button class="btn-ghost" id="btnProsedurPrev">&larr; Sebelumnya</button>
+          <span id="prosedurPageInfo"></span>
+          <button class="btn-ghost" id="btnProsedurNext">Berikutnya &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="tab-biaya">
+      <div class="chart-wrap"><h3>Komposisi Total Biaya Riil RS per Komponen</h3><div class="cbox tall"><canvas id="chartBiaya"></canvas></div></div>
+      <p class="sub" style="margin-top:14px;">Diambil dari rincian billing per kasus (obat, kamar, tindakan, laboratorium, dst.) yang tersimpan di dalam berkas INA&#8209;CBG.</p>
+    </div>
+
+    <div class="tabpanel" id="tab-fragmentasi">
+      <p class="sub">Pasien rawat jalan berkunjung ke dokter (DPJP) yang sama &le; 7 hari, dihitung dari tanggal masuk di bulan yang sama. Kode <span class="mono">M-3-16-0</span>, <span class="mono">N-3-15-0</span>, dan <span class="mono">Z-3-12-0</span> dikecualikan dari deteksi ini (kunjungan berulang memang wajar untuk kode-kode tersebut).</p>
+      <div class="cards" id="fragmentasiCards"></div>
+      <div class="chart-wrap">
+        <h3>Daftar Episode Fragmentasi</h3>
+        <div class="filter-grid" style="margin-bottom:14px;">
+          <div class="filter-field">
+            <label>Cari Pasien (Nama/MRN)</label>
+            <input type="text" id="fragFilterPasien" placeholder="ketik nama atau MRN...">
+          </div>
+          <div class="filter-field">
+            <label>Cari Dokter (DPJP)</label>
+            <input type="text" id="fragFilterDpjp" placeholder="ketik nama dokter...">
+          </div>
+          <div class="filter-field">
+            <label>Jarak Hari Dari</label>
+            <input type="number" id="fragFilterJarakMin" min="0" placeholder="mis. 0">
+          </div>
+          <div class="filter-field">
+            <label>Jarak Hari Sampai</label>
+            <input type="number" id="fragFilterJarakMax" min="0" placeholder="mis. 7">
+          </div>
+        </div>
+        <div class="table-scroll"><table id="tableFragmentasi"><thead></thead><tbody></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="tab-readmisi">
+      <p class="sub">Kunjungan berulang pada episode rawat inap &le; 30 hari, dihitung dari tanggal keluar ke tanggal masuk episode selanjutnya di bulan yang sama.</p>
+      <div class="cards" id="readmisiCards"></div>
+      <div class="chart-wrap">
+        <h3>Daftar Episode Readmisi</h3>
+        <div class="filter-grid" style="margin-bottom:14px;">
+          <div class="filter-field">
+            <label>Cari Pasien (Nama/MRN)</label>
+            <input type="text" id="readFilterPasien" placeholder="ketik nama atau MRN...">
+          </div>
+          <div class="filter-field">
+            <label>Jarak Hari Dari</label>
+            <input type="number" id="readFilterJarakMin" min="0" placeholder="mis. 0">
+          </div>
+          <div class="filter-field">
+            <label>Jarak Hari Sampai</label>
+            <input type="number" id="readFilterJarakMax" min="0" placeholder="mis. 30">
+          </div>
+        </div>
+        <div class="table-scroll"><table id="tableReadmisi"><thead></thead><tbody></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="tab-tren">
+      <div class="chart-wrap"><h3>Jumlah Kasus &amp; Total Klaim per Bulan</h3><div class="cbox"><canvas id="chartTren"></canvas></div></div>
+      <p class="sub" id="trenEmptyHint" style="display:none;">Tanggal masuk tidak dipetakan, tren bulanan tidak tersedia.</p>
+    </div>
+
+    <div class="tabpanel" id="tab-detail">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Cari kode atau deskripsi...">
+        <label class="toggle-label" id="identityToggleWrap" style="display:none;"><input type="checkbox" id="identityToggle" checked> Tampilkan identitas pasien (nama &amp; MRN)</label>
+        <button class="btn-ghost" id="btnExportCsv">Unduh ringkasan (CSV)</button>
+      </div>
+      <div class="table-scroll"><table id="tableDetail"><thead></thead><tbody></tbody></table></div>
+      <div class="pager">
+        <button class="btn-ghost" id="btnPrev">&larr; Sebelumnya</button>
+        <span id="pageInfo"></span>
+        <button class="btn-ghost" id="btnNext">Berikutnya &rarr;</button>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="tab-laporan">
+      <p class="sub">Unduh ringkasan hasil analisa (mengikuti filter yang sedang aktif) dalam format siap pakai.</p>
+      <div class="report-grid">
+        <div class="report-card">
+          <div class="report-icon">&#128202;</div>
+          <h3>Excel (.xlsx)</h3>
+          <p>Ringkasan, sebaran kode, dan tabel data lengkap dalam beberapa sheet.</p>
+          <button class="btn-primary" id="btnExportExcel">Unduh Excel</button>
+        </div>
+        <div class="report-card">
+          <div class="report-icon">&#128196;</div>
+          <h3>Word (.doc)</h3>
+          <p>Laporan naratif siap cetak: ringkasan, tabel kode teratas, dan catatan analisa.</p>
+          <button class="btn-primary" id="btnExportWord">Unduh Word</button>
+        </div>
+        <div class="report-card">
+          <div class="report-icon">&#128200;</div>
+          <h3>PowerPoint (.pptx)</h3>
+          <p>Slide ringkasan bergambar grafik, siap untuk presentasi rapat.</p>
+          <button class="btn-primary" id="btnExportPptx">Unduh PowerPoint</button>
+        </div>
+      </div>
+      <div class="loading-line" id="reportLoadingLine">Menyiapkan berkas laporan...</div>
+      <p class="sub" style="margin-top:16px;">Catatan: berkas Word dibuat dalam format HTML-untuk-Word (dapat dibuka normal di Microsoft Word/Google Docs), bukan format .docx native.</p>
+    </div>
+
+    <div class="tabpanel" id="tab-rekomendasi">
+      <p class="sub">Disusun otomatis dari hasil analisa data yang diunggah (mengikuti filter yang sedang aktif). Gunakan sebagai titik awal diskusi, bukan kesimpulan final.</p>
+      <div id="rekomendasiList" class="rekomendasi-list"></div>
+    </div>
+
+    <div class="tabpanel" id="tab-swot">
+      <p class="sub">Analisa kekuatan, kelemahan, peluang, dan ancaman disusun otomatis dari pola data klaim yang dianalisa &mdash; untuk membantu diskusi strategi pengembangan layanan, bukan kesimpulan final.</p>
+      <div class="swot-grid">
+        <div class="swot-box swot-s"><div class="swot-title">&#128170; Kekuatan (Strengths)</div><ul id="swotStrengths"></ul></div>
+        <div class="swot-box swot-w"><div class="swot-title">&#9888;&#65039; Kelemahan (Weaknesses)</div><ul id="swotWeaknesses"></ul></div>
+        <div class="swot-box swot-o"><div class="swot-title">&#128161; Peluang (Opportunities)</div><ul id="swotOpportunities"></ul></div>
+        <div class="swot-box swot-t"><div class="swot-title">&#9889; Ancaman (Threats)</div><ul id="swotThreats"></ul></div>
+      </div>
+
+      <div class="chart-wrap">
+        <h3>10 Layanan dengan Nilai Klaim Tertinggi per Kasus</h3>
+        <p class="sub">Layanan/tindakan dengan rata-rata nilai klaim per kasus tertinggi &mdash; berpotensi jadi fokus penunjang pendapatan bila volumenya bisa ditingkatkan.</p>
+        <div class="table-scroll"><table id="tableNilaiTertinggi"><thead></thead><tbody></tbody></table></div>
+      </div>
+
+      <div class="chart-wrap">
+        <h3>Layanan Potensial untuk Dikembangkan</h3>
+        <p class="sub">Kode dengan nilai klaim per kasus di atas rata-rata, margin tidak negatif, namun volume kasusnya masih di bawah median &mdash; kandidat kuat untuk dikembangkan/dipromosikan agar volumenya meningkat.</p>
+        <div class="table-scroll"><table id="tablePotensial"><thead></thead><tbody></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="tabpanel" id="tab-inapjalan">
+      <p class="sub">Perbandingan rawat inap vs rawat jalan, sebaran tingkat keparahan, dan komponen tarif biaya riil RS.</p>
+
+      <h3 class="section-heading">1&ndash;2. Kunjungan &amp; Nilai Klaim: Rawat Inap vs Rawat Jalan</h3>
+      <div class="cards" id="inapJalanCards"></div>
+      <div class="two-col">
+        <div class="chart-wrap"><h3>Jumlah Kunjungan</h3><div class="cbox"><canvas id="chartInapJalanJumlah"></canvas></div></div>
+        <div class="chart-wrap"><h3>Total Tarif Klaim vs Biaya Riil</h3><div class="cbox"><canvas id="chartInapJalanNilai"></canvas></div></div>
+      </div>
+
+      <h3 class="section-heading">3. 20 Kasus Terbanyak: Rawat Inap vs Rawat Jalan</h3>
+      <div class="two-col">
+        <div class="chart-wrap">
+          <h3>20 Kode Terbanyak &mdash; Rawat Inap</h3>
+          <div class="table-scroll"><table id="tableTop20Inap"><thead></thead><tbody></tbody></table></div>
+        </div>
+        <div class="chart-wrap">
+          <h3>20 Kode Terbanyak &mdash; Rawat Jalan</h3>
+          <div class="table-scroll"><table id="tableTop20Jalan"><thead></thead><tbody></tbody></table></div>
+        </div>
+      </div>
+
+      <h3 class="section-heading">4&ndash;6. Jumlah Kasus &amp; Klaim per Tingkat Keparahan</h3>
+      <div class="chart-wrap">
+        <div class="table-scroll"><table id="tableSeverityLevel"><thead></thead><tbody></tbody></table></div>
+      </div>
+
+      <h3 class="section-heading">7&ndash;10. Komponen Tarif Biaya Riil RS</h3>
+      <div class="chart-wrap">
+        <p class="sub">Akomodasi (kamar rawat), Farmasi/Obat (obat reguler, kronis, kemoterapi), Konsul/Visite (jasa konsultasi &amp; tenaga ahli), dan Penunjang (laboratorium, radiologi, penunjang diagnostik lain, pelayanan darah).</p>
+        <div class="cbox tall"><canvas id="chartKomponenTarif"></canvas></div>
+        <div class="table-scroll" style="margin-top:14px;"><table id="tableKomponenTarif"><thead></thead><tbody></tbody></table></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>RS HUMANA PRIMA BANDUNG &middot; ANALISA CASEMIX &middot; TIDAK ADA DATA YANG DIKIRIM KELUAR</footer>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+// ---------------- app unlock bridge (dipanggil oleh auth.js setelah status Firestore = approved) ----------------
+window.__casemixUnlockApp = function(){
+  document.getElementById('accessGate').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('userBar').style.display = 'flex';
+};
+window.__casemixLockApp = function(){
+  document.getElementById('accessGate').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('userBar').style.display = 'none';
+};
+
+document.getElementById('cover-date').textContent = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
+
+document.getElementById('btnPresentMode').addEventListener('click', ()=>{
+  const isOn = document.body.classList.toggle('presentation-mode');
+  document.getElementById('btnPresentMode').innerHTML = isOn ? '&#10005;&nbsp; Keluar Mode Presentasi' : '&#9654;&nbsp; Mode Presentasi';
+  if(isOn){
+    if(document.documentElement.requestFullscreen){ document.documentElement.requestFullscreen().catch(()=>{}); }
+  } else {
+    if(document.fullscreenElement && document.exitFullscreen){ document.exitFullscreen().catch(()=>{}); }
+  }
+  if(isOn) syncPresentNav();
+  setTimeout(()=>{ Object.values(charts).forEach(c=>{ try{ c.resize(); }catch(e){} }); }, 150);
+});
+
+// ---------------- state ----------------
+let rawRows = [];
+let headers = [];
+let mapping = {};
+let data = [];
+let allData = [];
+let currentFileName = '';
+let stagedFiles = []; // [{name, rows, headers}]
+let charts = {};
+let inacbgMode = false;
+let showIdentity = true;
+let detailPage = 0;
+const PAGE_SIZE = 25;
+let detailFiltered = [];
+
+const FIELD_DEFS = [
+  {key:'kode', label:'Kode INA-CBG', required:true, keywords:['kode_inacbg','kodeinacbg','kode cbg','kodecbg','inacbg','cbg','kode']},
+  {key:'deskripsi', label:'Deskripsi / Diagnosa', required:false, keywords:['deskripsi','diagnosa','diagnosis','nama','description','uraian']},
+  {key:'tarifKlaim', label:'Tarif INA-CBG (klaim)*', required:true, keywords:['total_tarif','tarif_inacbg','tarifinacbg','tarif klaim','tarifklaim','klaim','tarif']},
+  {key:'tarifRS', label:'Biaya Riil RS', required:false, keywords:['tarif_rs','tarifrs','biaya_riil','biayariil','real cost','riil','cost rs','hpp']},
+  {key:'los', label:'Lama Rawat (LOS, hari)', required:false, keywords:['los','lama_rawat','lamarawat','hari_rawat','harirawat','length of stay']},
+  {key:'tglMasuk', label:'Tanggal Masuk', required:false, keywords:['admission_date','tgl_masuk','tanggal_masuk','admission','masuk']},
+  {key:'tglKeluar', label:'Tanggal Keluar', required:false, keywords:['discharge_date','tgl_keluar','tanggal_keluar','discharge','keluar','pulang']},
+  {key:'kelasRawat', label:'Kelas Rawat', required:false, keywords:['kelas_rawat','kelasrawat','kelas','class']},
+  {key:'ptd', label:'Rawat Inap / Rawat Jalan (PTD)', required:false, hint:'Nilai 1 = Rawat Inap, nilai 2 = Rawat Jalan', keywords:['ptd','jenis_kunjungan','jeniskunjungan','tipe_pasien','jenis_perawatan','jenis_rawat']},
+  {key:'severity', label:'Tingkat Keparahan', required:false, keywords:['severity','keparahan','tingkat_keparahan','tingkatkeparahan','tingkat']},
+  {key:'statusPulang', label:'Cara / Status Pulang', required:false, keywords:['discharge_status','cara_pulang','carapulang','status_pulang','status']},
+  {key:'umur', label:'Usia (tahun)', required:false, keywords:['umur_tahun','umurtahun','usia','age','umur']},
+  {key:'dpjp', label:'Dokter Penanggung Jawab (DPJP)', required:false, keywords:['dpjp','dokter','doctor','physician']},
+  {key:'noRawat', label:'No. Rawat / RM', required:false, keywords:['mrn','no_rawat','norawat','no_rm','norm','no rekam','rm','id']}
+];
+
+// official INA-CBG MIX export signature (78 official fields)
+const INACBG_SIGNATURE = ['KODE_RS','KELAS_RS','KELAS_RAWAT','KODE_TARIF','PTD','ADMISSION_DATE','DISCHARGE_DATE',
+  'BIRTH_DATE','SEX','DISCHARGE_STATUS','DIAGLIST','PROCLIST','INACBG','DESKRIPSI_INACBG','TARIF_INACBG',
+  'TOTAL_TARIF','TARIF_RS','LOS','NAMA_PASIEN','MRN','DPJP','SEP','C1','C2','C3','C4'];
+
+const SEX_LABELS = {'1':'Laki-laki','2':'Perempuan'};
+const PTD_LABELS = {'1':'Rawat Inap','2':'Rawat Jalan'};
+const DISCHARGE_LABELS = {'1':'Pulang / Sembuh','2':'Rujuk ke RS Lain','3':'Pulang Atas Permintaan Sendiri','4':'Meninggal','5':'Lain-lain'};
+const CARA_MASUK_LABELS = {'gp':'Rujukan / Poliklinik','emd':'Gawat Darurat (IGD)','outp':'Rawat Jalan Langsung','born':'Bayi Baru Lahir'};
+const BILLING_LABELS = {
+  procedure_amt:'Tindakan Non-Bedah', surgical_amt:'Tindakan Bedah', consul_amt:'Konsultasi', expert_amt:'Tenaga Ahli',
+  nursing_amt:'Keperawatan', ancillary_amt:'Penunjang', blood_amt:'Pelayanan Darah', laboratory_amt:'Laboratorium',
+  radiology_amt:'Radiologi', rehab_amt:'Rehabilitasi', room_amt:'Kamar Akomodasi', intensive_amt:'Rawat Intensif',
+  drug_amt:'Obat', device_amt:'Alat Kesehatan', consumable_amt:'BMHP', device_rent_amt:'Sewa Alat',
+  drug_chronic_amt:'Obat Kronis', drug_chemo_amt:'Obat Kemoterapi'
+};
+
+// ---------------- helpers ----------------
+function norm(s){return (s||'').toString().toLowerCase().replace(/[^a-z0-9]/g,'');}
+function findHeader(hdrs, name){
+  const target = name.toUpperCase();
+  return hdrs.find(h=>h.trim().toUpperCase()===target) || null;
+}
+function detectInacbgFormat(hdrs){
+  const setH = new Set(hdrs.map(h=>h.trim().toUpperCase()));
+  let matches=0;
+  INACBG_SIGNATURE.forEach(f=>{ if(setH.has(f)) matches++; });
+  return matches;
+}
+function buildInacbgMapping(hdrs){
+  return {
+    kode: findHeader(hdrs,'INACBG'),
+    deskripsi: findHeader(hdrs,'DESKRIPSI_INACBG'),
+    tarifKlaim: findHeader(hdrs,'TOTAL_TARIF') || findHeader(hdrs,'TARIF_INACBG'),
+    tarifRS: findHeader(hdrs,'TARIF_RS'),
+    los: findHeader(hdrs,'LOS'),
+    tglMasuk: findHeader(hdrs,'ADMISSION_DATE'),
+    tglKeluar: findHeader(hdrs,'DISCHARGE_DATE'),
+    kelasRawat: findHeader(hdrs,'KELAS_RAWAT'),
+    ptd: findHeader(hdrs,'PTD'),
+    severity: findHeader(hdrs,'C3'),
+    statusPulang: findHeader(hdrs,'DISCHARGE_STATUS'),
+    umur: findHeader(hdrs,'UMUR_TAHUN'),
+    dpjp: findHeader(hdrs,'DPJP'),
+    noRawat: findHeader(hdrs,'MRN')
+  };
+}
+
+function guessMapping(hdrs){
+  const used = new Set();
+  const m = {};
+  FIELD_DEFS.forEach(f=>{
+    let best=null, bestScore=0;
+    hdrs.forEach(h=>{
+      if(used.has(h)) return;
+      const nh = norm(h);
+      f.keywords.forEach(k=>{
+        const nk = norm(k);
+        if(nh===nk && bestScore<100){best=h;bestScore=100;}
+        else if(nh.includes(nk) && bestScore<50){best=h;bestScore=50;}
+      });
+    });
+    if(best){m[f.key]=best; used.add(best);}
+  });
+  return m;
+}
+
+function parseNumber(v){
+  if(v===null||v===undefined||v==='') return null;
+  if(typeof v==='number') return v;
+  let s = v.toString().trim().replace(/rp/i,'').replace(/\s/g,'');
+  if(s==='') return null;
+  const hasDot = s.includes('.'), hasComma = s.includes(',');
+  if(hasDot && hasComma){
+    s = s.replace(/\./g,'').replace(',', '.');
+  } else if(hasComma && !hasDot){
+    s = s.replace(',', '.');
+  } else {
+    const dotCount = (s.match(/\./g)||[]).length;
+    if(dotCount>1) s = s.replace(/\./g,'');
+  }
+  const n = parseFloat(s.replace(/[^0-9.\-]/g,''));
+  return isNaN(n) ? null : n;
+}
+
+function parseDate(v){
+  if(!v) return null;
+  if(v instanceof Date) return v;
+  if(typeof v==='number'){
+    const d = new Date(Math.round((v-25569)*86400*1000));
+    return isNaN(d) ? null : d;
+  }
+  const s = v.toString().trim();
+  let m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+  if(m){
+    let [,d,mo,y]=m; if(y.length===2) y='20'+y;
+    const dt = new Date(+y, +mo-1, +d);
+    if(!isNaN(dt)) return dt;
+  }
+  m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+  if(m){
+    const [,y,mo,d]=m;
+    const dt = new Date(+y, +mo-1, +d);
+    if(!isNaN(dt)) return dt;
+  }
+  const dt = new Date(s);
+  return isNaN(dt) ? null : dt;
+}
+
+function formatPtdValue(raw){
+  if(raw===null||raw===undefined) return null;
+  const s = raw.toString().trim();
+  if(s==='') return null;
+  return PTD_LABELS[s] || s;
+}
+
+function formatSeverityValue(raw){
+  if(raw===null||raw===undefined) return null;
+  const s = raw.toString().trim();
+  if(s==='') return null;
+  if(/^[0-9]+$/.test(s)) return 'Tingkat '+s;
+  if(/^(I|II|III|IV)$/i.test(s)) return 'Tingkat '+s.toUpperCase();
+  return s;
+}
+
+function deriveSeverity(kode){
+  if(!kode) return 'Tidak diketahui';
+  const parts = kode.toString().trim().split('-');
+  const last = (parts[parts.length-1]||'').toUpperCase();
+  if(['I','II','III'].includes(last)) return 'Tingkat '+last;
+  if(last==='0') return 'Tingkat I';
+  if(last==='1') return 'Tingkat II';
+  if(last==='2') return 'Tingkat III';
+  return 'Tidak diketahui';
+}
+
+function extractInacbgJsonMeta(c2str){
+  if(!c2str) return null;
+  const marker = '{"cara_masuk"';
+  const pos = c2str.lastIndexOf(marker);
+  if(pos===-1) return null;
+  try{ return JSON.parse(c2str.slice(pos)); }catch(e){ return null; }
+}
+
+function fmtRp(n){
+  if(n===null||n===undefined||isNaN(n)) return '&mdash;';
+  return 'Rp' + Math.round(n).toLocaleString('id-ID');
+}
+function fmtNum(n,d){
+  if(n===null||n===undefined||isNaN(n)) return '&mdash;';
+  return n.toLocaleString('id-ID',{maximumFractionDigits:d||0, minimumFractionDigits:0});
+}
+function maskName(s){
+  if(!s) return '&mdash;';
+  const str = s.toString().trim();
+  if(str.length<=2) return '•'.repeat(str.length);
+  return str[0] + '•'.repeat(Math.max(3,str.length-2)) + str[str.length-1];
+}
+
+// ---------------- persistent storage (IndexedDB) ----------------
+const DB_NAME = 'casemix_analyzer_db';
+const DB_VERSION = 1;
+const STORE_NAME = 'datasets';
+let dbSupportOk = !!window.indexedDB;
+
+function openDb(){
+  return new Promise((resolve,reject)=>{
+    if(!window.indexedDB){ reject(new Error('IndexedDB tidak didukung di peramban ini.')); return; }
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = e=>{
+      const db = e.target.result;
+      if(!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME, {keyPath:'id'});
+    };
+    req.onsuccess = e=>resolve(e.target.result);
+    req.onerror = e=>reject(e.target.error);
+  });
+}
+async function dbPut(record){
+  const db = await openDb();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction(STORE_NAME,'readwrite');
+    tx.objectStore(STORE_NAME).put(record);
+    tx.oncomplete = ()=>resolve();
+    tx.onerror = e=>reject(e.target.error);
+  });
+}
+async function dbGetAll(){
+  const db = await openDb();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction(STORE_NAME,'readonly');
+    const req = tx.objectStore(STORE_NAME).getAll();
+    req.onsuccess = ()=>resolve(req.result||[]);
+    req.onerror = e=>reject(e.target.error);
+  });
+}
+async function dbDelete(id){
+  const db = await openDb();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction(STORE_NAME,'readwrite');
+    const req = tx.objectStore(STORE_NAME).delete(id);
+    tx.oncomplete = ()=>resolve();
+    tx.onerror = e=>reject(e.target.error || new Error('Gagal menghapus dari IndexedDB'));
+    req.onerror = e=>reject(e.target.error || new Error('Gagal menghapus dari IndexedDB'));
+  });
+}
+
+function showSavedStatus(msg, isError){
+  const el = document.getElementById('savedStatusMsg');
+  el.textContent = msg;
+  el.className = 'saved-status ' + (isError ? 'err' : 'ok');
+  el.style.display = 'block';
+  clearTimeout(showSavedStatus._t);
+  showSavedStatus._t = setTimeout(()=>{ el.style.display='none'; }, 4000);
+}
+
+async function saveCurrentDataset(){
+  if(!dbSupportOk) return;
+  try{
+    const record = {
+      id: Date.now().toString(),
+      filename: currentFileName || 'data.csv',
+      savedAt: new Date().toISOString(),
+      rowCount: allData.length,
+      inacbgMode: inacbgMode,
+      data: allData
+    };
+    await dbPut(record);
+    await refreshSavedList();
+  }catch(e){
+    console.error('Gagal menyimpan dataset:', e);
+  }
+}
+
+async function refreshSavedList(collapseIfEmpty){
+  if(collapseIfEmpty===undefined) collapseIfEmpty = true;
+  const box = document.getElementById('savedDatasetsBox');
+  const section = document.getElementById('savedSection');
+  if(!dbSupportOk){ section.style.display='none'; return; }
+  try{
+    const list = await dbGetAll();
+    if(!list.length){
+      if(collapseIfEmpty){ section.style.display='none'; box.innerHTML=''; return; }
+      section.style.display='block';
+      box.innerHTML = '<div class="empty-hint">Belum ada data tersimpan.</div>';
+      return;
+    }
+    list.sort((a,b)=> new Date(b.savedAt) - new Date(a.savedAt));
+    section.style.display='block';
+    box.innerHTML = list.map(rec=>{
+      const dt = new Date(rec.savedAt).toLocaleString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+      const tipe = rec.inacbgMode ? 'Format resmi INA-CBG' : 'Format umum';
+      return `<div class="saved-item" id="saved-item-${rec.id}">
+        <div class="meta">
+          <strong>${rec.filename}</strong>
+          <span>${tipe} &middot; ${rec.rowCount.toLocaleString('id-ID')} baris &middot; disimpan ${dt}</span>
+        </div>
+        <div class="actions" id="saved-actions-${rec.id}">
+          <button class="btn-primary" data-action="open" data-id="${rec.id}">Buka</button>
+          <button class="btn-danger" data-action="delete" data-id="${rec.id}">Hapus</button>
+        </div>
+      </div>`;
+    }).join('');
+  }catch(e){
+    console.error('Gagal memuat daftar dataset tersimpan:', e);
+    section.style.display='none';
+  }
+}
+
+document.getElementById('savedDatasetsBox').addEventListener('click', async e=>{
+  const btn = e.target.closest('button[data-action]');
+  if(!btn) return;
+  const id = btn.dataset.id;
+  const action = btn.dataset.action;
+
+  if(action==='delete'){
+    const actionsEl = document.getElementById('saved-actions-'+id);
+    if(actionsEl){
+      actionsEl.innerHTML = `<span class="confirm-row"><span class="confirm-text">Yakin hapus data ini?</span>
+        <button class="btn-danger" data-action="confirm-delete" data-id="${id}">Ya, Hapus</button>
+        <button class="btn-ghost" data-action="cancel-delete" data-id="${id}">Batal</button></span>`;
+    }
+  } else if(action==='cancel-delete'){
+    refreshSavedList(false);
+  } else if(action==='confirm-delete'){
+    try{
+      await dbDelete(id);
+      await refreshSavedList(false);
+      showSavedStatus('Data berhasil dihapus dari perangkat ini.', false);
+    }catch(err){
+      console.error('Gagal menghapus dataset:', err);
+      showSavedStatus('Gagal menghapus data: ' + (err && err.message ? err.message : 'terjadi kesalahan tak terduga.'), true);
+    }
+  } else if(action==='open'){
+    try{
+      const list = await dbGetAll();
+      const rec = list.find(r=>r.id===id);
+      if(!rec){ showSavedStatus('Data tidak ditemukan, mungkin sudah terhapus.', true); return; }
+      openSavedDataset(rec);
+    }catch(err){
+      console.error('Gagal membuka dataset:', err);
+      showSavedStatus('Gagal membuka data: ' + (err && err.message ? err.message : 'terjadi kesalahan tak terduga.'), true);
+    }
+  }
+});
+
+function openSavedDataset(rec){
+  data = rec.data;
+  allData = rec.data.slice();
+  inacbgMode = rec.inacbgMode;
+  currentFileName = rec.filename;
+  applyInacbgVisibility();
+  resetFilterInputs();
+  document.getElementById('panel-mapping').style.display='none';
+  document.getElementById('filenameBadge').style.display='inline-block';
+  document.getElementById('filenameBadge').textContent = rec.filename + ' (tersimpan)';
+  document.getElementById('panel-dashboard').style.display='block';
+  updateDashSub();
+  renderDashboard();
+  document.getElementById('panel-dashboard').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+refreshSavedList();
+
+// ---------------- file handling ----------------
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+dropzone.addEventListener('click', ()=>fileInput.click());
+dropzone.addEventListener('keydown', e=>{if(e.key==='Enter'||e.key===' ')fileInput.click();});
+dropzone.addEventListener('dragover', e=>{e.preventDefault(); dropzone.classList.add('drag');});
+dropzone.addEventListener('dragleave', ()=>dropzone.classList.remove('drag'));
+dropzone.addEventListener('drop', e=>{
+  e.preventDefault(); dropzone.classList.remove('drag');
+  if(e.dataTransfer.files.length) handleFiles(Array.from(e.dataTransfer.files));
+});
+fileInput.addEventListener('change', e=>{
+  if(e.target.files.length) handleFiles(Array.from(e.target.files));
+  fileInput.value = '';
+});
+document.getElementById('btnSample').addEventListener('click', loadSampleData);
+
+function guessDelimiter(text){
+  const firstLine = text.split(/\r?\n/,1)[0];
+  const tabs = (firstLine.match(/\t/g)||[]).length;
+  const semis = (firstLine.match(/;/g)||[]).length;
+  const commas = (firstLine.match(/,/g)||[]).length;
+  if(tabs>0 && tabs>=semis && tabs>=commas) return '\t';
+  if(semis>0 && semis>=commas) return ';';
+  return ',';
+}
+
+function parseFileToRows(file){
+  const ext = file.name.split('.').pop().toLowerCase();
+  return new Promise((resolve, reject)=>{
+    if(ext==='xlsx' || ext==='xls'){
+      const reader = new FileReader();
+      reader.onload = evt=>{
+        try{
+          const wb = XLSX.read(evt.target.result, {type:'array', cellDates:true});
+          const sheet = wb.Sheets[wb.SheetNames[0]];
+          const json = XLSX.utils.sheet_to_json(sheet, {defval:'', raw:true});
+          resolve(json);
+        }catch(ex){ reject(ex); }
+      };
+      reader.onerror = ()=>reject(new Error('Gagal membaca berkas.'));
+      reader.readAsArrayBuffer(file);
+    } else {
+      const reader = new FileReader();
+      reader.onload = evt=>{
+        try{
+          const text = evt.target.result;
+          const delim = guessDelimiter(text);
+          const res = Papa.parse(text, {header:true, skipEmptyLines:true, delimiter: delim});
+          resolve(res.data);
+        }catch(ex){ reject(ex); }
+      };
+      reader.onerror = ()=>reject(new Error('Gagal membaca berkas.'));
+      reader.readAsText(file, 'UTF-8');
+    }
+  });
+}
+
+async function handleFiles(files){
+  document.getElementById('loadingLine').style.display='block';
+  for(const file of files){
+    try{
+      const rows = await parseFileToRows(file);
+      if(!rows || !rows.length){
+        showSavedStatus('Berkas "'+file.name+'" tidak berisi data yang bisa dibaca, dilewati.', true);
+        continue;
+      }
+      stagedFiles.push({ name: file.name, rows: rows, headers: Object.keys(rows[0]) });
+    }catch(ex){
+      showSavedStatus('Gagal membaca berkas "'+file.name+'": '+(ex && ex.message ? ex.message : 'kesalahan tak dikenal.'), true);
+    }
+  }
+  document.getElementById('loadingLine').style.display='none';
+  renderStagedList();
+}
+
+function renderStagedList(){
+  const section = document.getElementById('stagedSection');
+  const box = document.getElementById('stagedFilesBox');
+  if(!stagedFiles.length){ section.style.display='none'; box.innerHTML=''; return; }
+  section.style.display='block';
+  const totalRows = stagedFiles.reduce((a,f)=>a+f.rows.length,0);
+  box.innerHTML = stagedFiles.map((f,i)=>`
+    <div class="admin-row">
+      <div class="who"><strong>${f.name}</strong><span>${f.rows.length.toLocaleString('id-ID')} baris</span></div>
+      <div class="actions"><button class="btn-danger" data-idx="${i}" id="btnRemoveStaged${i}">Hapus dari daftar</button></div>
+    </div>`).join('');
+  stagedFiles.forEach((f,i)=>{
+    document.getElementById('btnRemoveStaged'+i).addEventListener('click', ()=>{
+      stagedFiles.splice(i,1);
+      renderStagedList();
+    });
+  });
+  const btn = document.getElementById('btnProcessStaged');
+  btn.textContent = stagedFiles.length>1
+    ? `Proses & Gabungkan ${stagedFiles.length} Berkas (${totalRows.toLocaleString('id-ID')} baris)`
+    : `Proses Berkas (${totalRows.toLocaleString('id-ID')} baris)`;
+}
+
+function mergeStagedFiles(){
+  if(!stagedFiles.length) return [];
+  const canonical = stagedFiles[0].headers;
+  const merged = [];
+  stagedFiles.forEach(f=>{
+    f.rows.forEach(row=>{
+      const obj = {};
+      canonical.forEach(h=>{ obj[h] = (row[h]!==undefined && row[h]!==null) ? row[h] : ''; });
+      merged.push(obj);
+    });
+  });
+  return merged;
+}
+
+document.getElementById('btnProcessStaged').addEventListener('click', ()=>{
+  const merged = mergeStagedFiles();
+  if(!merged.length){
+    showSavedStatus('Tidak ada baris data pada berkas yang dipilih.', true);
+    return;
+  }
+  currentFileName = stagedFiles.length>1
+    ? `Gabungan ${stagedFiles.length} berkas (${stagedFiles.map(f=>f.name).join(', ')})`
+    : stagedFiles[0].name;
+  document.getElementById('filenameBadge').style.display='inline-block';
+  document.getElementById('filenameBadge').textContent = currentFileName;
+  onParsed(merged);
+  stagedFiles = [];
+  renderStagedList();
+});
+document.getElementById('btnClearStaged').addEventListener('click', ()=>{
+  stagedFiles = [];
+  renderStagedList();
+});
+
+function onParsed(rows){
+  if(!rows || !rows.length){
+    alert('Berkas tidak berisi data yang bisa dibaca. Periksa kembali formatnya.');
+    return;
+  }
+  rawRows = rows;
+  headers = Object.keys(rows[0]);
+  const score = detectInacbgFormat(headers);
+  inacbgMode = score >= 12;
+
+  if(inacbgMode){
+    mapping = buildInacbgMapping(headers);
+    document.getElementById('detectBanner').style.display='block';
+    document.getElementById('detectDesc').textContent =
+      `${headers.length} kolom terbaca dari berkas, ${score} di antaranya cocok dengan skema resmi INA-CBG. Bobot casemix, MDC, dan cara masuk yang tersimpan di dalam berkas akan ikut diuraikan otomatis.`;
+    const chipList = document.getElementById('chipList');
+    const sigSet = new Set(INACBG_SIGNATURE);
+    chipList.innerHTML = headers.map(h=>{
+      const matched = sigSet.has(h.trim().toUpperCase());
+      return `<span class="chip ${matched?'matched':''}">${h}</span>`;
+    }).join('');
+    document.getElementById('mappingSub').textContent = 'Pemetaan kolom sudah diisi otomatis sesuai skema resmi. Anda tetap bisa mengubahnya bila perlu, lalu klik Proses & Analisa.';
+  } else {
+    mapping = guessMapping(headers);
+    document.getElementById('detectBanner').style.display='none';
+    document.getElementById('mappingSub').textContent = 'Sistem sudah menebak kolom yang sesuai dari header berkas Anda. Periksa dan sesuaikan bila perlu.';
+  }
+
+  renderMappingUI();
+  document.getElementById('panel-mapping').style.display='block';
+  document.getElementById('panel-dashboard').style.display='none';
+  document.getElementById('rowCountBadge').textContent = rawRows.length.toLocaleString('id-ID') + ' baris terbaca';
+  document.getElementById('panel-mapping').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function renderMappingUI(){
+  const grid = document.getElementById('mapGrid');
+  grid.innerHTML='';
+  FIELD_DEFS.forEach(f=>{
+    const div = document.createElement('div');
+    div.className='map-field';
+    const label = document.createElement('label');
+    label.innerHTML = f.label + (f.required?' <span class="req">*</span>':'');
+    const sel = document.createElement('select');
+    sel.id = 'map_'+f.key;
+    let opts = '<option value="">-- tidak ada --</option>';
+    headers.forEach(h=>{
+      const sel_attr = mapping[f.key]===h ? 'selected' : '';
+      opts += `<option value="${h}" ${sel_attr}>${h}</option>`;
+    });
+    sel.innerHTML = opts;
+    div.appendChild(label);
+    div.appendChild(sel);
+    if(f.hint){
+      const hint = document.createElement('div');
+      hint.className = 'map-hint';
+      hint.textContent = f.hint;
+      div.appendChild(hint);
+    }
+    grid.appendChild(div);
+  });
+}
+
+document.getElementById('btnCancelMap').addEventListener('click', ()=>{
+  document.getElementById('panel-mapping').style.display='none';
+  document.getElementById('filenameBadge').style.display='none';
+  fileInput.value='';
+});
+
+document.getElementById('btnProcess').addEventListener('click', ()=>{
+  FIELD_DEFS.forEach(f=>{
+    const sel = document.getElementById('map_'+f.key);
+    mapping[f.key] = sel.value || null;
+  });
+  if(!mapping.kode || !mapping.tarifKlaim){
+    alert('Kolom Kode INA-CBG dan Tarif INA-CBG (klaim) wajib dipetakan sebelum melanjutkan.');
+    return;
+  }
+  processData();
+});
+
+function applyInacbgVisibility(){
+  document.querySelectorAll('.inacbg-only').forEach(t=>{ t.style.display = inacbgMode ? 'flex' : 'none'; });
+  document.getElementById('identityToggleWrap').style.display = inacbgMode ? 'flex' : 'none';
+}
+
+function processData(){
+  data = rawRows.map(row=>{
+    const kode = mapping.kode ? (row[mapping.kode]||'').toString().trim() : '';
+    const tglMasuk = mapping.tglMasuk ? parseDate(row[mapping.tglMasuk]) : null;
+    const tglKeluar = mapping.tglKeluar ? parseDate(row[mapping.tglKeluar]) : null;
+    let los = mapping.los ? parseNumber(row[mapping.los]) : null;
+    if(los===null && tglMasuk && tglKeluar){
+      los = Math.round((tglKeluar - tglMasuk) / 86400000);
+    }
+    const statusRaw = mapping.statusPulang ? (row[mapping.statusPulang]||'').toString().trim() : null;
+
+    const rec = {
+      noRawat: mapping.noRawat ? row[mapping.noRawat] : null,
+      kode: kode,
+      deskripsi: mapping.deskripsi ? (row[mapping.deskripsi]||'').toString().trim() : '',
+      tarifKlaim: mapping.tarifKlaim ? parseNumber(row[mapping.tarifKlaim]) : null,
+      tarifRS: mapping.tarifRS ? parseNumber(row[mapping.tarifRS]) : null,
+      los: (los!==null && los>=0 && los<400) ? los : null,
+      tglMasuk: tglMasuk,
+      tglKeluar: tglKeluar,
+      kelasRawat: mapping.kelasRawat ? (row[mapping.kelasRawat]||'Tidak diketahui').toString().trim() : null,
+      ptd: mapping.ptd ? formatPtdValue(row[mapping.ptd]) : null,
+      severity: mapping.severity ? (formatSeverityValue(row[mapping.severity]) || deriveSeverity(kode)) : deriveSeverity(kode),
+      statusPulang: statusRaw,
+      umur: mapping.umur ? parseNumber(row[mapping.umur]) : null,
+      dpjp: mapping.dpjp ? (row[mapping.dpjp]||'').toString().trim() : null
+    };
+
+    if(inacbgMode){
+      rec.namaPasien = row['NAMA_PASIEN'] || '';
+      rec.mrn = row['MRN'] || '';
+      rec.sex = SEX_LABELS[row['SEX']] || row['SEX'] || null;
+      rec.kelasRawat = 'Kelas ' + (row['KELAS_RAWAT']||'?');
+      rec.statusPulangLabel = DISCHARGE_LABELS[statusRaw] || ('Status '+statusRaw);
+      rec.diaglist = (row['DIAGLIST']||'').split(';').map(s=>s.trim()).filter(s=>s && s!=='-');
+      rec.proclist = (row['PROCLIST']||'').split(';').map(s=>s.trim()).filter(s=>s && s!=='-');
+      rec.hasProsedur = rec.proclist.length > 0;
+
+      const meta = extractInacbgJsonMeta(row['C2']);
+      if(meta){
+        rec.caraMasuk = CARA_MASUK_LABELS[meta.cara_masuk] || meta.cara_masuk || 'Tidak diketahui';
+        const idrg = meta.idrg || {};
+        rec.costWeight = parseFloat(idrg.cost_weight);
+        rec.totalCostWeight = parseFloat(idrg.total_cost_weight);
+        rec.mdc = idrg.mdc_description || 'Tidak diketahui';
+        rec.drg = idrg.drg_description || '';
+        rec.billing = meta.billing_group || {};
+      } else {
+        rec.caraMasuk = 'Tidak diketahui';
+        rec.costWeight = null;
+        rec.totalCostWeight = null;
+        rec.mdc = 'Tidak diketahui';
+        rec.billing = {};
+      }
+    }
+    if(!rec.statusPulangLabel) rec.statusPulangLabel = rec.statusPulang || null;
+    return rec;
+  }).filter(r=>r.kode);
+
+  if(!data.length){
+    alert('Tidak ada baris valid setelah pemetaan. Periksa kembali kolom Kode INA-CBG.');
+    return;
+  }
+
+  applyInacbgVisibility();
+  allData = data.slice();
+  resetFilterInputs();
+
+  document.getElementById('panel-dashboard').style.display='block';
+  updateDashSub();
+  renderDashboard();
+  document.getElementById('panel-dashboard').scrollIntoView({behavior:'smooth', block:'start'});
+
+  const chkSimpan = document.getElementById('chkSimpan');
+  if(chkSimpan && chkSimpan.checked){
+    saveCurrentDataset();
+  }
+}
+
+function updateDashSub(){
+  let periodTxt = '';
+  const dated = data.filter(r=>r.tglMasuk);
+  if(dated.length){
+    const times = dated.map(r=>r.tglMasuk.getTime());
+    const minD = new Date(Math.min(...times)), maxD = new Date(Math.max(...times));
+    const fmt = d=>d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
+    periodTxt = ` Periode data: ${fmt(minD)} \u2013 ${fmt(maxD)}.`;
+  }
+  const filterTxt = data.length!==allData.length ? ` (${data.length.toLocaleString('id-ID')} dari ${allData.length.toLocaleString('id-ID')} kasus sesuai filter aktif)` : '';
+  document.getElementById('dashSub').textContent = `${data.length.toLocaleString('id-ID')} kasus dianalisa dari berkas yang diunggah.${periodTxt}${filterTxt}`;
+}
+
+// ---------------- sample data ----------------
+function loadSampleData(){
+  const kodes = ['I-4-10-I','I-4-10-II','I-4-10-III','J-4-14-I','J-4-14-II','K-4-17-I','K-4-17-II','K-4-17-III','O-6-10-I','O-6-10-II','Q-5-45-I','Q-5-45-II','A-4-15-I','A-4-15-II','A-4-15-III'];
+  const kelas = ['Kelas 1','Kelas 2','Kelas 3','VIP'];
+  const status = ['Sembuh','Membaik','Rujuk','Pulang Paksa'];
+  const rows = [];
+  const start = new Date(2026,0,1);
+  for(let i=0;i<600;i++){
+    const kode = kodes[Math.floor(Math.random()*kodes.length)];
+    const baseTarif = 2500000 + (kode.length*37000) + Math.random()*4000000;
+    const tarifKlaim = Math.round(baseTarif/1000)*1000;
+    const variance = (Math.random()-0.55)*0.35;
+    const tarifRS = Math.round(tarifKlaim*(1+variance)/1000)*1000;
+    const masuk = new Date(start.getTime() + Math.random()*220*86400000);
+    const los = Math.max(1, Math.round(Math.abs(1 + Math.random()*9)));
+    rows.push({
+      no_rawat: 'RJ'+(100000+i),
+      kode_inacbg: kode,
+      deskripsi: 'Kasus contoh '+kode,
+      tarif_inacbg: tarifKlaim,
+      tarif_rs: tarifRS,
+      tgl_masuk: masuk.toISOString().slice(0,10),
+      los_hari: los,
+      kelas_rawat: kelas[Math.floor(Math.random()*kelas.length)],
+      cara_pulang: status[Math.floor(Math.random()*status.length)]
+    });
+  }
+  currentFileName = 'data_contoh.csv';
+  document.getElementById('filenameBadge').style.display='inline-block';
+  document.getElementById('filenameBadge').textContent = 'data_contoh.csv (dummy)';
+  onParsed(rows);
+}
+
+// ---------------- tabs ----------------
+function tabLabel(tab){ const s = tab.querySelector('span'); return (s||tab).textContent.trim(); }
+function setPageTitle(t){ const el = document.getElementById('pageTitle'); if(el) el.textContent = t; }
+function scrollToDashboardTop(){
+  const el = document.getElementById('panel-dashboard');
+  if(el && el.getBoundingClientRect().top < 0) el.scrollIntoView({behavior:'smooth', block:'start'});
+  else if(!document.body.classList.contains('presentation-mode')) window.scrollTo({top:0, behavior:'smooth'});
+}
+function syncPresentNav(){
+  const box = document.getElementById('presentNav');
+  if(!box) return;
+  const tabs = Array.from(document.querySelectorAll('#navTabs .tab')).filter(t=>t.style.display!=='none' && getComputedStyle(t).display!=='none');
+  box.innerHTML = '';
+  tabs.forEach(t=>{
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = tabLabel(t);
+    if(t.classList.contains('active')) b.classList.add('active');
+    b.addEventListener('click', ()=>{ t.click(); });
+    box.appendChild(b);
+  });
+}
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tabpanel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+    setPageTitle(tabLabel(tab));
+    document.body.classList.remove('nav-open');
+    if(document.body.classList.contains('presentation-mode')) syncPresentNav();
+    scrollToDashboardTop();
+    setTimeout(()=>{ Object.values(charts).forEach(c=>{ try{ c.resize(); }catch(e){} }); }, 60);
+  });
+  tab.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); tab.click(); } });
+});
+
+// tampilan: unggah vs analisis
+function setView(view){
+  document.body.classList.toggle('view-analysis', view==='analysis');
+  document.body.classList.toggle('view-upload', view!=='analysis');
+  const nu = document.getElementById('navUpload');
+  if(nu) nu.classList.toggle('active', view!=='analysis');
+  if(view==='analysis'){
+    const act = document.querySelector('#navTabs .tab.active');
+    if(act) setPageTitle(tabLabel(act));
+  } else {
+    setPageTitle('Unggah Data');
+  }
+}
+setView('upload');
+document.getElementById('navUpload').addEventListener('click', ()=>{
+  setView('upload');
+  document.body.classList.remove('nav-open');
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+document.getElementById('menuBtn').addEventListener('click', ()=>document.body.classList.toggle('nav-open'));
+document.getElementById('navOverlay').addEventListener('click', ()=>document.body.classList.remove('nav-open'));
+(function filterFold(){
+  const t = document.getElementById('filterToggle'), body = document.getElementById('filterBody'), hint = document.getElementById('filterHint');
+  if(!t) return;
+  t.addEventListener('click', ()=>{
+    const open = body.hasAttribute('hidden');
+    if(open) body.removeAttribute('hidden'); else body.setAttribute('hidden','');
+    t.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  function refresh(){
+    const ids = ['filterJenis','filterMasuk','filterKeluar','filterUmurMin','filterUmurMax','filterSeverity','filterKelas','filterStatusPulang'];
+    let n = 0;
+    ids.forEach(id=>{ const el = document.getElementById(id); if(el && el.value && el.value!=='semua') n++; });
+    hint.textContent = n ? (n+' filter aktif') : 'Tidak ada filter aktif';
+    hint.classList.toggle('on', n>0);
+  }
+  ['btnApplyFilter','btnResetFilter'].forEach(id=>{ const b = document.getElementById(id); if(b) b.addEventListener('click', ()=>setTimeout(refresh,0)); });
+})();
+(function watchDashboard(){
+  const dash = document.getElementById('panel-dashboard');
+  const apply = ()=>{
+    const shown = dash.style.display && dash.style.display !== 'none';
+    if(shown){
+      const was = document.body.classList.contains('view-analysis');
+      document.body.classList.add('has-data'); setView('analysis');
+      if(!was) window.scrollTo({top:0});
+    } else { setView('upload'); }
+  };
+  new MutationObserver(apply).observe(dash, {attributes:true, attributeFilter:['style']});
+  apply();
+})();
+
+document.getElementById('identityToggle').addEventListener('change', e=>{
+  showIdentity = e.target.checked;
+  renderDetailTablePageOnly();
+  if(inacbgMode) renderFragmentasiReadmisi();
+});
+
+// ---------------- filter ----------------
+function populateSelectOptions(selectId, values){
+  const sel = document.getElementById(selectId);
+  const current = sel.value;
+  const uniq = Array.from(new Set(values.filter(v=>v))).sort();
+  sel.innerHTML = '<option value="semua">Semua</option>' + uniq.map(v=>`<option value="${v}">${v}</option>`).join('');
+  if(uniq.includes(current)) sel.value = current;
+}
+
+function populateFilterDropdowns(){
+  populateSelectOptions('filterSeverity', allData.map(r=>r.severity));
+  populateSelectOptions('filterKelas', allData.map(r=>r.kelasRawat));
+  populateSelectOptions('filterStatusPulang', allData.map(r=>r.statusPulangLabel));
+}
+
+function resetFilterInputs(){
+  const jenisSel = document.getElementById('filterJenis');
+  if(jenisSel) jenisSel.value = 'semua';
+  ['filterMasuk','filterKeluar'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.value='';
+  });
+  ['filterUmurMin','filterUmurMax'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.value='';
+  });
+  populateFilterDropdowns();
+  ['filterSeverity','filterKelas','filterStatusPulang'].forEach(id=>{
+    document.getElementById(id).value = 'semua';
+  });
+  const hasPtd = allData.some(r=>r.ptd);
+  document.getElementById('filterJenisWrap').style.display = hasPtd ? 'block' : 'none';
+}
+
+function applyFilters(){
+  if(!allData.length) return;
+  const hasPtd = allData.some(r=>r.ptd);
+  const jenisSel = document.getElementById('filterJenis');
+  const jenis = (hasPtd && jenisSel) ? jenisSel.value : 'semua';
+  const masuk = document.getElementById('filterMasuk').value;
+  const keluar = document.getElementById('filterKeluar').value;
+  const umurMinRaw = document.getElementById('filterUmurMin').value;
+  const umurMaxRaw = document.getElementById('filterUmurMax').value;
+  const umurMin = umurMinRaw!=='' ? parseFloat(umurMinRaw) : null;
+  const umurMax = umurMaxRaw!=='' ? parseFloat(umurMaxRaw) : null;
+  const severity = document.getElementById('filterSeverity').value;
+  const kelas = document.getElementById('filterKelas').value;
+  const statusPulang = document.getElementById('filterStatusPulang').value;
+
+  const dMasuk = masuk ? new Date(masuk+'T00:00:00') : null;
+  const dKeluar = keluar ? new Date(keluar+'T23:59:59') : null;
+
+  const filtered = allData.filter(r=>{
+    if(jenis!=='semua'){
+      const want = jenis==='inap' ? 'Rawat Inap' : 'Rawat Jalan';
+      if(r.ptd !== want) return false;
+    }
+    if(dMasuk && (!r.tglMasuk || r.tglMasuk < dMasuk)) return false;
+    if(dKeluar && (!r.tglKeluar || r.tglKeluar > dKeluar)) return false;
+    if(umurMin!==null && (r.umur===null || r.umur===undefined || r.umur < umurMin)) return false;
+    if(umurMax!==null && (r.umur===null || r.umur===undefined || r.umur > umurMax)) return false;
+    if(severity!=='semua' && r.severity !== severity) return false;
+    if(kelas!=='semua' && r.kelasRawat !== kelas) return false;
+    if(statusPulang!=='semua' && r.statusPulangLabel !== statusPulang) return false;
+    return true;
+  });
+
+  if(!filtered.length){
+    alert('Tidak ada kasus yang cocok dengan filter ini. Filter tidak diterapkan.');
+    return;
+  }
+  data = filtered;
+  updateDashSub();
+  renderDashboard();
+}
+
+function resetFilters(){
+  resetFilterInputs();
+  data = allData.slice();
+  updateDashSub();
+  renderDashboard();
+}
+
+document.getElementById('btnApplyFilter').addEventListener('click', applyFilters);
+document.getElementById('btnResetFilter').addEventListener('click', resetFilters);
+
+// ---------------- dashboard rendering ----------------
+function groupBy(arr, keyFn){
+  const m = new Map();
+  arr.forEach(r=>{
+    const k = keyFn(r);
+    if(!m.has(k)) m.set(k, []);
+    m.get(k).push(r);
+  });
+  return m;
+}
+function sum(arr, f){return arr.reduce((a,r)=>a+(f(r)||0),0);}
+function avg(arr, f){const vals=arr.map(f).filter(v=>v!==null&&v!==undefined&&!isNaN(v)); return vals.length?sum(vals,v=>v)/vals.length:null;}
+
+function destroyChart(id){ if(charts[id]){charts[id].destroy(); delete charts[id];} }
+
+const PALETTE = ['#EA580C','#0F766E','#2563EB','#D97706','#9333EA','#DB2777','#65A30D','#0891B2','#92400E','#475569'];
+
+if(window.ChartDataLabels){ Chart.register(window.ChartDataLabels); }
+
+// Pengaturan global agar semua grafik terasa hidup, jelas, dan siap presentasi
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.font.size = 13;
+Chart.defaults.color = '#44403C';
+Chart.defaults.layout.padding = {top:22, right:44, bottom:4, left:4};
+Chart.defaults.maintainAspectRatio = false;
+Chart.defaults.locale = 'id-ID';
+Chart.defaults.animation.duration = 650;
+Chart.defaults.animation.easing = 'easeOutQuart';
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.pointStyle = 'circle';
+Chart.defaults.plugins.legend.labels.padding = 16;
+Chart.defaults.plugins.legend.labels.font = {size:13, weight:600};
+Chart.defaults.plugins.legend.labels.color = '#1C1917';
+Chart.defaults.plugins.tooltip.backgroundColor = '#1C1917';
+Chart.defaults.plugins.tooltip.titleColor = '#FFFFFF';
+Chart.defaults.plugins.tooltip.bodyColor = '#FFEDD5';
+Chart.defaults.plugins.tooltip.padding = 12;
+Chart.defaults.plugins.tooltip.cornerRadius = 8;
+Chart.defaults.plugins.tooltip.titleFont = {size:13, weight:700};
+Chart.defaults.plugins.tooltip.bodyFont = {size:13};
+Chart.defaults.plugins.tooltip.displayColors = true;
+Chart.defaults.plugins.tooltip.boxPadding = 6;
+Chart.defaults.elements.bar.borderSkipped = false;
+Chart.defaults.elements.arc.borderWidth = 3;
+Chart.defaults.elements.arc.borderColor = '#FFFFFF';
+Chart.defaults.elements.line.tension = 0.3;
+Chart.defaults.elements.point.radius = 4;
+Chart.defaults.elements.point.hoverRadius = 6;
+
+// Menghasilkan konfigurasi label persentase untuk sebuah chart.
+// totalFn(ctx) opsional: fungsi untuk menentukan penyebut (default: jumlah seluruh data di dataset yang sama).
+function pctLabels(totalFn, opts){
+  opts = opts || {};
+  return {
+    color: opts.color || '#1C1917',
+    font: {size: opts.fontSize || 12, weight:700},
+    anchor: opts.anchor || 'end',
+    align: opts.align || 'end',
+    offset: opts.offset!==undefined ? opts.offset : 4,
+    clamp: true,
+    clip: false,
+    textStrokeColor: opts.textStrokeColor || ((opts.color||'').toLowerCase()==='#fff' ? 'rgba(28,25,23,0.55)' : 'rgba(255,255,255,0)'),
+    textStrokeWidth: opts.textStrokeWidth!==undefined ? opts.textStrokeWidth : ((opts.color||'').toLowerCase()==='#fff' ? 3 : 0),
+    formatter: (value, ctx)=>{
+      const total = typeof totalFn==='function' ? totalFn(ctx) : ctx.dataset.data.reduce((a,b)=>a+(typeof b==='number'?Math.abs(b):0),0);
+      if(!total) return '';
+      const pct = Math.abs(value)/total*100;
+      if(opts.hideBelow && pct < opts.hideBelow) return '';
+      return pct.toFixed(1)+'%';
+    }
+  };
+}
+function noPctLabels(){ return {display:false}; }
+// format ringkas untuk kartu & sumbu (angka penuh tetap ditampilkan di keterangan)
+function rpCompact(n){
+  const a = Math.abs(n), sign = n<0 ? '\u2212' : '';
+  if(a>=1e12) return sign+'Rp'+fmtNum(a/1e12,2)+' triliun';
+  if(a>=1e9)  return sign+'Rp'+fmtNum(a/1e9,2)+' miliar';
+  if(a>=1e7)  return sign+'Rp'+fmtNum(a/1e6,1)+' juta';
+  return null;
+}
+function fmtRpShort(n){
+  if(n===null||n===undefined||isNaN(n)) return '&mdash;';
+  return rpCompact(n) || fmtRp(n);
+}
+function axisRp(v){
+  const a = Math.abs(v), s = v<0 ? '-' : '';
+  if(a>=1e9) return s+'Rp'+fmtNum(a/1e9,1)+' M';
+  if(a>=1e6) return s+'Rp'+fmtNum(a/1e6,0)+' jt';
+  if(a>=1e3) return s+'Rp'+fmtNum(a/1e3,0)+' rb';
+  return s+'Rp'+fmtNum(a,0);
+}
+
+function renderDashboard(){
+  renderSummaryCards();
+  renderTopFreqChart();
+  renderKelasChart();
+  renderKodeSection();
+  renderSeverityChart();
+  renderLOSChart();
+  if(inacbgMode){
+    renderKlinisCards();
+    renderMdcChart();
+    renderCaraMasukChart();
+    renderGenderChart();
+    renderStatusPulangChart();
+    renderIcdAnalysis();
+    renderProsedurTable();
+    renderBiayaChart();
+    renderFragmentasiReadmisi();
+    renderInapJalanAnalysis();
+  }
+  renderRekomendasi();
+  renderSwot();
+  renderTrendChart();
+  renderDetailTable(true);
+}
+
+const CARD_ICONS = [
+  [/meninggal/i,'i-heart'], [/selisih/i,'i-scale'], [/klaim|tarif/i,'i-cash'], [/biaya|riil/i,'i-wallet'],
+  [/\blos\b|lama/i,'i-clock'], [/cmi/i,'i-gauge'], [/inap|jalan/i,'i-bed'], [/episode|fragment|readmisi|berulang/i,'i-repeat'],
+  [/pasien/i,'i-users'], [/kasus/i,'i-users'], [/diagnosis|prosedur/i,'i-file']
+];
+function cardIcon(label){
+  const plain = String(label).replace(/&[a-z#0-9]+;/gi,' ');
+  for(const [re, id] of CARD_ICONS){ if(re.test(plain)) return id; }
+  return 'i-chart';
+}
+function card(label,value,foot,cls){
+  let val = value, ft = foot || '';
+  const m = typeof value==='string' ? value.match(/^Rp(-?)([\d.]+)$/) : null;
+  if(m){
+    const num = parseInt(m[2].replace(/\./g,''),10) * (m[1] ? -1 : 1);
+    const short = rpCompact(num);
+    if(short){ val = short; ft = '<span class="full">'+value.replace('Rp-','-Rp')+'</span>' + ft; }
+  }
+  const extra = cls==='neg' ? ' neg-card' : (cls==='pos' ? ' pos-card' : '');
+  return `<div class="card${extra}"><div class="card-top"><div class="label">${label}</div><span class="card-icon"><svg class="ic" aria-hidden="true"><use href="#${cardIcon(label)}"/></svg></span></div><div class="value ${cls||''}">${val}</div><div class="foot">${ft}</div></div>`;
+}
+
+function renderSummaryCards(){
+  const totalKasus = data.length;
+  const totalKlaim = sum(data, r=>r.tarifKlaim);
+  const hasRS = data.some(r=>r.tarifRS!==null);
+  const totalRS = hasRS ? sum(data.filter(r=>r.tarifRS!==null), r=>r.tarifRS) : null;
+  const selisih = hasRS ? (totalKlaim - totalRS) : null;
+  const rataLos = avg(data, r=>r.los);
+  const cards = document.getElementById('summaryCards');
+  let html = '';
+  html += card('Total Kasus', fmtNum(totalKasus), 'kasus dianalisa');
+  html += card('Total Tarif Klaim', fmtRp(totalKlaim), 'jumlah tarif INA-CBG');
+  if(hasRS){
+    const cls = selisih>=0 ? 'pos' : 'neg';
+    html += card('Total Biaya Riil RS', fmtRp(totalRS), '');
+    html += card('Selisih (Klaim &minus; Riil)', fmtRp(selisih), selisih>=0?'surplus &mdash; klaim lebih besar':'defisit &mdash; biaya riil lebih besar', cls);
+  } else {
+    html += card('Rata-rata Klaim / Kasus', fmtRp(totalKlaim/totalKasus), 'biaya riil tidak dipetakan');
+  }
+  html += card('Rata-rata LOS', rataLos!==null ? fmtNum(rataLos,1)+' hari' : '&mdash;', 'lama rawat rata-rata');
+  cards.innerHTML = html;
+  renderExecInsight({totalKasus,totalKlaim,hasRS,totalRS,selisih,rataLos});
+}
+
+function renderExecInsight(k){
+  const box = document.getElementById('execInsight');
+  if(!box) return;
+  if(!k.totalKasus){ box.style.display='none'; return; }
+  const items = [];
+  const bi = (id,t)=>`<li><svg class="ic" aria-hidden="true"><use href="#${id}"/></svg><div>${t}</div></li>`;
+  items.push(bi('i-users', `Sebanyak <b>${fmtNum(k.totalKasus)} kasus</b> dianalisa dengan total tarif klaim <b>${fmtRpShort(k.totalKlaim)}</b>${k.rataLos!==null?` dan rata-rata lama rawat <b>${fmtNum(k.rataLos,1)} hari</b>`:''}.`));
+  if(k.hasRS && k.totalRS){
+    const pct = Math.abs(k.selisih)/k.totalRS*100;
+    items.push(bi('i-scale', k.selisih>=0
+      ? `Klaim melampaui biaya riil sebesar <span class="pos">${fmtRpShort(k.selisih)}</span> (${fmtNum(pct,1)}% dari biaya riil RS).`
+      : `Biaya riil melampaui klaim sebesar <span class="neg">${fmtRpShort(Math.abs(k.selisih))}</span> (${fmtNum(pct,1)}% dari biaya riil RS). Periksa kode dengan defisit terbesar di menu Sebaran Kode CBG.`));
+  }
+  const cnt = {};
+  data.forEach(r=>{ if(r.kode) cnt[r.kode] = (cnt[r.kode]||0)+1; });
+  const top = Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
+  if(top) items.push(bi('i-chart', `Kode terbanyak adalah <b>${top[0]}</b> dengan ${fmtNum(top[1])} kasus (${fmtNum(top[1]/k.totalKasus*100,1)}% dari seluruh kasus).`));
+  if(inacbgMode){
+    const inap = data.filter(r=>r.ptd==='Rawat Inap').length;
+    const jalan = data.filter(r=>r.ptd==='Rawat Jalan').length;
+    if(inap+jalan>0) items.push(bi('i-bed', `Komposisi layanan: <b>${fmtNum(jalan/(inap+jalan)*100,1)}% rawat jalan</b> (${fmtNum(jalan)} kasus) dan <b>${fmtNum(inap/(inap+jalan)*100,1)}% rawat inap</b> (${fmtNum(inap)} kasus).`));
+  }
+  box.innerHTML = `<h3><svg class="ic" aria-hidden="true"><use href="#i-spark"/></svg>Sorotan Eksekutif</h3><ul>${items.join('')}</ul>`;
+  box.style.display = 'block';
+}
+
+function renderKlinisCards(){
+  const withWeight = data.filter(r=>r.totalCostWeight!==null && !isNaN(r.totalCostWeight));
+  const cmi = withWeight.length ? sum(withWeight, r=>r.totalCostWeight)/withWeight.length : null;
+  const inap = data.filter(r=>r.ptd==='Rawat Inap').length;
+  const jalan = data.filter(r=>r.ptd==='Rawat Jalan').length;
+  const meninggal = data.filter(r=>r.statusPulangLabel==='Meninggal').length;
+  const html =
+    card('CMI (Case Mix Index)', cmi!==null?fmtNum(cmi,3):'&mdash;', 'rata-rata bobot relatif kasus') +
+    card('Rawat Inap', fmtNum(inap), fmtNum(inap/data.length*100,1)+'% dari seluruh kasus') +
+    card('Rawat Jalan', fmtNum(jalan), fmtNum(jalan/data.length*100,1)+'% dari seluruh kasus') +
+    card('Kasus Meninggal', fmtNum(meninggal), meninggal? (fmtNum(meninggal/data.length*100,2)+'% dari seluruh kasus') : 'tidak ada tercatat', meninggal?'neg':'');
+  document.getElementById('klinisCards').innerHTML = html;
+}
+
+function renderIcdAnalysis(){
+  const diagOnly = data.filter(r=>!r.hasProsedur);
+  const diagProc = data.filter(r=>r.hasProsedur);
+  const avgKlaimDiagOnly = avg(diagOnly, r=>r.tarifKlaim);
+  const avgKlaimDiagProc = avg(diagProc, r=>r.tarifKlaim);
+  const avgRSDiagOnly = avg(diagOnly.filter(r=>r.tarifRS!==null), r=>r.tarifRS);
+  const avgRSDiagProc = avg(diagProc.filter(r=>r.tarifRS!==null), r=>r.tarifRS);
+
+  const html =
+    card('Diagnosis Saja (ICD&#8209;10)', fmtNum(diagOnly.length), fmtNum(diagOnly.length/data.length*100,1)+'% dari seluruh kasus') +
+    card('Rata-rata Klaim &mdash; Diagnosis Saja', fmtRp(avgKlaimDiagOnly), avgRSDiagOnly!==null? ('rata-rata riil '+fmtRp(avgRSDiagOnly)) : '') +
+    card('Diagnosis + Prosedur (ICD&#8209;10 + ICD&#8209;9)', fmtNum(diagProc.length), fmtNum(diagProc.length/data.length*100,1)+'% dari seluruh kasus') +
+    card('Rata-rata Klaim &mdash; Diagnosis + Prosedur', fmtRp(avgKlaimDiagProc), avgRSDiagProc!==null? ('rata-rata riil '+fmtRp(avgRSDiagProc)) : '');
+  document.getElementById('icdCards').innerHTML = html;
+
+  destroyChart('icd');
+  charts.icd = new Chart(document.getElementById('chartIcd'), {
+    type:'bar',
+    data:{
+      labels:['Diagnosis Saja (ICD-10)','Diagnosis + Prosedur (ICD-10 + ICD-9)'],
+      datasets:[{label:'Rata-rata Klaim (Rp)', data:[avgKlaimDiagOnly||0, avgKlaimDiagProc||0], backgroundColor:['#EA580C','#0F766E'], borderRadius:8}]
+    },
+    options:{plugins:{legend:{display:false}, datalabels:{color:'#1C1917', font:{size:12.5, weight:700}, anchor:'end', align:'end', formatter:(v)=>fmtRpShort(v).replace('&mdash;','-')}}, scales:{y:{beginAtZero:true, grid:{color:'#EDE5DE'}, grace:'16%', ticks:{callback:(v)=>axisRp(v)}}, x:{grid:{display:false}}}}
+  });
+}
+
+let prosedurPage = 0;
+const PROSEDUR_PAGE_SIZE = 25;
+let prosedurListCache = [];
+let prosedurFiltered = [];
+
+function renderProsedurTable(){
+  prosedurListCache = data.filter(r=>r.hasProsedur).slice().sort((a,b)=>(b.tarifKlaim||0)-(a.tarifKlaim||0));
+  document.querySelector('#tableProsedur thead').innerHTML =
+    `<tr><th>Kode</th><th>Deskripsi</th><th>Pasien (Nama / MRN)</th><th>Kode Prosedur (ICD-9)</th><th class="num">Tarif Klaim</th><th class="num">LOS</th><th>Kelas</th></tr>`;
+  renderProsedurTableBody();
+}
+
+function renderProsedurTableBody(){
+  const q = (document.getElementById('prosedurSearchInput').value||'').toLowerCase().trim();
+  prosedurFiltered = !q ? prosedurListCache : prosedurListCache.filter(r=>
+    r.kode.toLowerCase().includes(q) ||
+    (r.namaPasien||'').toLowerCase().includes(q) ||
+    (r.mrn||'').toLowerCase().includes(q)
+  );
+  const startI = prosedurPage*PROSEDUR_PAGE_SIZE;
+  const pageRows = prosedurFiltered.slice(startI, startI+PROSEDUR_PAGE_SIZE);
+  const tbody = document.querySelector('#tableProsedur tbody');
+  tbody.innerHTML = pageRows.length ? pageRows.map(r=>`<tr>
+      <td class="mono">${r.kode}</td>
+      <td>${r.deskripsi||'&mdash;'}</td>
+      <td class="mono" style="font-size:11.5px;">${fullIdTxt(r.namaPasien,r.mrn)}</td>
+      <td class="mono">${(r.proclist||[]).join(', ')||'&mdash;'}</td>
+      <td class="num">${fmtRp(r.tarifKlaim)}</td>
+      <td class="num">${r.los!==null?r.los:'&mdash;'}</td>
+      <td>${r.kelasRawat||'&mdash;'}</td>
+    </tr>`).join('') : `<tr><td colspan="7" class="empty-hint">${prosedurListCache.length?'Tidak ada data yang cocok dengan pencarian.':'Tidak ada kasus dengan kode prosedur pada data ini.'}</td></tr>`;
+  const maxPage = Math.max(0, Math.ceil(prosedurFiltered.length/PROSEDUR_PAGE_SIZE)-1);
+  document.getElementById('prosedurPageInfo').textContent = `Halaman ${prosedurFiltered.length?prosedurPage+1:0} dari ${maxPage+1} (${prosedurFiltered.length.toLocaleString('id-ID')} kasus)`;
+}
+
+document.getElementById('prosedurSearchInput').addEventListener('input', ()=>{ prosedurPage=0; renderProsedurTableBody(); });
+document.getElementById('btnProsedurPrev').addEventListener('click', ()=>{ if(prosedurPage>0){ prosedurPage--; renderProsedurTableBody(); } });
+document.getElementById('btnProsedurNext').addEventListener('click', ()=>{
+  const maxPage = Math.ceil(prosedurFiltered.length/PROSEDUR_PAGE_SIZE)-1;
+  if(prosedurPage<maxPage){ prosedurPage++; renderProsedurTableBody(); }
+});
+
+function renderTopFreqChart(){
+  const groups = groupBy(data, r=>r.kode);
+  const arr = Array.from(groups.entries()).map(([k,v])=>({kode:k, n:v.length}));
+  arr.sort((a,b)=>b.n-a.n);
+  const top = arr.slice(0,10);
+  destroyChart('topFreq');
+  charts.topFreq = new Chart(document.getElementById('chartTopFreq'), {
+    type:'bar',
+    data:{labels: top.map(t=>t.kode), datasets:[{label:'Jumlah kasus', data: top.map(t=>t.n), backgroundColor:'#EA580C', borderRadius:8}]},
+    options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels(()=>data.length)}, scales:{x:{beginAtZero:true, grid:{color:'#EDE5DE'}}, y:{grid:{display:false}}}}
+  });
+}
+
+function renderKelasChart(){
+  const withKelas = data.filter(r=>r.kelasRawat);
+  const wrap = document.getElementById('chartKelas').parentElement;
+  wrap.querySelectorAll('.empty-hint').forEach(e=>e.remove());
+  if(!withKelas.length){
+    wrap.querySelector('canvas').style.display='none';
+    wrap.insertAdjacentHTML('beforeend','<div class="empty-hint">Kolom kelas rawat tidak dipetakan.</div>');
+    return;
+  }
+  wrap.querySelector('canvas').style.display='block';
+  const groups = groupBy(withKelas, r=>r.kelasRawat);
+  const labels = Array.from(groups.keys());
+  const vals = labels.map(l=>groups.get(l).length);
+  destroyChart('kelas');
+  charts.kelas = new Chart(document.getElementById('chartKelas'), {
+    type:'doughnut',
+    data:{labels, datasets:[{data:vals, backgroundColor: labels.map((_,i)=>PALETTE[i%PALETTE.length])}]},
+    options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:13, weight:600}, color:'#1C1917'}}, datalabels: pctLabels(null,{color:'#fff', anchor:'center', align:'center', fontSize:12, hideBelow:4})}}
+  });
+}
+
+function renderKodeSection(){
+  const groups = groupBy(data, r=>r.kode);
+  const hasRS = data.some(r=>r.tarifRS!==null);
+  const rows = Array.from(groups.entries()).map(([kode, rs])=>{
+    const n = rs.length;
+    const totalKlaim = sum(rs, r=>r.tarifKlaim);
+    const totalRS = hasRS ? sum(rs.filter(r=>r.tarifRS!==null), r=>r.tarifRS) : null;
+    const selisih = hasRS ? (totalKlaim - (totalRS||0)) : null;
+    return {kode, n, totalKlaim, totalRS, selisih, deskripsi: rs[0].deskripsi};
+  });
+
+  const defisitWrap = document.getElementById('chartDefisit').parentElement;
+  const surplusWrap = document.getElementById('chartSurplus').parentElement;
+  defisitWrap.querySelectorAll('.empty-hint').forEach(e=>e.remove());
+  surplusWrap.querySelectorAll('.empty-hint').forEach(e=>e.remove());
+
+  if(hasRS){
+    document.getElementById('chartDefisit').style.display='block';
+    document.getElementById('chartSurplus').style.display='block';
+    const withSel = rows.filter(r=>r.selisih!==null);
+    const defisit = [...withSel].sort((a,b)=>a.selisih-b.selisih).slice(0,10);
+    const surplus = [...withSel].sort((a,b)=>b.selisih-a.selisih).slice(0,10);
+    destroyChart('defisit');
+    charts.defisit = new Chart(document.getElementById('chartDefisit'), {
+      type:'bar',
+      data:{labels: defisit.map(d=>d.kode), datasets:[{label:'Selisih', data: defisit.map(d=>d.selisih), backgroundColor:'#B91C1C', borderRadius:8}]},
+      options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{x:{grid:{color:'#EDE5DE'}, ticks:{callback:(v)=>axisRp(v)}}, y:{grid:{display:false}}}}
+    });
+    destroyChart('surplus');
+    charts.surplus = new Chart(document.getElementById('chartSurplus'), {
+      type:'bar',
+      data:{labels: surplus.map(d=>d.kode), datasets:[{label:'Selisih', data: surplus.map(d=>d.selisih), backgroundColor:'#15803D', borderRadius:8}]},
+      options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{x:{grid:{color:'#EDE5DE'}, ticks:{callback:(v)=>axisRp(v)}}, y:{grid:{display:false}}}}
+    });
+  } else {
+    document.getElementById('chartDefisit').style.display='none';
+    document.getElementById('chartSurplus').style.display='none';
+    defisitWrap.insertAdjacentHTML('beforeend','<div class="empty-hint">Kolom biaya riil RS tidak dipetakan, sehingga selisih tidak dapat dihitung.</div>');
+    surplusWrap.insertAdjacentHTML('beforeend','<div class="empty-hint">Kolom biaya riil RS tidak dipetakan, sehingga selisih tidak dapat dihitung.</div>');
+  }
+
+  rows.sort((a,b)=>b.n-a.n);
+  const thead = document.querySelector('#tableKode thead');
+  const tbody = document.querySelector('#tableKode tbody');
+  thead.innerHTML = `<tr><th>Kode</th><th>Judul / Deskripsi</th><th class="num">Jumlah</th><th class="num">Total Klaim</th>${hasRS?'<th class="num">Total Riil</th><th class="num">Selisih</th>':''}</tr>`;
+  tbody.innerHTML = rows.map(r=>`<tr>
+    <td class="mono">${r.kode}</td>
+    <td>${r.deskripsi||'&mdash;'}</td>
+    <td class="num">${fmtNum(r.n)}</td>
+    <td class="num">${fmtRp(r.totalKlaim)}</td>
+    ${hasRS?`<td class="num">${fmtRp(r.totalRS)}</td><td class="num"><span class="badge ${r.selisih>=0?'pos':'neg'}">${fmtRp(r.selisih)}</span></td>`:''}
+  </tr>`).join('');
+}
+
+function renderSeverityChart(){
+  const groups = groupBy(data, r=>r.severity || 'Tidak diketahui');
+  const labels = Array.from(groups.keys());
+  const vals = labels.map(l=>groups.get(l).length);
+  destroyChart('severity');
+  charts.severity = new Chart(document.getElementById('chartSeverity'), {
+    type:'bar',
+    data:{labels, datasets:[{label:'Jumlah kasus', data:vals, backgroundColor: labels.map((_,i)=>PALETTE[i%PALETTE.length]), borderRadius:8}]},
+    options:{plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{y:{beginAtZero:true, grid:{color:'#EDE5DE'}}, x:{grid:{display:false}}}}
+  });
+}
+
+function renderLOSChart(){
+  const withLos = data.filter(r=>r.los!==null);
+  const wrap = document.getElementById('chartLOS').parentElement;
+  wrap.querySelectorAll('.empty-hint').forEach(e=>e.remove());
+  if(!withLos.length){
+    document.getElementById('chartLOS').style.display='none';
+    wrap.insertAdjacentHTML('beforeend','<div class="empty-hint">Data LOS / tanggal masuk-keluar tidak tersedia.</div>');
+    return;
+  }
+  document.getElementById('chartLOS').style.display='block';
+  const bins = [[0,3,'0-3 hari'],[4,7,'4-7 hari'],[8,14,'8-14 hari'],[15,30,'15-30 hari'],[31,Infinity,'>30 hari']];
+  const vals = bins.map(([lo,hi])=>withLos.filter(r=>r.los>=lo && r.los<=hi).length);
+  destroyChart('los');
+  charts.los = new Chart(document.getElementById('chartLOS'), {
+    type:'bar',
+    data:{labels: bins.map(b=>b[2]), datasets:[{label:'Jumlah kasus', data:vals, backgroundColor:'#EA580C', borderRadius:8}]},
+    options:{plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{y:{beginAtZero:true, grid:{color:'#EDE5DE'}}, x:{grid:{display:false}}}}
+  });
+}
+
+function renderMdcChart(){
+  const groups = groupBy(data, r=>r.mdc || 'Tidak diketahui');
+  const arr = Array.from(groups.entries()).map(([k,v])=>({mdc:k, n:v.length})).sort((a,b)=>b.n-a.n).slice(0,10);
+  destroyChart('mdc');
+  charts.mdc = new Chart(document.getElementById('chartMdc'), {
+    type:'bar',
+    data:{labels: arr.map(a=>a.mdc.length>38?a.mdc.slice(0,38)+'\u2026':a.mdc), datasets:[{label:'Jumlah kasus', data: arr.map(a=>a.n), backgroundColor:'#EA580C', borderRadius:8}]},
+    options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels(()=>data.length)}, scales:{x:{beginAtZero:true, grid:{color:'#EDE5DE'}}, y:{grid:{display:false}, ticks:{font:{size:10.5}}}}}
+  });
+}
+
+function renderCaraMasukChart(){
+  const groups = groupBy(data, r=>r.caraMasuk || 'Tidak diketahui');
+  const labels = Array.from(groups.keys());
+  const vals = labels.map(l=>groups.get(l).length);
+  destroyChart('caraMasuk');
+  charts.caraMasuk = new Chart(document.getElementById('chartCaraMasuk'), {
+    type:'doughnut',
+    data:{labels, datasets:[{data:vals, backgroundColor: labels.map((_,i)=>PALETTE[i%PALETTE.length])}]},
+    options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:13, weight:600}, color:'#1C1917'}}, datalabels: pctLabels(null,{color:'#fff', anchor:'center', align:'center', fontSize:12, hideBelow:4})}}
+  });
+}
+
+function renderGenderChart(){
+  const groups = groupBy(data, r=>r.sex || 'Tidak diketahui');
+  const labels = Array.from(groups.keys());
+  const vals = labels.map(l=>groups.get(l).length);
+  destroyChart('gender');
+  charts.gender = new Chart(document.getElementById('chartGender'), {
+    type:'doughnut',
+    data:{labels, datasets:[{data:vals, backgroundColor:['#EA580C','#0F766E','#2563EB']}]},
+    options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:13, weight:600}, color:'#1C1917'}}, datalabels: pctLabels(null,{color:'#fff', anchor:'center', align:'center', fontSize:12, hideBelow:4})}}
+  });
+}
+
+function renderStatusPulangChart(){
+  const groups = groupBy(data, r=>r.statusPulangLabel || 'Tidak diketahui');
+  const labels = Array.from(groups.keys());
+  const vals = labels.map(l=>groups.get(l).length);
+  destroyChart('statusPulang');
+  charts.statusPulang = new Chart(document.getElementById('chartStatusPulang'), {
+    type:'bar',
+    data:{labels, datasets:[{label:'Jumlah kasus', data:vals, backgroundColor: labels.map((_,i)=>PALETTE[i%PALETTE.length]), borderRadius:8}]},
+    options:{plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{y:{beginAtZero:true, grid:{color:'#EDE5DE'}}, x:{grid:{display:false}, ticks:{font:{size:10.5}}}}}
+  });
+}
+
+function renderBiayaChart(){
+  const totals = {};
+  Object.keys(BILLING_LABELS).forEach(k=>totals[k]=0);
+  data.forEach(r=>{
+    const b = r.billing || {};
+    Object.keys(BILLING_LABELS).forEach(k=>{
+      const v = parseFloat(b[k]);
+      if(!isNaN(v)) totals[k]+=v;
+    });
+  });
+  const arr = Object.keys(BILLING_LABELS).map(k=>({label:BILLING_LABELS[k], v: totals[k]})).filter(a=>a.v>0).sort((a,b)=>b.v-a.v);
+  destroyChart('biaya');
+  charts.biaya = new Chart(document.getElementById('chartBiaya'), {
+    type:'bar',
+    data:{labels: arr.map(a=>a.label), datasets:[{label:'Total biaya (Rp)', data: arr.map(a=>a.v), backgroundColor:'#0F766E', borderRadius:8}]},
+    options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels()}, scales:{x:{beginAtZero:true, grid:{color:'#EDE5DE'}, ticks:{callback:(v)=>axisRp(v)}}, y:{grid:{display:false}}}}
+  });
+}
+
+// ---------------- Rawat Inap/Jalan & Komponen Tarif ----------------
+function severityLevelNum(sev){
+  if(!sev) return null;
+  const m = sev.match(/Tingkat\s+(\w+)/i);
+  if(!m) return null;
+  const tok = m[1].toUpperCase();
+  const map = {'I':1,'II':2,'III':3,'IV':4,'1':1,'2':2,'3':3,'4':4};
+  return map[tok] || null;
+}
+
+function top20KodeTable(rows, containerSel){
+  const groups = groupBy(rows, r=>r.kode);
+  const arr = Array.from(groups.entries()).map(([kode, rs])=>({
+    kode, deskripsi: rs[0].deskripsi, n: rs.length, totalKlaim: sum(rs, r=>r.tarifKlaim)
+  })).sort((a,b)=>b.n-a.n).slice(0,20);
+  document.querySelector(containerSel+' thead').innerHTML = `<tr><th>Kode</th><th>Deskripsi</th><th class="num">Jumlah</th><th class="num">Total Klaim</th></tr>`;
+  document.querySelector(containerSel+' tbody').innerHTML = arr.length ? arr.map(r=>`<tr>
+      <td class="mono">${r.kode}</td><td>${r.deskripsi||'&mdash;'}</td>
+      <td class="num">${fmtNum(r.n)}</td><td class="num">${fmtRp(r.totalKlaim)}</td>
+    </tr>`).join('') : `<tr><td colspan="4" class="empty-hint">Tidak ada data.</td></tr>`;
+}
+
+function renderInapJalanAnalysis(){
+  // 1-2: Jumlah kunjungan & nilai klaim: Rawat Inap vs Rawat Jalan
+  const inapRows = data.filter(r=>r.ptd==='Rawat Inap');
+  const jalanRows = data.filter(r=>r.ptd==='Rawat Jalan');
+  const hasRS = data.some(r=>r.tarifRS!==null);
+  const totalKlaimInap = sum(inapRows, r=>r.tarifKlaim);
+  const totalKlaimJalan = sum(jalanRows, r=>r.tarifKlaim);
+  const totalRSInap = hasRS ? sum(inapRows.filter(r=>r.tarifRS!==null), r=>r.tarifRS) : null;
+  const totalRSJalan = hasRS ? sum(jalanRows.filter(r=>r.tarifRS!==null), r=>r.tarifRS) : null;
+
+  document.getElementById('inapJalanCards').innerHTML =
+    card('Kunjungan Rawat Inap', fmtNum(inapRows.length), fmtNum(data.length?inapRows.length/data.length*100:0,1)+'% dari total kasus') +
+    card('Kunjungan Rawat Jalan', fmtNum(jalanRows.length), fmtNum(data.length?jalanRows.length/data.length*100:0,1)+'% dari total kasus') +
+    card('Total Klaim Rawat Inap', fmtRp(totalKlaimInap), hasRS?('Biaya Riil: '+fmtRp(totalRSInap)):'') +
+    card('Total Klaim Rawat Jalan', fmtRp(totalKlaimJalan), hasRS?('Biaya Riil: '+fmtRp(totalRSJalan)):'');
+
+  destroyChart('inapJalanJumlah');
+  charts.inapJalanJumlah = new Chart(document.getElementById('chartInapJalanJumlah'), {
+    type:'doughnut',
+    data:{labels:['Rawat Inap','Rawat Jalan'], datasets:[{data:[inapRows.length, jalanRows.length], backgroundColor:['#EA580C','#0F766E']}]},
+    options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, font:{size:13, weight:600}, color:'#1C1917'}}, datalabels: pctLabels(null,{color:'#fff', anchor:'center', align:'center', fontSize:12})}}
+  });
+
+  destroyChart('inapJalanNilai');
+  const nilaiDatasets = [{label:'Tarif Klaim', data:[totalKlaimInap, totalKlaimJalan], backgroundColor:'#EA580C', borderRadius:8}];
+  if(hasRS) nilaiDatasets.push({label:'Biaya Riil', data:[totalRSInap||0, totalRSJalan||0], backgroundColor:'#0F766E', borderRadius:8});
+  charts.inapJalanNilai = new Chart(document.getElementById('chartInapJalanNilai'), {
+    type:'bar',
+    data:{labels:['Rawat Inap','Rawat Jalan'], datasets:nilaiDatasets},
+    options:{plugins:{legend:{display:hasRS}, datalabels:{color:'#1C1917', font:{size:12, weight:700}, anchor:'end', align:'end', formatter:(v)=>axisRp(v)}}, scales:{y:{beginAtZero:true, grid:{color:'#EDE5DE'}, grace:'16%', ticks:{callback:(v)=>axisRp(v)}}, x:{grid:{display:false}}}}
+  });
+
+  // 3: 20 kasus terbanyak - rawat inap & rawat jalan
+  top20KodeTable(inapRows, '#tableTop20Inap');
+  top20KodeTable(jalanRows, '#tableTop20Jalan');
+
+  // 4-6: Jumlah kasus & klaim per severity level 1/2/3
+  document.querySelector('#tableSeverityLevel thead').innerHTML =
+    `<tr><th>Tingkat Keparahan</th><th class="num">Jumlah Kasus</th><th class="num">Total Tarif Klaim</th>${hasRS?'<th class="num">Total Biaya Riil</th><th class="num">Selisih</th>':''}</tr>`;
+  document.querySelector('#tableSeverityLevel tbody').innerHTML = [1,2,3].map(level=>{
+    const rows = data.filter(r=>severityLevelNum(r.severity)===level);
+    const tk = sum(rows, r=>r.tarifKlaim);
+    const tr = hasRS ? sum(rows.filter(r=>r.tarifRS!==null), r=>r.tarifRS) : null;
+    const sel = hasRS ? (tk-(tr||0)) : null;
+    return `<tr>
+      <td><b>Severity Level ${level}</b></td>
+      <td class="num">${fmtNum(rows.length)}</td>
+      <td class="num">${fmtRp(tk)}</td>
+      ${hasRS?`<td class="num">${fmtRp(tr)}</td><td class="num"><span class="badge ${sel>=0?'pos':'neg'}">${fmtRp(sel)}</span></td>`:''}
+    </tr>`;
+  }).join('');
+
+  // 7-10: Komponen tarif (dari billing per kasus)
+  const totals = {akomodasi:0, farmasi:0, konsul:0, penunjang:0, lainnya:0};
+  data.forEach(r=>{
+    const b = r.billing||{};
+    const g = k=>{ const v=parseFloat(b[k]); return isNaN(v)?0:v; };
+    totals.akomodasi += g('room_amt');
+    totals.farmasi += g('drug_amt')+g('drug_chronic_amt')+g('drug_chemo_amt');
+    totals.konsul += g('consul_amt')+g('expert_amt');
+    totals.penunjang += g('ancillary_amt')+g('laboratory_amt')+g('radiology_amt')+g('blood_amt');
+    totals.lainnya += g('procedure_amt')+g('surgical_amt')+g('nursing_amt')+g('rehab_amt')+g('intensive_amt')+g('device_amt')+g('consumable_amt')+g('device_rent_amt');
+  });
+  const totalSemua = Object.values(totals).reduce((a,b)=>a+b,0);
+  const komponenArr = [
+    {label:'Akomodasi', v: totals.akomodasi},
+    {label:'Farmasi/Obat', v: totals.farmasi},
+    {label:'Konsul/Visite', v: totals.konsul},
+    {label:'Penunjang', v: totals.penunjang},
+    {label:'Lainnya (tindakan, keperawatan, dll.)', v: totals.lainnya}
+  ];
+  destroyChart('komponenTarif');
+  charts.komponenTarif = new Chart(document.getElementById('chartKomponenTarif'), {
+    type:'bar',
+    data:{labels:komponenArr.map(k=>k.label), datasets:[{label:'Total Biaya Riil (Rp)', data:komponenArr.map(k=>k.v), backgroundColor:['#EA580C','#0F766E','#2563EB','#D97706','#64748B'], borderRadius:8}]},
+    options:{indexAxis:'y', plugins:{legend:{display:false}, datalabels: pctLabels(()=>totalSemua)}, scales:{x:{beginAtZero:true, grid:{color:'#EDE5DE'}, ticks:{callback:(v)=>axisRp(v)}}, y:{grid:{display:false}}}}
+  });
+
+  document.querySelector('#tableKomponenTarif thead').innerHTML = `<tr><th>Komponen</th><th class="num">Total Biaya Riil</th><th class="num">% dari Total</th></tr>`;
+  document.querySelector('#tableKomponenTarif tbody').innerHTML = komponenArr.map(k=>`<tr>
+      <td>${k.label}</td>
+      <td class="num">${fmtRp(k.v)}</td>
+      <td class="num">${totalSemua?fmtNum(k.v/totalSemua*100,1)+'%':'-'}</td>
+    </tr>`).join('');
+}
+
+function computeFragmentasiReadmisi(){
+  const FRAGMENTASI_EXCLUDED_CODES = new Set(['M-3-16-0','N-3-15-0','Z-3-12-0']);
+  const withMrn = data.filter(r=>r.mrn);
+  const byMrn = groupBy(withMrn, r=>r.mrn);
+  const fragmentasiList = [];
+  const readmisiList = [];
+
+  byMrn.forEach((episodes)=>{
+    const jalan = episodes.filter(r=>r.ptd==='Rawat Jalan' && r.tglMasuk && r.dpjp);
+    const byDpjp = groupBy(jalan, r=>r.dpjp);
+    byDpjp.forEach((visits)=>{
+      visits.sort((a,b)=>a.tglMasuk-b.tglMasuk);
+      for(let i=1;i<visits.length;i++){
+        const prev = visits[i-1], curr = visits[i];
+        const gapDays = Math.round((curr.tglMasuk - prev.tglMasuk)/86400000);
+        const sameMonth = curr.tglMasuk.getFullYear()===prev.tglMasuk.getFullYear() && curr.tglMasuk.getMonth()===prev.tglMasuk.getMonth();
+        const isExcluded = FRAGMENTASI_EXCLUDED_CODES.has(curr.kode) || FRAGMENTASI_EXCLUDED_CODES.has(prev.kode);
+        if(sameMonth && gapDays>=0 && gapDays<=7 && !isExcluded){
+          fragmentasiList.push({mrn: curr.mrn, nama: curr.namaPasien, dpjp: curr.dpjp, kodeSebelum: prev.kode, deskSebelum: prev.deskripsi, kodeSaat: curr.kode, deskSaat: curr.deskripsi, tglSebelum: prev.tglMasuk, tglSaat: curr.tglMasuk, gapDays});
+        }
+      }
+    });
+    const inap = episodes.filter(r=>r.ptd==='Rawat Inap' && r.tglMasuk && r.tglKeluar).sort((a,b)=>a.tglMasuk-b.tglMasuk);
+    for(let i=1;i<inap.length;i++){
+      const prev = inap[i-1], curr = inap[i];
+      const gapDays = Math.round((curr.tglMasuk - prev.tglKeluar)/86400000);
+      const sameMonth = curr.tglMasuk.getFullYear()===prev.tglKeluar.getFullYear() && curr.tglMasuk.getMonth()===prev.tglKeluar.getMonth();
+      if(sameMonth && gapDays>=0 && gapDays<=30){
+        readmisiList.push({mrn: curr.mrn, nama: curr.namaPasien, kodeSebelum: prev.kode, deskSebelum: prev.deskripsi, kodeSaat: curr.kode, deskSaat: curr.deskripsi, tglKeluarSebelum: prev.tglKeluar, tglMasukSaat: curr.tglMasuk, gapDays});
+      }
+    }
+  });
+
+  fragmentasiList.sort((a,b)=>a.tglSaat-b.tglSaat);
+  readmisiList.sort((a,b)=>a.tglMasukSaat-b.tglMasukSaat);
+  return {fragmentasiList, readmisiList};
+}
+
+function fullIdTxt(nama, mrn){
+  return `${nama||'&mdash;'} / ${mrn||'&mdash;'}`;
+}
+function fmtD(d){ return d ? d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}) : '&mdash;'; }
+
+let fragmentasiListCache = [];
+let readmisiListCache = [];
+
+function renderFragmentasiReadmisi(){
+  const {fragmentasiList, readmisiList} = computeFragmentasiReadmisi();
+  fragmentasiListCache = fragmentasiList;
+  readmisiListCache = readmisiList;
+  const totalJalan = data.filter(r=>r.ptd==='Rawat Jalan').length;
+  const totalInap = data.filter(r=>r.ptd==='Rawat Inap').length;
+
+  document.getElementById('fragmentasiCards').innerHTML =
+    card('Episode Fragmentasi', fmtNum(fragmentasiList.length), 'kunjungan rawat jalan berulang &le;7 hari dalam bulan yang sama') +
+    card('Persentase dari Rawat Jalan', totalJalan? fmtNum(fragmentasiList.length/totalJalan*100,2)+'%' : '&mdash;', fmtNum(totalJalan)+' total kasus rawat jalan', fragmentasiList.length?'neg':'') +
+    card('Pasien Terdampak', fmtNum(new Set(fragmentasiList.map(f=>f.mrn)).size), 'pasien unik dengan episode fragmentasi');
+
+  document.querySelector('#tableFragmentasi thead').innerHTML = `<tr><th>Pasien (Nama / MRN)</th><th>Dokter (DPJP)</th><th>Kunjungan Sebelumnya</th><th>Kunjungan Saat Ini</th><th class="num">Jarak (hari)</th></tr>`;
+  renderFragmentasiTableBody();
+
+  document.getElementById('readmisiCards').innerHTML =
+    card('Episode Readmisi', fmtNum(readmisiList.length), 'kunjungan rawat inap berulang &le;30 hari dalam bulan yang sama') +
+    card('Persentase dari Rawat Inap', totalInap? fmtNum(readmisiList.length/totalInap*100,2)+'%' : '&mdash;', fmtNum(totalInap)+' total kasus rawat inap', readmisiList.length?'neg':'') +
+    card('Pasien Terdampak', fmtNum(new Set(readmisiList.map(r=>r.mrn)).size), 'pasien unik dengan episode readmisi');
+
+  document.querySelector('#tableReadmisi thead').innerHTML = `<tr><th>Pasien (Nama / MRN)</th><th>Episode Sebelumnya (Keluar)</th><th>Episode Berikutnya (Masuk)</th><th class="num">Jarak (hari)</th></tr>`;
+  renderReadmisiTableBody();
+}
+
+function renderFragmentasiTableBody(){
+  const qPasien = (document.getElementById('fragFilterPasien').value||'').toLowerCase().trim();
+  const qDpjp = (document.getElementById('fragFilterDpjp').value||'').toLowerCase().trim();
+  const jarakMinRaw = document.getElementById('fragFilterJarakMin').value;
+  const jarakMaxRaw = document.getElementById('fragFilterJarakMax').value;
+  const jarakMin = jarakMinRaw!=='' ? parseFloat(jarakMinRaw) : null;
+  const jarakMax = jarakMaxRaw!=='' ? parseFloat(jarakMaxRaw) : null;
+
+  const filtered = fragmentasiListCache.filter(f=>{
+    if(qPasien && !((f.nama||'').toLowerCase().includes(qPasien) || (f.mrn||'').toLowerCase().includes(qPasien))) return false;
+    if(qDpjp && !((f.dpjp||'').toLowerCase().includes(qDpjp))) return false;
+    if(jarakMin!==null && f.gapDays < jarakMin) return false;
+    if(jarakMax!==null && f.gapDays > jarakMax) return false;
+    return true;
+  });
+
+  const fTbody = document.querySelector('#tableFragmentasi tbody');
+  fTbody.innerHTML = filtered.length ? filtered.map(f=>`<tr>
+      <td class="mono">${fullIdTxt(f.nama,f.mrn)}</td>
+      <td>${f.dpjp||'&mdash;'}</td>
+      <td>${fmtD(f.tglSebelum)} &middot; <span class="mono">${f.kodeSebelum}</span></td>
+      <td>${fmtD(f.tglSaat)} &middot; <span class="mono">${f.kodeSaat}</span></td>
+      <td class="num"><span class="badge neg">${f.gapDays}</span></td>
+    </tr>`).join('') : `<tr><td colspan="5" class="empty-hint">${fragmentasiListCache.length ? 'Tidak ada data yang cocok dengan filter.' : 'Tidak ditemukan episode fragmentasi pada data ini.'}</td></tr>`;
+}
+
+function renderReadmisiTableBody(){
+  const qPasien = (document.getElementById('readFilterPasien').value||'').toLowerCase().trim();
+  const jarakMinRaw = document.getElementById('readFilterJarakMin').value;
+  const jarakMaxRaw = document.getElementById('readFilterJarakMax').value;
+  const jarakMin = jarakMinRaw!=='' ? parseFloat(jarakMinRaw) : null;
+  const jarakMax = jarakMaxRaw!=='' ? parseFloat(jarakMaxRaw) : null;
+
+  const filtered = readmisiListCache.filter(r=>{
+    if(qPasien && !((r.nama||'').toLowerCase().includes(qPasien) || (r.mrn||'').toLowerCase().includes(qPasien))) return false;
+    if(jarakMin!==null && r.gapDays < jarakMin) return false;
+    if(jarakMax!==null && r.gapDays > jarakMax) return false;
+    return true;
+  });
+
+  const rTbody = document.querySelector('#tableReadmisi tbody');
+  rTbody.innerHTML = filtered.length ? filtered.map(r=>`<tr>
+      <td class="mono">${fullIdTxt(r.nama,r.mrn)}</td>
+      <td>${fmtD(r.tglKeluarSebelum)} &middot; <span class="mono">${r.kodeSebelum}</span></td>
+      <td>${fmtD(r.tglMasukSaat)} &middot; <span class="mono">${r.kodeSaat}</span></td>
+      <td class="num"><span class="badge neg">${r.gapDays}</span></td>
+    </tr>`).join('') : `<tr><td colspan="4" class="empty-hint">${readmisiListCache.length ? 'Tidak ada data yang cocok dengan filter.' : 'Tidak ditemukan episode readmisi pada data ini.'}</td></tr>`;
+}
+
+['fragFilterPasien','fragFilterDpjp','fragFilterJarakMin','fragFilterJarakMax'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', renderFragmentasiTableBody);
+});
+['readFilterPasien','readFilterJarakMin','readFilterJarakMax'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', renderReadmisiTableBody);
+});
+
+function renderTrendChart(){
+  const withDate = data.filter(r=>r.tglMasuk);
+  if(!withDate.length){
+    document.getElementById('chartTren').style.display='none';
+    document.getElementById('trenEmptyHint').style.display='block';
+    return;
+  }
+  document.getElementById('chartTren').style.display='block';
+  document.getElementById('trenEmptyHint').style.display='none';
+  const groups = groupBy(withDate, r=>{
+    const d=r.tglMasuk; return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  });
+  const keys = Array.from(groups.keys()).sort();
+  const counts = keys.map(k=>groups.get(k).length);
+  const totals = keys.map(k=>sum(groups.get(k), r=>r.tarifKlaim));
+  destroyChart('tren');
+  charts.tren = new Chart(document.getElementById('chartTren'), {
+    data:{
+      labels: keys,
+      datasets:[
+        {type:'bar', label:'Jumlah kasus', data:counts, backgroundColor:'#0F766E', yAxisID:'y', borderRadius:8},
+        {type:'line', label:'Total klaim (Rp)', data:totals, borderColor:'#EA580C', backgroundColor:'#EA580C', yAxisID:'y1', tension:.25}
+      ]
+    },
+    options:{
+      plugins:{ datalabels: {display:false} },
+      scales:{
+        y:{position:'left', beginAtZero:true, grid:{color:'#EDE5DE'}, title:{display:true, text:'Jumlah kasus'}},
+        y1:{position:'right', beginAtZero:true, grid:{display:false}, title:{display:true, text:'Total klaim (Rp)'}}
+      }
+    }
+  });
+}
+
+// detail table
+document.getElementById('searchInput').addEventListener('input', e=>{
+  detailPage = 0;
+  renderDetailTable(false, e.target.value);
+});
+document.getElementById('btnPrev').addEventListener('click', ()=>{ if(detailPage>0){detailPage--; renderDetailTablePageOnly();} });
+document.getElementById('btnNext').addEventListener('click', ()=>{
+  const maxPage = Math.ceil(detailFiltered.length/PAGE_SIZE)-1;
+  if(detailPage<maxPage){detailPage++; renderDetailTablePageOnly();}
+});
+document.getElementById('btnExportCsv').addEventListener('click', exportSummaryCsv);
+
+function renderDetailTable(initial, query){
+  const q = (query||'').toLowerCase().trim();
+  detailFiltered = !q ? data : data.filter(r=> r.kode.toLowerCase().includes(q) || (r.deskripsi||'').toLowerCase().includes(q));
+  const hasRS = data.some(r=>r.tarifRS!==null);
+  const thead = document.querySelector('#tableDetail thead');
+  let cols = `<th>Kode</th><th>Judul / Deskripsi</th><th class="num">Klaim</th>`;
+  if(hasRS) cols += `<th class="num">Riil</th><th class="num">Selisih</th>`;
+  cols += `<th class="num">LOS</th><th>Kelas</th><th>Keparahan</th>`;
+  if(inacbgMode) cols += `<th>Cara Masuk</th><th class="num">Bobot</th><th>Nama / MRN</th>`;
+  thead.innerHTML = `<tr>${cols}</tr>`;
+  renderDetailTablePageOnly();
+}
+function renderDetailTablePageOnly(){
+  const hasRS = data.some(r=>r.tarifRS!==null);
+  const tbody = document.querySelector('#tableDetail tbody');
+  const startI = detailPage*PAGE_SIZE;
+  const pageRows = detailFiltered.slice(startI, startI+PAGE_SIZE);
+  const colCount = 5 + (hasRS?2:0) + (inacbgMode?3:0);
+  if(!pageRows.length){
+    tbody.innerHTML = `<tr><td colspan="${colCount}" class="empty-hint">Tidak ada data yang cocok.</td></tr>`;
+  } else {
+    tbody.innerHTML = pageRows.map(r=>{
+      const selisih = (hasRS && r.tarifRS!==null) ? r.tarifKlaim-r.tarifRS : null;
+      let row = `<tr>
+        <td class="mono">${r.kode}</td>
+        <td>${r.deskripsi||'&mdash;'}</td>
+        <td class="num">${fmtRp(r.tarifKlaim)}</td>`;
+      if(hasRS) row += `<td class="num">${r.tarifRS!==null?fmtRp(r.tarifRS):'&mdash;'}</td><td class="num">${selisih!==null?`<span class="badge ${selisih>=0?'pos':'neg'}">${fmtRp(selisih)}</span>`:'&mdash;'}</td>`;
+      row += `<td class="num">${r.los!==null?r.los:'&mdash;'}</td>
+        <td>${r.kelasRawat||'&mdash;'}</td>
+        <td>${r.severity||'&mdash;'}</td>`;
+      if(inacbgMode){
+        const idTxt = showIdentity ? `${r.namaPasien||'&mdash;'} / ${r.mrn||'&mdash;'}` : `${maskName(r.namaPasien)} / ${maskName(r.mrn)}`;
+        row += `<td>${r.caraMasuk||'&mdash;'}</td><td class="num">${r.totalCostWeight!==null&&!isNaN(r.totalCostWeight)?fmtNum(r.totalCostWeight,2):'&mdash;'}</td><td class="mono" style="font-size:11.5px;">${idTxt}</td>`;
+      }
+      row += `</tr>`;
+      return row;
+    }).join('');
+  }
+  const maxPage = Math.max(0, Math.ceil(detailFiltered.length/PAGE_SIZE)-1);
+  document.getElementById('pageInfo').textContent = `Halaman ${detailFiltered.length?detailPage+1:0} dari ${maxPage+1} (${detailFiltered.length.toLocaleString('id-ID')} baris)`;
+}
+
+function exportSummaryCsv(){
+  const groups = groupBy(data, r=>r.kode);
+  const hasRS = data.some(r=>r.tarifRS!==null);
+  const rows = Array.from(groups.entries()).map(([kode, rs])=>{
+    const n = rs.length;
+    const totalKlaim = sum(rs, r=>r.tarifKlaim);
+    const totalRS = hasRS ? sum(rs.filter(r=>r.tarifRS!==null), r=>r.tarifRS) : '';
+    const selisih = hasRS ? (totalKlaim-(totalRS||0)) : '';
+    return [kode, rs[0].deskripsi||'', n, totalKlaim, totalRS, selisih];
+  });
+  let csv = 'Kode;Deskripsi;Jumlah Kasus;Total Klaim;Total Riil;Selisih\n';
+  rows.forEach(r=>{ csv += r.join(';')+'\n'; });
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'ringkasan_casemix.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ---------------- Laporan (Excel / Word / PowerPoint) ----------------
+function dateStamp(){ return new Date().toISOString().slice(0,10); }
+
+function buildReportSummary(){
+  const totalKasus = data.length;
+  const totalKlaim = sum(data, r=>r.tarifKlaim);
+  const hasRS = data.some(r=>r.tarifRS!==null);
+  const totalRS = hasRS ? sum(data.filter(r=>r.tarifRS!==null), r=>r.tarifRS) : null;
+  const selisih = hasRS ? (totalKlaim-totalRS) : null;
+  const rataLos = avg(data, r=>r.los);
+  let cmi = null;
+  if(inacbgMode){
+    const withWeight = data.filter(r=>r.totalCostWeight!==null && !isNaN(r.totalCostWeight));
+    cmi = withWeight.length ? sum(withWeight, r=>r.totalCostWeight)/withWeight.length : null;
+  }
+  const groups = groupBy(data, r=>r.kode);
+  const kodeRows = Array.from(groups.entries()).map(([kode, rs])=>{
+    const n = rs.length;
+    const tk = sum(rs, r=>r.tarifKlaim);
+    const tr = hasRS ? sum(rs.filter(r=>r.tarifRS!==null), r=>r.tarifRS) : null;
+    const sel = hasRS ? (tk-(tr||0)) : null;
+    return {kode, deskripsi: rs[0].deskripsi, n, totalKlaim:tk, totalRS:tr, selisih:sel};
+  }).sort((a,b)=>b.n-a.n);
+  return {totalKasus, totalKlaim, hasRS, totalRS, selisih, rataLos, cmi, kodeRows};
+}
+
+// ---------------- Rekomendasi otomatis ----------------
+function icdPrefixMatch(diaglist, prefixes){
+  if(!diaglist || !diaglist.length) return false;
+  return diaglist.some(code => prefixes.some(p => code.toUpperCase().startsWith(p)));
+}
+
+function rekomCard(icon, title, desc, tone){
+  return `<div class="rekom-card ${tone||''}"><div class="rekom-title">${icon} ${title}</div><div class="rekom-desc">${desc}</div></div>`;
+}
+
+function computeRekomendasiItems(){
+  const items = [];
+  const rep = buildReportSummary();
+
+  // ===== KATEGORI: PENDAPATAN / FINANSIAL =====
+  if(rep.hasRS){
+    if(rep.selisih < 0){
+      const top3 = rep.kodeRows.filter(r=>r.selisih!==null).sort((a,b)=>a.selisih-b.selisih).slice(0,3);
+      const listTxt = top3.map(r=>`<b>${r.kode}</b> (${fmtRp(r.selisih)})`).join(', ');
+      items.push({icon:'&#128201;', title:'Total Biaya Riil Melebihi Klaim (Defisit)',
+        desc:`RS mengalami defisit total sebesar <b>${fmtRp(Math.abs(rep.selisih))}</b> pada data ini. Kode dengan defisit terbesar: ${listTxt}. Disarankan meninjau efisiensi biaya (obat, BMHP, lama rawat) untuk kode-kode tersebut, dan memastikan ketepatan koding agar tarif INA-CBG yang diklaim sudah sesuai kompleksitas kasus.`,
+        tone:'warning', category:'finansial'});
+    } else {
+      items.push({icon:'&#128200;', title:'Klaim Melebihi Biaya Riil (Surplus)',
+        desc:`Secara total, tarif klaim INA-CBG lebih besar <b>${fmtRp(rep.selisih)}</b> dibanding biaya riil RS pada data ini &mdash; kondisi yang sehat secara finansial. Tetap pantau kode-kode yang defisit secara individual di tab Sebaran Kode CBG agar tidak menggerus surplus ini.`,
+        tone:'positive', category:'finansial'});
+    }
+  }
+
+  if(inacbgMode && rep.cmi!==null){
+    if(rep.cmi < 1){
+      items.push({icon:'&#9878;&#65039;', title:'Case Mix Index Tergolong Rendah',
+        desc:`CMI sebesar <b>${rep.cmi.toFixed(3)}</b> mengindikasikan dominasi kasus dengan kompleksitas ringan&ndash;sedang. Bila RS memang berfokus melayani kasus ringan, ini wajar; namun bila banyak kasus kompleks yang ter-under-code (kurang lengkap pencatatan diagnosis sekunder/prosedur), CMI bisa lebih rendah dari kondisi klinis sebenarnya, yang berarti potensi pendapatan klaim belum optimal &mdash; perlu audit koding.`,
+        tone:'info', category:'finansial'});
+    } else {
+      items.push({icon:'&#9878;&#65039;', title:'Case Mix Index Tergolong Tinggi',
+        desc:`CMI sebesar <b>${rep.cmi.toFixed(3)}</b> mengindikasikan kompleksitas kasus yang cukup tinggi. Pastikan sumber daya (SDM, alat, obat) untuk kasus kompleks memadai, dan pantau biaya riil agar sejalan dengan tarif klaim kasus-kasus berat tersebut.`,
+        tone:'info', category:'finansial'});
+    }
+  }
+
+  if(inacbgMode){
+    const totals = {};
+    Object.keys(BILLING_LABELS).forEach(k=>totals[k]=0);
+    data.forEach(r=>{
+      const b = r.billing||{};
+      Object.keys(BILLING_LABELS).forEach(k=>{ const v=parseFloat(b[k]); if(!isNaN(v)) totals[k]+=v; });
+    });
+    const totalBiaya = Object.values(totals).reduce((a,b)=>a+b,0);
+    if(totalBiaya>0){
+      const top = Object.keys(BILLING_LABELS).map(k=>({label:BILLING_LABELS[k], v:totals[k]})).sort((a,b)=>b.v-a.v)[0];
+      const pct = top.v/totalBiaya*100;
+      if(pct>=30){
+        items.push({icon:'&#128176;', title:'Komponen Biaya Dominan',
+          desc:`Komponen <b>${top.label}</b> menyumbang &asymp;${fmtNum(pct,1)}% dari total biaya riil RS pada data ini. Ini wajar untuk beberapa layanan, tapi patut ditelaah lebih lanjut apakah ada peluang efisiensi (mis. formularium obat, negosiasi harga BMHP, dsb.) khusus pada komponen ini.`,
+          tone:'info', category:'finansial'});
+      }
+    }
+
+    const diagOnly = data.filter(r=>!r.hasProsedur);
+    const diagProc = data.filter(r=>r.hasProsedur);
+    if(diagOnly.length && diagProc.length){
+      const avgO = avg(diagOnly, r=>r.tarifKlaim), avgP = avg(diagProc, r=>r.tarifKlaim);
+      if(avgP!==null && avgO!==null && avgP > avgO){
+        items.push({icon:'&#129513;', title:'Nilai Klaim Kasus dengan Prosedur Lebih Tinggi',
+          desc:`Rata-rata klaim kasus dengan kode prosedur (ICD&#8209;10 + ICD&#8209;9) sebesar <b>${fmtRp(avgP)}</b>, lebih tinggi dari kasus diagnosis saja (<b>${fmtRp(avgO)}</b>). Pastikan seluruh tindakan/prosedur yang benar-benar dilakukan sudah dikode lengkap di PROCLIST, agar tidak terjadi under-coding yang merugikan nilai klaim RS.`,
+          tone:'info', category:'finansial'});
+      }
+    }
+  }
+
+  // ===== KATEGORI: KEPATUHAN REGULASI (Kemenkes/BPJS/TKMKB) =====
+  if(inacbgMode){
+    const {fragmentasiList, readmisiList} = computeFragmentasiReadmisi();
+    if(fragmentasiList.length){
+      const pctFrag = data.filter(r=>r.ptd==='Rawat Jalan').length ? (fragmentasiList.length/data.filter(r=>r.ptd==='Rawat Jalan').length*100) : 0;
+      items.push({icon:'&#9203;', title:'Indikasi Fragmentasi Kunjungan Rawat Jalan',
+        desc:`Ditemukan <b>${fmtNum(fragmentasiList.length)} episode</b> (&asymp;${fmtNum(pctFrag,1)}% dari kasus rawat jalan) berupa kunjungan berulang ke dokter yang sama dalam &le;7 hari pada bulan yang sama. Disarankan meninjau jadwal kontrol pasien dan pertimbangkan konsolidasi tindak lanjut dalam satu episode bila secara klinis memungkinkan.`,
+        tone:'warning', category:'regulasi', sumber:'Prinsip kendali mutu kendali biaya &mdash; TKMKB BPJS Pusat'});
+    }
+    if(readmisiList.length){
+      items.push({icon:'&#128280;', title:'Indikasi Readmisi Rawat Inap',
+        desc:`Ditemukan <b>${fmtNum(readmisiList.length)} episode</b> readmisi (kembali rawat inap &le;30 hari pada bulan yang sama). Disarankan meninjau proses discharge planning, edukasi pasien pulang, dan kelengkapan tata laksana pada episode sebelumnya.`,
+        tone:'warning', category:'regulasi', sumber:'Prinsip kendali mutu kendali biaya &mdash; TKMKB BPJS Pusat'});
+    }
+
+    const pneumoniaShort = data.filter(r=>r.ptd==='Rawat Inap' && r.los!==null && r.los<=1 && icdPrefixMatch(r.diaglist,['J12','J13','J14','J15','J16','J17','J18']));
+    if(pneumoniaShort.length){
+      items.push({icon:'&#129502;', title:'Kasus Pneumonia Rawat Inap dengan LOS Sangat Pendek',
+        desc:`Ditemukan <b>${fmtNum(pneumoniaShort.length)} kasus</b> pneumonia rawat inap dengan lama rawat &le;1 hari. Disarankan meninjau kembali kriteria indikasi rawat inap (skoring CURB&#8209;65/PSI) dan kelengkapan penegakan diagnosis pneumonia.`,
+        tone:'warning', category:'regulasi', sumber:'Kepmenkes No. HK.01.07/MENKES/2147/2023 (PNPK Pneumonia Dewasa) &amp; PNPK IDAI Pneumonia pada Anak 2025'});
+    }
+
+    const geaInap = data.filter(r=>r.ptd==='Rawat Inap' && icdPrefixMatch(r.diaglist,['A09']));
+    if(geaInap.length){
+      items.push({icon:'&#128167;', title:'Kasus GEA/Diare Rawat Inap',
+        desc:`Ditemukan <b>${fmtNum(geaInap.length)} kasus</b> GEA/diare rawat inap. Pastikan kriteria derajat dehidrasi (sedang&ndash;berat) tercantum jelas dalam rekam medis untuk setiap kasus yang dirawat inap.`,
+        tone:'info', category:'regulasi', sumber:'Kepmenkes No. HK.01.07/MENKES/1186/2022'});
+    }
+
+    const asfiksiaShort = data.filter(r=>icdPrefixMatch(r.diaglist,['P21']) && r.los!==null && r.los<=1 && r.statusPulangLabel==='Pulang / Sembuh');
+    if(asfiksiaShort.length){
+      items.push({icon:'&#128118;', title:'Asfiksia Neonatorum dengan Pola LOS Tidak Wajar',
+        desc:`Ditemukan <b>${fmtNum(asfiksiaShort.length)} kasus</b> asfiksia neonatorum dengan lama rawat 1 hari dan status pulang sembuh &mdash; pola ini tidak sejalan dengan tata laksana asfiksia yang umumnya membutuhkan observasi lebih lama. Perlu ditelaah kelengkapan penegakan diagnosis dan tata laksananya.`,
+        tone:'warning', category:'regulasi', sumber:'Sosialisasi Rekomendasi TKMKB Pusat Hasil Audit Medis 2025'});
+    }
+
+    const rehabFreq = [];
+    const rehabRows = data.filter(r=>/rehabilitas/i.test(r.deskripsi||'') && r.mrn && r.tglMasuk);
+    groupBy(rehabRows, r=>r.mrn).forEach((rows)=>{
+      groupBy(rows, r=>r.tglMasuk.getFullYear()+'-'+r.tglMasuk.getMonth()).forEach((monthRows)=>{
+        if(monthRows.length>8) rehabFreq.push(monthRows.length);
+      });
+    });
+    if(rehabFreq.length){
+      items.push({icon:'&#127939;', title:'Frekuensi Rehabilitasi Medik Tinggi',
+        desc:`Ditemukan <b>${fmtNum(rehabFreq.length)} pasien</b> dengan kunjungan rehabilitasi medik lebih dari 8 kali dalam sebulan. Pastikan re-asesmen berkala (idealnya setiap 2 minggu) oleh Dokter Sp.KFR terdokumentasi dengan lengkap, termasuk goal therapy dan evaluasi progres.`,
+        tone:'warning', category:'regulasi', sumber:'Berita Acara Kesepakatan BPJS&ndash;Kemenkes 2024 &amp; Sosialisasi TKMKB Pusat 2025'});
+    }
+
+    const pciRows = data.filter(r=>/(percutaneous|kateterisasi jantung|\bpci\b)/i.test(r.deskripsi||'') && r.mrn && r.tglMasuk);
+    let pciRepeat = 0;
+    groupBy(pciRows, r=>r.mrn).forEach((rows)=>{
+      const sorted = rows.slice().sort((a,b)=>a.tglMasuk-b.tglMasuk);
+      for(let i=1;i<sorted.length;i++){
+        const gap = Math.round((sorted[i].tglMasuk - sorted[i-1].tglMasuk)/86400000);
+        if(gap<=45) pciRepeat++;
+      }
+    });
+    if(pciRepeat){
+      items.push({icon:'&#129505;', title:'Pengulangan Tindakan PCI dalam Waktu Singkat',
+        desc:`Ditemukan <b>${fmtNum(pciRepeat)} pasang episode</b> tindakan PCI berulang pada pasien yang sama dalam rentang &le;45 hari. Pastikan setiap tindakan didasari indikasi medis yang jelas dan didokumentasikan melalui forum Heart Team (cardiac conference).`,
+        tone:'warning', category:'regulasi', sumber:'Sosialisasi Rekomendasi TKMKB Pusat 2025'});
+    }
+
+    const eswlRows = data.filter(r=>/(eswl|litotripsi)/i.test(r.deskripsi||'') && r.mrn && r.tglMasuk);
+    let eswlExcess = 0;
+    groupBy(eswlRows, r=>r.mrn).forEach((rows)=>{ if(rows.length>4) eswlExcess++; });
+    if(eswlExcess){
+      items.push({icon:'&#129442;', title:'Pengulangan Tindakan ESWL Melebihi Batas',
+        desc:`Ditemukan <b>${fmtNum(eswlExcess)} pasien</b> dengan tindakan ESWL lebih dari 4 kali. PNPK membatasi maksimal 4 kali per sisi per tahun; bila melebihi, Dokter Spesialis Urologi wajib menyusun rencana terapi alternatif.`,
+        tone:'warning', category:'regulasi', sumber:'TKMKB Pusat 2025 &amp; PNPK Batu Saluran Kemih No. HK.01.07/MENKES/1560/2022'});
+    }
+
+    const kelasiRows = data.filter(r=>/(thalassemia|thalasemia|kelasi besi)/i.test(r.deskripsi||'') && r.mrn && r.tglMasuk);
+    let kelasiExcess = 0;
+    groupBy(kelasiRows, r=>r.mrn).forEach((rows)=>{
+      groupBy(rows, r=>r.tglMasuk.getFullYear()+'-'+r.tglMasuk.getMonth()).forEach((monthRows)=>{ if(monthRows.length>1) kelasiExcess++; });
+    });
+    if(kelasiExcess){
+      items.push({icon:'&#129788;', title:'Terapi Kelasi Besi Thalassemia Lebih dari 1x/Bulan',
+        desc:`Ditemukan <b>${fmtNum(kelasiExcess)} kejadian</b> pasien thalassemia mendapat terapi kelasi besi lebih dari 1 kali dalam sebulan yang sama.`,
+        tone:'warning', category:'regulasi', sumber:'Permenkes No. 3 Tahun 2023 Pasal 34 ayat (2)'});
+    }
+
+    const unknownSeverity = data.filter(r=>!r.severity || r.severity==='Tidak diketahui').length;
+    if(unknownSeverity > 0 && unknownSeverity/data.length > 0.05){
+      items.push({icon:'&#128203;', title:'Kelengkapan Data Rekam Medis',
+        desc:`${fmtNum(unknownSeverity/data.length*100,1)}% kasus (${fmtNum(unknownSeverity)} kasus) tidak memiliki data tingkat keparahan yang terbaca. Kelengkapan isi rekam medis (identitas, hasil pemeriksaan, diagnosis, pengobatan) merupakan syarat administratif yang wajib dipenuhi.`,
+        tone:'info', category:'regulasi', sumber:'Permenkes No. 24 Tahun 2022 Pasal 19 &amp; Pasal 26 ayat (6)'});
+    }
+  }
+
+  const withLos = data.filter(r=>r.los!==null);
+  if(withLos.length){
+    const longLos = withLos.filter(r=>r.los>30);
+    if(longLos.length){
+      items.push({icon:'&#128197;', title:'Kasus dengan Lama Rawat &gt;30 Hari',
+        desc:`Terdapat <b>${fmtNum(longLos.length)} kasus</b> (${fmtNum(longLos.length/withLos.length*100,1)}%) dengan lama rawat lebih dari 30 hari. Kasus rawat inap yang sangat panjang berisiko terhadap efisiensi biaya dan berpotensi memerlukan telaah klinis/manajemen kasus lebih lanjut.`,
+        tone:'info', category:'regulasi'});
+    }
+  }
+
+  if(!items.length){
+    items.push({icon:'&#9989;', title:'Tidak Ada Catatan Khusus',
+      desc:'Berdasarkan data yang dianalisa, tidak ditemukan indikasi masalah signifikan pada aspek-aspek yang ditinjau otomatis di atas. Tetap lakukan telaah manual berkala.',
+      tone:'positive', category:'umum'});
+  }
+  return items;
+}
+
+function renderRekomendasi(){
+  const box = document.getElementById('rekomendasiList');
+  if(!data.length){ box.innerHTML = ''; return; }
+  const items = computeRekomendasiItems();
+  box.innerHTML = items.map(it=>rekomCard(it.icon, it.title, it.desc + (it.sumber?` <i>(Rujukan: ${it.sumber})</i>`:''), it.tone)).join('');
+}
+
+// ---------------- Analisa SWOT & Peluang Pengembangan Layanan ----------------
+function computeSwotAnalysis(){
+  const rep = buildReportSummary();
+  const hasRS = rep.hasRS;
+  const totalKasus = rep.totalKasus;
+
+  const kodeStats = rep.kodeRows.map(r=>({
+    ...r,
+    avgKlaim: r.n ? r.totalKlaim/r.n : 0,
+    avgMargin: (hasRS && r.totalRS!==null) ? (r.totalKlaim-r.totalRS)/r.n : null
+  }));
+
+  const avgKlaimOverall = kodeStats.length ? kodeStats.reduce((a,r)=>a+r.avgKlaim,0)/kodeStats.length : 0;
+  const volumesSorted = kodeStats.map(r=>r.n).sort((a,b)=>a-b);
+  const volumeMedian = volumesSorted.length ? volumesSorted[Math.floor(volumesSorted.length/2)] : 0;
+
+  // ===== STRENGTHS =====
+  const strengths = [];
+  const topVolume = [...kodeStats].sort((a,b)=>b.n-a.n).slice(0,3);
+  if(topVolume.length){
+    strengths.push(`Layanan dengan volume kasus tertinggi: ${topVolume.map(r=>`<b>${r.kode}</b> (${fmtNum(r.n)} kasus)`).join(', ')} &mdash; menunjukkan kapasitas dan jam terbang RS yang kuat pada layanan tersebut.`);
+  }
+  if(hasRS){
+    if(rep.selisih>=0){
+      strengths.push(`Secara keseluruhan RS mencatat <b>surplus ${fmtRp(rep.selisih)}</b> pada data ini, menunjukkan pengelolaan biaya yang sehat.`);
+    }
+    const positiveMarginCount = kodeStats.filter(r=>r.avgMargin!==null && r.avgMargin>0).length;
+    if(positiveMarginCount){
+      strengths.push(`Sebanyak <b>${fmtNum(positiveMarginCount)} dari ${fmtNum(kodeStats.length)} kode</b> INA&#8209;CBG mencatat margin positif (tarif klaim melebihi biaya riil per kasus).`);
+    }
+  }
+  if(inacbgMode && rep.cmi!==null && rep.cmi>=1){
+    strengths.push(`CMI sebesar <b>${rep.cmi.toFixed(3)}</b> menunjukkan RS mampu menangani kasus dengan kompleksitas cukup tinggi &mdash; modal penting untuk pengembangan layanan spesialistik.`);
+  }
+  if(!strengths.length) strengths.push('Belum ada pola kekuatan yang menonjol teridentifikasi secara otomatis dari data ini.');
+
+  // ===== WEAKNESSES =====
+  const weaknesses = [];
+  if(hasRS && rep.selisih<0){
+    weaknesses.push(`RS mencatat <b>defisit total ${fmtRp(Math.abs(rep.selisih))}</b> pada data ini.`);
+  }
+  if(hasRS){
+    const negMargin = kodeStats.filter(r=>r.avgMargin!==null && r.avgMargin<0).sort((a,b)=>a.avgMargin-b.avgMargin).slice(0,3);
+    if(negMargin.length){
+      weaknesses.push(`Kode dengan margin negatif terbesar per kasus: ${negMargin.map(r=>`<b>${r.kode}</b> (${fmtRp(r.avgMargin)}/kasus)`).join(', ')}.`);
+    }
+  }
+  if(inacbgMode){
+    const {fragmentasiList, readmisiList} = computeFragmentasiReadmisi();
+    if(fragmentasiList.length) weaknesses.push(`Ditemukan <b>${fmtNum(fragmentasiList.length)} episode fragmentasi</b> rawat jalan yang perlu dievaluasi (lihat tab Fragmentasi).`);
+    if(readmisiList.length) weaknesses.push(`Ditemukan <b>${fmtNum(readmisiList.length)} episode readmisi</b> rawat inap yang perlu dievaluasi (lihat tab Readmisi).`);
+  }
+  const withLos = data.filter(r=>r.los!==null);
+  const longLos = withLos.filter(r=>r.los>30);
+  if(longLos.length) weaknesses.push(`Terdapat <b>${fmtNum(longLos.length)} kasus</b> dengan lama rawat &gt;30 hari yang berpotensi membebani efisiensi biaya.`);
+  if(!weaknesses.length) weaknesses.push('Tidak ditemukan indikasi kelemahan signifikan secara otomatis dari data ini.');
+
+  // ===== OPPORTUNITIES =====
+  const opportunities = kodeStats
+    .filter(r=> r.avgKlaim > avgKlaimOverall && r.n <= volumeMedian && (r.avgMargin===null || r.avgMargin>=0))
+    .sort((a,b)=>b.avgKlaim-a.avgKlaim);
+  const oppList = [];
+  if(opportunities.length){
+    const top3opp = opportunities.slice(0,3);
+    oppList.push(`Ditemukan <b>${fmtNum(opportunities.length)} kode layanan</b> bernilai klaim di atas rata&#8209;rata namun volume kasusnya masih rendah, contoh: ${top3opp.map(r=>`<b>${r.kode}</b> (${fmtRp(r.avgKlaim)}/kasus, ${fmtNum(r.n)} kasus)`).join(', ')}. Layanan ini berpotensi ditingkatkan volumenya melalui promosi, kerja sama rujukan, atau penambahan kapasitas layanan.`);
+  }
+  if(inacbgMode){
+    const diagOnly = data.filter(r=>!r.hasProsedur);
+    const diagProc = data.filter(r=>r.hasProsedur);
+    const avgO = avg(diagOnly, r=>r.tarifKlaim), avgP = avg(diagProc, r=>r.tarifKlaim);
+    if(avgP!==null && avgO!==null && avgP>avgO && diagProc.length < diagOnly.length){
+      oppList.push(`Kasus dengan tindakan/prosedur (ICD&#8209;9) rata&#8209;rata bernilai klaim <b>${fmtRp(avgP)}</b>, lebih tinggi dari kasus diagnosis saja (<b>${fmtRp(avgO)}</b>), namun jumlahnya (${fmtNum(diagProc.length)} kasus) masih lebih sedikit dari kasus diagnosis saja (${fmtNum(diagOnly.length)} kasus) &mdash; peluang mengembangkan layanan tindakan/prosedur untuk menunjang pendapatan.`);
+    }
+  }
+  oppList.push('Kerja sama rujukan berjenjang dengan FKTP/klinik jejaring untuk kode-kode layanan unggulan dapat meningkatkan volume kasus tanpa menambah beban infrastruktur baru.');
+  if(!oppList.length) oppList.push('Belum ada peluang spesifik yang teridentifikasi otomatis dari data ini.');
+
+  // ===== THREATS =====
+  const threats = [];
+  if(kodeStats.length){
+    const top1 = [...kodeStats].sort((a,b)=>b.n-a.n)[0];
+    const pctTop1 = totalKasus ? top1.n/totalKasus*100 : 0;
+    if(pctTop1>=30){
+      threats.push(`Ketergantungan tinggi pada satu kode layanan: <b>${top1.kode}</b> menyumbang <b>${fmtNum(pctTop1,1)}%</b> dari seluruh kasus &mdash; risiko konsentrasi pendapatan bila terjadi perubahan kebijakan/tarif pada kode tersebut.`);
+    }
+  }
+  if(hasRS && rep.selisih<0){
+    threats.push('Defisit yang berkelanjutan dapat mengancam keberlanjutan operasional bila tidak segera ditangani dengan efisiensi biaya atau optimalisasi koding.');
+  }
+  threats.push('Perubahan regulasi tarif JKN (Permenkes Standar Tarif) serta kebijakan verifikasi BPJS Kesehatan dan rekomendasi TKMKB dapat memengaruhi nilai klaim yang diterima RS ke depannya.');
+  threats.push('Persaingan dengan fasilitas kesehatan lain di sekitar wilayah cakupan RS untuk layanan-layanan dengan volume kasus tinggi.');
+
+  return {strengths, weaknesses, oppList, threats, kodeStats, avgKlaimOverall, volumeMedian, opportunities};
+}
+
+function swotListHtml(arr){
+  return arr.map(t=>`<li>${t}</li>`).join('');
+}
+
+function renderSwot(){
+  if(!data.length) return;
+  const swot = computeSwotAnalysis();
+  document.getElementById('swotStrengths').innerHTML = swotListHtml(swot.strengths);
+  document.getElementById('swotWeaknesses').innerHTML = swotListHtml(swot.weaknesses);
+  document.getElementById('swotOpportunities').innerHTML = swotListHtml(swot.oppList);
+  document.getElementById('swotThreats').innerHTML = swotListHtml(swot.threats);
+
+  const topNilai = [...swot.kodeStats].sort((a,b)=>b.avgKlaim-a.avgKlaim).slice(0,10);
+  document.querySelector('#tableNilaiTertinggi thead').innerHTML =
+    `<tr><th>Kode</th><th>Deskripsi</th><th class="num">Jumlah Kasus</th><th class="num">Rata-rata Klaim/Kasus</th><th class="num">Total Klaim</th></tr>`;
+  document.querySelector('#tableNilaiTertinggi tbody').innerHTML = topNilai.length ? topNilai.map(r=>`<tr>
+      <td class="mono">${r.kode}</td><td>${r.deskripsi||'&mdash;'}</td>
+      <td class="num">${fmtNum(r.n)}</td>
+      <td class="num">${fmtRp(r.avgKlaim)}</td>
+      <td class="num">${fmtRp(r.totalKlaim)}</td>
+    </tr>`).join('') : `<tr><td colspan="5" class="empty-hint">Tidak ada data.</td></tr>`;
+
+  const potensial = swot.opportunities.slice(0,15);
+  document.querySelector('#tablePotensial thead').innerHTML =
+    `<tr><th>Kode</th><th>Deskripsi</th><th class="num">Jumlah Kasus</th><th class="num">Rata-rata Klaim/Kasus</th>${swot.kodeStats.some(r=>r.avgMargin!==null)?'<th class="num">Margin/Kasus</th>':''}</tr>`;
+  document.querySelector('#tablePotensial tbody').innerHTML = potensial.length ? potensial.map(r=>`<tr>
+      <td class="mono">${r.kode}</td><td>${r.deskripsi||'&mdash;'}</td>
+      <td class="num">${fmtNum(r.n)}</td>
+      <td class="num">${fmtRp(r.avgKlaim)}</td>
+      ${swot.kodeStats.some(x=>x.avgMargin!==null)?`<td class="num"><span class="badge ${r.avgMargin!==null&&r.avgMargin>=0?'pos':'neg'}">${r.avgMargin!==null?fmtRp(r.avgMargin):'&mdash;'}</span></td>`:''}
+    </tr>`).join('') : `<tr><td colspan="5" class="empty-hint">Belum ditemukan kode dengan pola volume rendah &amp; nilai klaim tinggi pada data ini.</td></tr>`;
+}
+
+function exportExcelReport(){
+  const rep = buildReportSummary();
+  const wb = XLSX.utils.book_new();
+
+  const summaryAOA = [
+    ['Laporan Analisa Casemix INA-CBG'],
+    ['RS Humana Prima Bandung'],
+    ['Digenerate', new Date().toLocaleString('id-ID')],
+    [],
+    ['Metrik','Nilai'],
+    ['Total Kasus', rep.totalKasus],
+    ['Total Tarif Klaim (Rp)', rep.totalKlaim]
+  ];
+  if(rep.hasRS){
+    summaryAOA.push(['Total Biaya Riil RS (Rp)', rep.totalRS]);
+    summaryAOA.push(['Selisih Klaim - Riil (Rp)', rep.selisih]);
+  }
+  summaryAOA.push(['Rata-rata LOS (hari)', rep.rataLos!==null? Number(rep.rataLos.toFixed(1)) : '-']);
+  if(rep.cmi!==null) summaryAOA.push(['CMI (Case Mix Index)', Number(rep.cmi.toFixed(3))]);
+  const wsSummary = XLSX.utils.aoa_to_sheet(summaryAOA);
+  XLSX.utils.book_append_sheet(wb, wsSummary, 'Ringkasan');
+
+  const kodeAOA = [['Kode','Deskripsi','Jumlah Kasus','Total Klaim','Total Riil','Selisih']];
+  rep.kodeRows.forEach(r=> kodeAOA.push([r.kode, r.deskripsi||'', r.n, r.totalKlaim, r.totalRS!==null?r.totalRS:'', r.selisih!==null?r.selisih:'']));
+  const wsKode = XLSX.utils.aoa_to_sheet(kodeAOA);
+  XLSX.utils.book_append_sheet(wb, wsKode, 'Sebaran Kode');
+
+  const detailHeader = ['Kode','Deskripsi','Klaim','Riil','Selisih','LOS','Kelas','Keparahan'];
+  if(inacbgMode) detailHeader.push('Cara Masuk','Bobot','Nama','MRN');
+  const detailAOA = [detailHeader];
+  data.forEach(r=>{
+    const row = [r.kode, r.deskripsi||'', r.tarifKlaim, r.tarifRS, (rep.hasRS && r.tarifRS!==null)? r.tarifKlaim-r.tarifRS : '', r.los, r.kelasRawat||'', r.severity||''];
+    if(inacbgMode){
+      row.push(
+        r.caraMasuk||'',
+        (r.totalCostWeight!==null && !isNaN(r.totalCostWeight)) ? Number(r.totalCostWeight.toFixed(2)) : '',
+        showIdentity ? (r.namaPasien||'') : maskName(r.namaPasien).replace(/&mdash;/g,'-'),
+        showIdentity ? (r.mrn||'') : maskName(r.mrn).replace(/&mdash;/g,'-')
+      );
+    }
+    detailAOA.push(row);
+  });
+  const wsDetail = XLSX.utils.aoa_to_sheet(detailAOA);
+  XLSX.utils.book_append_sheet(wb, wsDetail, 'Detail Data');
+
+  XLSX.writeFile(wb, 'laporan_casemix_'+dateStamp()+'.xlsx');
+}
+
+function exportWordReport(){
+  const rep = buildReportSummary();
+  const top10 = rep.kodeRows.slice(0,10);
+  const rekomItems = computeRekomendasiItems();
+  const finansialItems = rekomItems.filter(i=>i.category==='finansial');
+  const regulasiItems = rekomItems.filter(i=>i.category==='regulasi');
+  const now = new Date();
+  const periodeTxt = document.getElementById('dashSub') ? document.getElementById('dashSub').textContent : '';
+
+  function chartImgTag(key, maxWidth){
+    if(!charts[key]) return '';
+    try{
+      return `<img src="${charts[key].toBase64Image()}" style="max-width:${maxWidth||580}px;width:100%;display:block;margin:14px auto;">`;
+    }catch(e){ return ''; }
+  }
+  function rekomListHtml(items){
+    if(!items.length) return '<p><i>Tidak ada catatan pada kategori ini untuk data yang dianalisa.</i></p>';
+    return '<ol>' + items.map(it=>`<li style="margin-bottom:10px;"><b>${it.title}</b> &mdash; ${it.desc}${it.sumber?` <i>(Rujukan: ${it.sumber})</i>`:''}</li>`).join('') + '</ol>';
+  }
+
+  const sections = [];
+
+  sections.push(`
+    <h2>1. Pendahuluan</h2>
+    <p>Laporan ini disusun sebagai hasil analisa data klaim casemix INA&#8209;CBG RS Humana Prima Bandung, mencakup <b>${fmtNum(rep.totalKasus)} kasus</b> pelayanan yang tercatat pada berkas yang dianalisa. ${periodeTxt} Analisa disusun secara otomatis untuk memberikan gambaran umum kinerja klaim, sebaran diagnosis dan tindakan, indikasi kepatuhan terhadap sejumlah ketentuan administratif dan medis, serta rekomendasi tindak lanjut baik dari sisi pendapatan maupun kepatuhan regulasi.</p>
+  `);
+
+  let ringkasanNarasi = `Berdasarkan data yang dianalisa, tercatat sebanyak <b>${fmtNum(rep.totalKasus)} kasus</b> dengan total tarif klaim INA&#8209;CBG sebesar <b>${fmtRp(rep.totalKlaim)}</b>.`;
+  if(rep.hasRS){
+    ringkasanNarasi += ` Total biaya riil yang dikeluarkan Rumah Sakit tercatat sebesar <b>${fmtRp(rep.totalRS)}</b>, sehingga diperoleh selisih sebesar <b>${fmtRp(Math.abs(rep.selisih))}</b> yang menunjukkan kondisi <b>${rep.selisih>=0?'surplus (tarif klaim lebih besar dibanding biaya riil)':'defisit (biaya riil lebih besar dibanding tarif klaim)'}</b>.`;
+  }
+  ringkasanNarasi += ` Rata&#8209;rata lama rawat (length of stay) pada data ini adalah <b>${rep.rataLos!==null?rep.rataLos.toFixed(1)+' hari':'tidak tersedia'}</b>.`;
+  if(rep.cmi!==null){
+    ringkasanNarasi += ` Case Mix Index (CMI) tercatat sebesar <b>${rep.cmi.toFixed(3)}</b>, yang mengindikasikan tingkat kompleksitas kasus secara keseluruhan tergolong <b>${rep.cmi<1?'ringan hingga sedang':'cukup tinggi'}</b>.`;
+  }
+  sections.push(`
+    <h2>2. Ringkasan Eksekutif</h2>
+    <p>${ringkasanNarasi}</p>
+    <table>
+      <tr><th>Metrik</th><th>Nilai</th></tr>
+      <tr><td>Total Kasus</td><td>${fmtNum(rep.totalKasus)}</td></tr>
+      <tr><td>Total Tarif Klaim</td><td>${fmtRp(rep.totalKlaim)}</td></tr>
+      ${rep.hasRS?`<tr><td>Total Biaya Riil RS</td><td>${fmtRp(rep.totalRS)}</td></tr><tr><td>Selisih (Klaim &minus; Riil)</td><td>${fmtRp(rep.selisih)}</td></tr>`:''}
+      <tr><td>Rata-rata LOS</td><td>${rep.rataLos!==null?rep.rataLos.toFixed(1)+' hari':'-'}</td></tr>
+      ${rep.cmi!==null?`<tr><td>CMI (Case Mix Index)</td><td>${rep.cmi.toFixed(3)}</td></tr>`:''}
+    </table>
+  `);
+
+  let sebaranNarasi = '';
+  if(top10.length){
+    const topKode = top10[0];
+    const top10Total = top10.reduce((a,r)=>a+r.n,0);
+    sebaranNarasi = `Kode INA&#8209;CBG yang paling banyak muncul pada data ini adalah <b>${topKode.kode}</b> (${topKode.deskripsi||'-'}) dengan <b>${fmtNum(topKode.n)} kasus</b>, setara ${fmtNum(topKode.n/rep.totalKasus*100,1)}% dari seluruh kasus. Sepuluh kode teratas secara kumulatif menyumbang ${fmtNum(top10Total/rep.totalKasus*100,1)}% dari total kasus, sebagaimana divisualisasikan pada grafik berikut.`;
+  }
+  sections.push(`
+    <h2>3. Sebaran Kode INA-CBG</h2>
+    <p>${sebaranNarasi}</p>
+    ${chartImgTag('topFreq')}
+    ${chartImgTag('kelas', 380)}
+    <table>
+      <tr><th>Kode</th><th>Deskripsi</th><th>Jumlah</th><th>%</th><th>Klaim</th>${rep.hasRS?'<th>Riil</th><th>Selisih</th>':''}</tr>
+      ${top10.map(r=>`<tr><td>${r.kode}</td><td>${r.deskripsi||'-'}</td><td style="text-align:right;">${fmtNum(r.n)}</td><td style="text-align:right;">${fmtNum(r.n/rep.totalKasus*100,1)}%</td><td style="text-align:right;">${fmtRp(r.totalKlaim)}</td>${rep.hasRS?`<td style="text-align:right;">${fmtRp(r.totalRS)}</td><td style="text-align:right;">${fmtRp(r.selisih)}</td>`:''}</tr>`).join('')}
+    </table>
+  `);
+
+  if(rep.hasRS){
+    const withSel = rep.kodeRows.filter(r=>r.selisih!==null);
+    const topDefisit = [...withSel].sort((a,b)=>a.selisih-b.selisih).slice(0,3);
+    const topSurplus = [...withSel].sort((a,b)=>b.selisih-a.selisih).slice(0,3);
+    const defisitTxt = topDefisit.map(r=>`${r.kode} (${fmtRp(r.selisih)})`).join(', ');
+    const surplusTxt = topSurplus.map(r=>`${r.kode} (${fmtRp(r.selisih)})`).join(', ');
+    sections.push(`
+      <h2>4. Analisa Selisih Tarif Klaim terhadap Biaya Riil</h2>
+      <p>Tiga kode dengan selisih paling defisit (biaya riil melebihi tarif klaim) adalah <b>${defisitTxt}</b>. Sebaliknya, tiga kode dengan selisih paling surplus (tarif klaim melebihi biaya riil) adalah <b>${surplusTxt}</b>. Kode-kode dengan defisit signifikan perlu ditelaah lebih lanjut, baik dari sisi efisiensi biaya pelayanan (obat, bahan medis habis pakai, lama rawat) maupun ketepatan koding diagnosis dan prosedur agar tarif yang diklaim sudah mencerminkan kompleksitas kasus sebenarnya.</p>
+      ${chartImgTag('defisit')}
+      ${chartImgTag('surplus')}
+    `);
+  }
+
+  sections.push(`
+    <h2>5. Tingkat Keparahan &amp; Lama Rawat (LOS)</h2>
+    <p>Rata&#8209;rata lama rawat pada seluruh kasus yang dianalisa adalah <b>${rep.rataLos!==null?rep.rataLos.toFixed(1)+' hari':'tidak tersedia'}</b>. Distribusi tingkat keparahan dan sebaran lama rawat divisualisasikan pada grafik berikut, untuk membantu identifikasi pola kasus ringan, sedang, dan berat serta kewajaran lama rawat pada masing-masing kelompok.</p>
+    ${chartImgTag('severity')}
+    ${chartImgTag('los')}
+  `);
+
+  let bagianKe = 5;
+  if(inacbgMode){
+    bagianKe++;
+    const inap = data.filter(r=>r.ptd==='Rawat Inap').length;
+    const jalan = data.filter(r=>r.ptd==='Rawat Jalan').length;
+    const meninggal = data.filter(r=>r.statusPulangLabel==='Meninggal').length;
+    sections.push(`
+      <h2>${bagianKe}. Analisa Klinis &amp; Casemix</h2>
+      <p>Dari total ${fmtNum(rep.totalKasus)} kasus, sebanyak <b>${fmtNum(inap)} kasus (${fmtNum(rep.totalKasus?inap/rep.totalKasus*100:0,1)}%)</b> merupakan rawat inap dan <b>${fmtNum(jalan)} kasus (${fmtNum(rep.totalKasus?jalan/rep.totalKasus*100:0,1)}%)</b> merupakan rawat jalan. Tercatat <b>${fmtNum(meninggal)} kasus</b> dengan status pulang meninggal (${fmtNum(rep.totalKasus?meninggal/rep.totalKasus*100:0,2)}% dari total kasus). Sebaran kelompok diagnosis mayor (MDC), cara masuk pasien, jenis kelamin, dan status pulang divisualisasikan pada grafik berikut.</p>
+      ${chartImgTag('mdc')}
+      ${chartImgTag('caraMasuk', 380)}
+      ${chartImgTag('gender', 380)}
+      ${chartImgTag('statusPulang')}
+    `);
+
+    bagianKe++;
+    const diagOnly = data.filter(r=>!r.hasProsedur);
+    const diagProc = data.filter(r=>r.hasProsedur);
+    const avgO = avg(diagOnly, r=>r.tarifKlaim), avgP = avg(diagProc, r=>r.tarifKlaim);
+    sections.push(`
+      <h2>${bagianKe}. Analisa Klaim: Diagnosis Saja vs Diagnosis + Prosedur</h2>
+      <p>Kasus dengan diagnosis saja (ICD&#8209;10, tanpa kode prosedur) berjumlah <b>${fmtNum(diagOnly.length)} kasus</b> dengan rata&#8209;rata klaim <b>${avgO!==null?fmtRp(avgO):'tidak tersedia'}</b>. Kasus dengan diagnosis disertai prosedur (ICD&#8209;10 + ICD&#8209;9) berjumlah <b>${fmtNum(diagProc.length)} kasus</b> dengan rata&#8209;rata klaim <b>${avgP!==null?fmtRp(avgP):'tidak tersedia'}</b>. ${(avgP!==null&&avgO!==null&&avgP>avgO)?'Nilai klaim kasus dengan prosedur secara konsisten lebih tinggi dibanding kasus diagnosis saja, sehingga kelengkapan pengkodean prosedur (PROCLIST) menjadi faktor penting terhadap optimalisasi pendapatan klaim Rumah Sakit.':'Tidak terdapat perbedaan signifikan antara kedua kelompok pada data ini.'}</p>
+      ${chartImgTag('icd', 500)}
+    `);
+
+    bagianKe++;
+    sections.push(`
+      <h2>${bagianKe}. Komposisi Biaya Riil Rumah Sakit</h2>
+      <p>Grafik berikut menampilkan proporsi komponen biaya riil (obat, kamar akomodasi, tindakan, laboratorium, dan komponen lainnya) yang dikeluarkan Rumah Sakit untuk seluruh kasus pada data ini, sebagai dasar identifikasi peluang efisiensi biaya.</p>
+      ${chartImgTag('biaya')}
+    `);
+
+    bagianKe++;
+    const {fragmentasiList, readmisiList} = computeFragmentasiReadmisi();
+    sections.push(`
+      <h2>${bagianKe}. Fragmentasi &amp; Readmisi</h2>
+      <p>Fragmentasi didefinisikan sebagai kunjungan rawat jalan berulang ke dokter (DPJP) yang sama dalam rentang &le;7 hari pada bulan yang sama. Pada data ini ditemukan <b>${fmtNum(fragmentasiList.length)} episode fragmentasi</b> yang melibatkan <b>${fmtNum(new Set(fragmentasiList.map(f=>f.mrn)).size)} pasien unik</b>. Readmisi didefinisikan sebagai kunjungan rawat inap berulang &le;30 hari pada bulan yang sama; pada data ini ditemukan <b>${fmtNum(readmisiList.length)} episode readmisi</b> yang melibatkan <b>${fmtNum(new Set(readmisiList.map(r=>r.mrn)).size)} pasien unik</b>. Kedua indikator ini merupakan bagian dari prinsip kendali mutu kendali biaya yang menjadi perhatian Tim Kendali Mutu Kendali Biaya (TKMKB) BPJS Kesehatan, dan perlu ditindaklanjuti dengan telaah rekam medis pada kasus-kasus terkait.</p>
+    `);
+  }
+
+  if(charts.tren){
+    bagianKe++;
+    sections.push(`
+      <h2>${bagianKe}. Tren Bulanan</h2>
+      <p>Grafik berikut menampilkan tren jumlah kasus dan total nilai klaim per bulan pada periode data yang dianalisa, untuk membantu identifikasi pola musiman atau perubahan signifikan dari waktu ke waktu.</p>
+      ${chartImgTag('tren')}
+    `);
+  }
+
+  bagianKe++;
+  sections.push(`
+    <h2>${bagianKe}. Rekomendasi Perbaikan</h2>
+    <h3 style="color:#9A3412;margin-top:16px;">A. Rekomendasi dari Sisi Pendapatan dan Efisiensi Biaya</h3>
+    ${rekomListHtml(finansialItems)}
+    <h3 style="color:#9A3412;margin-top:16px;">B. Rekomendasi Berdasarkan Regulasi (Kementerian Kesehatan, BPJS Kesehatan, dan TKMKB)</h3>
+    ${rekomListHtml(regulasiItems)}
+  `);
+
+  bagianKe++;
+  sections.push(`
+    <h2>${bagianKe}. Penutup</h2>
+    <p>Laporan ini disusun secara otomatis berdasarkan data yang diunggah dan dianalisa melalui aplikasi internal RS Humana Prima Bandung, dan dimaksudkan sebagai alat bantu awal (bukan pengganti) proses telaah dan audit manual oleh Tim Casemix, Komite Medik, dan Tim Kendali Mutu Kendali Biaya (TKMKB) Rumah Sakit. Seluruh rekomendasi yang tercantum di dalam laporan ini perlu ditindaklanjuti dengan verifikasi rekam medis dan diskusi klinis sebelum diambil keputusan final.</p>
+  `);
+
+  const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset="utf-8"><title>Laporan Analisa Casemix INA-CBG</title>
+  <style>
+    body{font-family:Calibri,Arial,sans-serif; color:#1C1917; font-size:14px; line-height:1.6;}
+    h1{color:#9A3412; margin-bottom:2px; font-size:24px;}
+    h2{color:#9A3412; border-bottom:2px solid #FED7AA; padding-bottom:5px; margin-top:30px; font-size:18px;}
+    h3{font-size:15px;}
+    table{border-collapse:collapse; width:100%; margin-top:10px;}
+    th,td{border:1px solid #ccc; padding:7px 9px; font-size:12.5px;}
+    th{background:#FFEDD5; text-align:left; color:#9A3412;}
+    ol li{margin-bottom:8px;}
+    p{text-align:justify;}
+  </style></head>
+  <body>
+    <h1>Laporan Analisa Casemix INA-CBG</h1>
+    <p style="margin-top:0;"><strong>RS Humana Prima Bandung</strong><br>
+    Digenerate: ${now.toLocaleString('id-ID')}<br>
+    ${periodeTxt}</p>
+    <hr>
+    ${sections.join('\n')}
+  </body></html>`;
+
+  const blob = new Blob(['\ufeff', html], {type:'application/msword'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'laporan_casemix_'+dateStamp()+'.doc';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+async function exportPptxReport(){
+  const rep = buildReportSummary();
+  const pptx = new PptxGenJS();
+  pptx.defineLayout({name:'CASEMIX', width:10, height:5.63});
+  pptx.layout = 'CASEMIX';
+
+  const purpleDeep = '7C2D12';
+
+  let s = pptx.addSlide();
+  s.background = {color: purpleDeep};
+  s.addText('Laporan Analisa Casemix INA-CBG', {x:0.5,y:1.8,w:9,h:1,fontSize:28,bold:true,color:'FFFFFF',fontFace:'Georgia'});
+  s.addText('RS Humana Prima Bandung', {x:0.5,y:2.7,w:9,h:0.5,fontSize:16,color:'FED7AA'});
+  s.addText('Digenerate: '+new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'}), {x:0.5,y:3.2,w:9,h:0.4,fontSize:12,color:'FFEDD5'});
+
+  s = pptx.addSlide();
+  s.addText('Ringkasan', {x:0.5,y:0.3,w:9,h:0.6,fontSize:22,bold:true,color:purpleDeep});
+  const bullets = [
+    `Total Kasus: ${fmtNum(rep.totalKasus)}`,
+    `Total Tarif Klaim: ${fmtRp(rep.totalKlaim)}`
+  ];
+  if(rep.hasRS){
+    bullets.push(`Total Biaya Riil RS: ${fmtRp(rep.totalRS)}`);
+    bullets.push(`Selisih: ${fmtRp(rep.selisih)}`);
+  }
+  bullets.push(`Rata-rata LOS: ${rep.rataLos!==null?rep.rataLos.toFixed(1)+' hari':'-'}`);
+  if(rep.cmi!==null) bullets.push(`CMI (Case Mix Index): ${rep.cmi.toFixed(3)}`);
+  s.addText(bullets.map(b=>({text:b, options:{bullet:true, breakLine:true, paraSpaceAfter:10}})), {x:0.5,y:1.1,w:9,h:3.5,fontSize:16,color:'1C1917'});
+
+  const chartOrder = ['topFreq','kelas','severity','los'];
+  if(inacbgMode){ chartOrder.push('mdc','caraMasuk','gender','statusPulang','biaya'); }
+  const chartTitles = {
+    topFreq:'10 Kode INA-CBG Paling Sering', kelas:'Distribusi Kelas Rawat', severity:'Distribusi Tingkat Keparahan',
+    los:'Distribusi Lama Rawat (LOS)', mdc:'10 MDC Terbanyak', caraMasuk:'Cara Masuk Pasien', gender:'Jenis Kelamin',
+    statusPulang:'Status Pulang', biaya:'Komposisi Biaya Riil RS'
+  };
+  chartOrder.forEach(key=>{
+    if(!charts[key]) return;
+    try{
+      const img = charts[key].toBase64Image();
+      const sl = pptx.addSlide();
+      sl.addText(chartTitles[key]||key, {x:0.5,y:0.3,w:9,h:0.5,fontSize:18,bold:true,color:purpleDeep});
+      sl.addImage({data: img, x:1, y:1, w:8, h:4});
+    }catch(e){ /* lewati chart yang gagal diambil gambarnya */ }
+  });
+
+  await pptx.writeFile({fileName:'laporan_casemix_'+dateStamp()+'.pptx'});
+}
+
+document.getElementById('btnExportExcel').addEventListener('click', ()=>{
+  const line = document.getElementById('reportLoadingLine');
+  line.style.display='block';
+  setTimeout(()=>{
+    try{ exportExcelReport(); }
+    catch(e){ alert('Gagal membuat berkas Excel: '+(e&&e.message?e.message:'kesalahan tak dikenal.')); }
+    line.style.display='none';
+  }, 30);
+});
+document.getElementById('btnExportWord').addEventListener('click', ()=>{
+  try{ exportWordReport(); }
+  catch(e){ alert('Gagal membuat berkas Word: '+(e&&e.message?e.message:'kesalahan tak dikenal.')); }
+});
+document.getElementById('btnExportPptx').addEventListener('click', async ()=>{
+  const line = document.getElementById('reportLoadingLine');
+  line.style.display='block';
+  try{ await exportPptxReport(); }
+  catch(e){ alert('Gagal membuat berkas PowerPoint: '+(e&&e.message?e.message:'kesalahan tak dikenal.')); }
+  line.style.display='none';
+});
+
+})();
+</script>
+</body>
+</html>
